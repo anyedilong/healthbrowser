@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/PhysicExamInfo/PhysicExamInfo.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <link rel="stylesheet" href="../../css/pagination.css">
+    <script src="../../js/jquery.pagination.js"></script>
+    <style>
+    	.table-nodata{
+    		line-height: 40px;
+    		text-align: center;
+    		color: #888888;
+    		display: none;
+    		font-size: 14px;
+    		border-bottom: 1px solid #EBEEF5;
+    	}
+    </style>
+</head>
+<body>
+<div class="pageBox">
+    <div class="pageCont">
+        <div class="tableCard">
+            <table class="my-table hov-table">
+            <thead>
+            <tr>
+                <th style="min-width: 100px">入院登记码</th>
+                <th style="min-width: 100px">入院日期</th>
+                <th style="min-width: 100px">入院时情况</th>
+                <th style="min-width: 100px">入院方式</th>
+                <th style="min-width: 200px">科室名称</th>
+                <th style="min-width: 200px">医院名称</th>
+                <th style="min-width: 100px">病室</th>
+                <th style="min-width: 80px">床位号</th>
+                <th style="min-width: 50px">管理</th>
+            </tr>
+            </thead>
+            <tbody id="hospitalTable"></tbody>
+        </table>
+        <div class="table-nodata">暂无数据</div>
+        <div class="pagingBox">
+            <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(function () {
+    	//设置菜单事件
+    	setMenuEvent();
+    	//获取住院的列表
+    	getHospitalPage(1);
+    });
+  	//获取住院的列表
+    function getHospitalPage(pageNo){
+        var jsonParam = {
+            page: {
+                pageNo: pageNo,
+                pageSize: 10
+            },
+            sfzh: parent.document.getElementById('idCard').value
+        };
+        var authorCookie = getCookie("author");
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + "/health/hospital/getHospitalPage",
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success:function(result) {
+                if(result.retCode == 0) {
+                    if (pageNo == 1) {
+                        paginationInit(result.data.totalPage);
+                    }
+                    if (result.data.list.length == 0) {
+                		$('.table-nodata').css('display', 'block');
+                	}
+                    var html = "";
+                    $.each(result.data.list, function (i, item) {
+                        html += '<tr>' +
+		                            '<td>'+item.arId+'</td>' +
+		                            '<td>'+item.admissionDate+'</td>' +
+		                            '<td>'+item.dmissionSituatio+'</td>' +
+		                            '<td>'+item.admissionTypeText+'</td>' +
+		                            '<td>'+item.depName+'</td>' +
+		                            '<td>'+item.orgName+'</td>' +
+		                            '<td>'+item.ward+'</td>' +
+		                            '<td>'+item.sickbedNum+'</td>' +
+		                            '<td><i class="tableicon iconfont" hospId="'+item.id+'">&#xe604;</i></td>' +
+	                            '</tr>';
+                    });
+                    $("#hospitalTable").append(html);
+                }
+            },
+            error:function(){
+                alert("加载资源失败");
+            }
+        });
+
+    };
+  	//设置菜单事件
+    function setMenuEvent(){
+    	var pageHeight = $(window).height();
+        function divResize () {
+            pageHeight = $(window).height();
+            $(".pageCont").css({height: pageHeight - 30 + 'px'});
+            $(".tableCard").css ({
+                height: $(".pageCont").height() - 40 + 'px'
+            });
+        }
+        divResize();
+        $(window).resize(function(){
+            divResize();
+        });
+        var urls = '';
+        var windowparent = window.parent;
+        $(".my-table").on('click', '.tableicon', function () {
+            var ids = $(this).parents("tr").children("td").eq(0).html();
+            var hospId = $(this).attr("hospId");
+            urls = 'hospitalizationInfo/hospitalizationDetail.html?id='+hospId;
+            windowparent.$('#mainIframe').attr('src', urls);
+        });
+    }
+ 	// 分页
+    function paginationInit (totalPage) {
+        $("#myPage").pagination(totalPage, {
+            num_edge_entries: 1, //边缘页数
+            // num_display_entries: 4, //主体页数
+            num_display_entries: (totalPage > 4 ? 4 : totalPage), //主体页数
+            callback: pageselectCallback,
+            items_per_page: 1 //每页显示1项
+            // prev_text: '<'
+            // prev_show_always:true,
+            // next_show_always:true
+        });
+    }
+    function pageselectCallback(page_index, jq){
+        if(jq.length !== undefined){
+        	getHospitalPage(page_index + 1);
+        }
+    };
+</script>
+</html>

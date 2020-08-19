@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <style>
+		.pageBox {position: relative;}
+		.wait {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 20px;
+			line-height: 150px; text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 18px; 
+			display:none;
+			text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata img {
+			display:block; margin: 50px auto;
+			width: auto;height:65%;
+		} 
+		.table-nodata{
+    		line-height: 40px;
+    		text-align: center;
+    		color: #888888;
+    		display: none;
+    		font-size: 14px;
+    		border-bottom: 1px solid #EBEEF5;
+    	}
+	</style>
+</head>
+<body>
+<div class="pageBox">
+ 	<div class="wait">
+		请稍等...
+	</div> 
+	<div class="nodata">
+		<img src="../../img/img_zwsj.png"/>
+		<div>暂无数据</div>
+	</div>
+    <div class="pageCont">
+        <div class="leftCard">
+            <ul class="docUl" id="listUl"></ul>
+        </div>
+        <div class="rightCard">
+            <div class="cardTit">精神障碍随访记录</div>
+            <ul class="consUl">
+                <li class="consLi">
+                    <div class="cons-label">随访日期</div>
+                    <div class="cons-txt" id="sfrq" name="sfrq"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">随访方式</div>
+                    <div class="cons-txt" id="sffsName" name="sffsName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">若失访，原因</div>
+                    <div class="cons-txt" id="lossName" name="lossName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">如死亡，日期</div>
+                    <div class="cons-txt" id="deathrq" name="deathrq"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">如死亡，原因</div>
+                    <div class="cons-txt" id="deathName" name="deathName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">危险性评估(级)</div>
+                    <div class="cons-txt" id="wxx" name="wxx"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">症状</div>
+                    <div class="cons-txt" id="mqzzName" name="mqzzName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">自知力</div>
+                    <div class="cons-txt" id="zzlName" name="zzlName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">睡眠情况</div>
+                    <div class="cons-txt" id="smqkName" name="smqkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">饮食情况</div>
+                    <div class="cons-txt" id="ysqkName" name="ysqkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">个人生活料理</div>
+                    <div class="cons-txt" id="grshllName" name="grshllName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">家务劳动</div>
+                    <div class="cons-txt" id="jwldName" name="jwldName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">生产劳动及工作</div>
+                    <div class="cons-txt" id="scldjgzName" name="scldjgzName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">学习能力</div>
+                    <div class="cons-txt" id="xxnlName" name="xxnlName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">社会人际交往</div>
+                    <div class="cons-txt" id="shrjjwName" name="shrjjwName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">危险行为</div>
+                    <div class="cons-txt tizheng">
+                        <div style="">
+                            <span class="span-label">轻度滋事次数</span>
+                            <span id="qdzs" name="qdzs"></span>
+                        </div>
+                        <div>
+                            <span class="span-label">肇事次数</span>
+                            <span id="zs" name="zs"></span>
+                        </div>
+                        <div>
+                            <span class="span-label">肇祸次数</span>
+                            <span id="zh" name="zh"></span>
+                        </div>
+                        <div>
+                            <span class="span-label">其他危害行为次数</span>
+                            <span id="qtwhxw" name="qtwhxw"></span>
+                        </div>
+                        <div>
+                            <span class="span-label">自伤次数</span>
+                            <span id="zshang" name="zshang"></span>
+                        </div>
+                        <div>
+                            <span class="span-label">自杀未遂次数</span>
+                            <span id="zsws" name="zsws"></span>
+                        </div>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">两次随访期间 关锁情况</div>
+                    <div class="cons-txt" id="gsqkName" name="gsqkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">两次随访期间 住院情况</div>
+                    <div class="cons-txt" id="zyqkName" name="zyqkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">实验室检查</div>
+                    <div class="cons-txt" id="sysjcName" name="sysjcName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">服药依从性</div>
+                    <div class="cons-txt" id="fyycxName" name="fyycxName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">药物不良反应</div>
+                    <div class="cons-txt" id="ywblfyName" name="ywblfyName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">治疗效果</div>
+                    <div class="cons-txt" id="zlxgName" name="zlxgName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">是否转诊</div>
+                    <div class="cons-txt" id="sfzdName" name="sfzdName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">转诊原因</div>
+                    <div class="cons-txt" id="zzyy" name="zzyy"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">转诊至机构及科室</div>
+                    <div class="cons-txt" id="jgjks" name="jgjks"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">目前用药</div>
+                    <div class="cons-txt">
+                        <table class="my-table" id="muqian">
+                            <thead>
+                                <tr class="bgtr">
+                                    <th>药物名称</th>
+                                    <th>用法</th>
+                                    <th>每次剂量(mg)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="table-nodata">暂无数据</div>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">用药指导</div>
+                    <div class="cons-txt">
+                        <table class="my-table" id="zhidao">
+                            <thead>
+                                <tr class="bgtr">
+                                    <th>药物名称</th>
+                                    <th>用法</th>
+                                    <th>每次剂量(mg)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="table-nodata">暂无数据</div>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">康复措施</div>
+                    <div class="cons-txt" id="kfcsName" name="kfcsName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">此次随访分类</div>
+                    <div class="cons-txt" id="sfflName" name="sfflName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">随访照片</div>
+                    <div class="cons-txt">
+                        <div class="consPic">
+                            <div><img src="../../img/noload.png"></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">医生签字</div>
+                    <div class="cons-txt">
+                        <div class="consQianm">
+                            <div>医生未上传手写签名</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">下次随访日期</div>
+                    <div class="cons-txt" id="xcsfrq" name="xcsfrq"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/resizeDiv.js"></script>
+<script>
+	$(function () {
+		//查询显示精神障碍的列表
+		getDataList();
+	})
+	//查询显示显示精神障碍的列表
+	function getDataList(){
+		var jsonParam = new Object();
+        jsonParam.jmId = parent.document.getElementById('archiveId').value;
+        var authorCookie = getCookie("author");
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/follow/getJsbList',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (res) {
+            	if(res.retCode == 0){  
+            		$(".wait").eq(0).css('display', 'none');
+            		$("#listUl").html("");
+            		if (res.data.length > 0) {
+            			for(var i = 0; i < res.data.length; i++){
+            				for (var key in res.data[i]) {
+                        		if (res.data[i][key] == null || res.data[i][key] == '') {
+                        			res.data[i][key] = '无数据';
+                        		}
+                        	}
+            				$("#listUl").append(
+            					'<li class="docLi" ids="' + res.data[i].id + '">'+
+			                        '<div class="docLi-icon">'+
+			                            '<div><i class="radius"></i><p>精</p></div>'+
+			                        '</div>'+
+			                        '<div class="docLi-cont">'+
+			                            '<div class="doc-cont">'+
+			                                '<div>'+
+			                                    '<span>随访医生</span>&nbsp;'+
+			                                    '<span name="sfysName">' + (res.data[i].sfysName == '无数据' ? '': res.data[i].sfysName) + '</span>'+
+			                                '</div>'+
+			                                '<div class="doc-cont-rem" style="margin-top: 5px;">'+
+			                                    '<span>随访方式</span>&nbsp;'+
+			                                    '<span name="sffsName">' + res.data[i].sffsName + '</span>'+
+			                                '</div>'+
+			                            '</div>'+
+			                            '<div class="doc-time" name="sfrq">' + res.data[i].sfrq + '</div>'+
+			                        '</div>'+
+			                    '</li>'
+            				);
+            				var userAgent = navigator.userAgent;
+            				var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                            reIE.test(userAgent);
+                            var fIEVersion = parseFloat(RegExp["$1"]);
+            				if (fIEVersion == 7) {
+            					$(".docLi-cont").css ({
+                		            width: $(".leftCard").width() - 80 + 'px'
+                		        });
+            				} else {
+            					$(".docLi-cont").css ({
+                		            width: $(".leftCard").width() - 80 + 'px'
+                		        });
+            				}
+            			}
+            			getDetail(res.data[0].id);
+            			$("#listUl").find(".docLi").eq(0).addClass("liact");
+            		} else {
+            			$(".nodata").eq(0).css('display', 'block');
+            		}            	
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            }
+        });
+	}
+	$("#listUl").on("click", ".docLi", function () {
+		$("#listUl").find(".docLi").removeClass("liact");
+		$(this).addClass("liact");
+		var ids = $(this).attr("ids");
+		getDetail(ids);
+	})
+	function getDetail (ids) {
+		var jsonParam = new Object();
+		jsonParam.id = ids;
+		var authorCookie = getCookie("author");
+		var detailArr = [
+			'sfrq', 'sffsName', 'lossName', 'deathrq', 
+			'deathName', 'wxx', 'mqzzName', 'zzlName',
+			'smqkName', 'ysqkName', 'grshllName', 'jwldName',
+			'scldjgzName', 'xxnlName', 'shrjjwName',
+			'qdzs', 'zs', 'zh', 'qtwhxw', 'zshang', 'zsws', 
+			'gsqkName', 'zyqkName', 'sysjcName', 'fyycxName',
+			'ywblfyName', 'zlxgName', 'sfzdName', 'zzyy',
+			'jgjks', 'kfcsName', 'sfflName', 'xcsfrq'
+		];
+		$("#muqian tbody").html("");
+		$("#zhidao tbody").html("");
+		$.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/follow/getJsb',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (res) {
+            	if(res.retCode == 0){
+            		for (var key in res.data) {
+                		if (res.data[key] == null || res.data[key] == '') {
+                			res.data[key] = '无数据';
+                		}
+                	}
+					for (var i = 0; i < detailArr.length; i++) {
+						var zang = (detailArr[i] + "").replace(/\d+/g,'');
+						$("#"+detailArr[i]).html(res.data[zang]);
+					} 
+					if (res.data.mzydcs == '无数据' && res.data.mcydsj == '无数据') {
+						$("#mzydcs").html('无数据');
+						$("#mcydsj").css('display','none');
+					} else {
+						$("#mcydsj").css('display','inline');
+						$("#mzydcs").html(res.data.mzydcs == '无数据' ? '' : res.data.mzydcs + '次/周');
+						$("#mcydsj").html(res.data.mcydsj == '无数据' ? '' : res.data.mcydsj + '分钟/次');
+						console.log(res.data.mcydsj)
+					}
+					var muqian = ['ywmc1','ywmc2','ywmc3'];
+					for (var j = 0; j < muqian.length; j++) {
+						if (res.data[muqian[j]] != '无数据') {
+							$("#muqian tbody").append('<tr>' +
+				                    '<td>' + res.data[muqian[j]] + '</td>' +
+				                    '<td>' + res.data[muqian[j] + 'mg'] + '</td>' +
+				                    '<td>' + res.data[muqian[j] + 'ci'] + '</td></tr>');
+						}
+					}
+					if ($("#muqian tbody").html() == '') {
+						$('.table-nodata').eq(0).css('display', 'block');
+					} else {
+						$('.table-nodata').eq(0).css('display', 'none');
+					}
+					var zhidao = ['yyzd1','yyzd2','yyzd3'];
+					for (var k = 0; k < zhidao.length; k++) {
+						if (res.data[zhidao[k]] != '无数据') {
+							$("#zhidao tbody").append('<tr>' +
+				                    '<td>' + res.data[zhidao[k]] + '</td>' +
+				                    '<td>' + res.data[zhidao[k].substring(0,4) + 'yf' + (k + 1)] + '</td>' +
+				                    '<td>' + res.data[zhidao[k].substring(0,4) + 'yl' + (k + 1)] + '</td></tr>');
+						}
+					}
+					if ($("#zhidao tbody").html() == '') {
+						$('.table-nodata').eq(1).css('display', 'block');
+					} else {
+						$('.table-nodata').eq(1).css('display', 'none');
+					}
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            }
+        });
+	}
+</script>
+</html>

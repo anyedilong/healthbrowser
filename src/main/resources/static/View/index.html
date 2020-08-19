@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>居民健康档案浏览器信息系统</title>
+    <link rel="stylesheet" href="../css/mainPageCss.css">
+    <link rel="stylesheet" href="../img/iconfont/iconfont.css">
+    <script src="../js/jquery-1.8.0.js"></script>
+    <script src="../js/jquery.util.js"></script>
+    <script src="../js/loginValidate.js"></script>
+    <script src="../js/json2.js"></script>
+    <script src="../img/iconfont/iconfont.js"></script>
+    <style>
+    	.leftbox {
+    		float: left; padding: 20px;
+    		height: 100%;    		
+    	}
+    	.leftbox label {display:block;}
+    	.rightbox {
+    		float: right;
+    		height: 100%;
+    	}
+    	iframe {
+    		border: none;
+    	}
+    	#boxIframe {
+		  width: 100%;height: 100%;
+		}
+    </style>
+</head>
+<body>
+	<div>
+		<div class="leftbox">
+			<div>模拟系统</div>
+			<div>
+				<label for="sfzh">身份证号</label>
+				<input type="text" id="sfzh"/>
+			</div>		
+			<div>
+				<input id="searchBtn" type="button" value="查询"/>
+			</div>
+		</div>
+		<div class="rightbox">
+			<iframe id="boxIframe" allowTransparency="true" frameborder="no"
+                        border="0" src=""></iframe>
+		</div>
+	</div>
+</body>
+<script>
+	$(function () {
+	    var pageHeight = $(window).height();
+	    var pageWidth = $(window).width();
+	    function divResize () {
+	        pageHeight = $(window).height();
+	        pageWidth = $(window).width();
+	        $(".leftbox").css({
+	        	height: (pageHeight - 40) + 'px',
+	        	width: 260 + 'px'
+	        });
+	        $(".rightbox").css({
+	        	height: pageHeight + 'px',
+	        	width: (pageWidth - 300) + 'px'
+        	});	        
+	    }
+	    divResize();
+	    $(window).resize(function(){
+	        divResize();
+	    });
+	    initPage();
+	})
+	var url = '';
+	function initPage() {
+		var jsonParam = new Object();
+	    jsonParam.doctorCode = "75";
+	    jsonParam.doctorName = "王艳玲";
+	    $.ajax({
+	        type: 'POST',
+	        dataType: "json",
+	        async: false,
+	        contentType: 'application/json',
+	        url: 'http://demo.sdboletong.com:8098/api/login/healthBrowser/index',
+	        data: JSON.stringify(jsonParam),
+	        beforeSend: function (XMLHttpRequest) {
+	        	XMLHttpRequest.setRequestHeader("orgId", "a9211734e03d47e9a6968ddca24e9c06");
+	        	XMLHttpRequest.setRequestHeader("authCode", "E1A477ED046549AA9A9D5FFE1EFA13C1");
+	        },
+	        success: function (resultMsg) {
+	        	if(resultMsg.retCode == 0){
+	        		url = resultMsg.data;
+	        	}
+	        },
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        	console.log(errorThrown);
+	        }
+	    });
+	}
+	$("#searchBtn").click(function () {
+		var sfzh = $("#sfzh").val();
+		$('#boxIframe').attr('src', url + '&sfzh=' + sfzh);
+	});
+</script>
+</html>

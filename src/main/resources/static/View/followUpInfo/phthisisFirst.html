@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <style>
+		.pageBox {position: relative;}
+		.wait {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 20px;
+			line-height: 150px; text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 18px; 
+			display:none;
+			text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata img {
+			display:block; margin: 50px auto;
+			width: auto;height:65%;
+		} 
+	</style>
+</head>
+<body>
+<div class="pageBox">
+	<div class="wait">
+		请稍等...
+	</div> 
+	<div class="nodata">
+		<img src="../../img/img_zwsj.png"/>
+		<div>暂无数据</div>
+	</div>
+    <div class="pageCont">
+        <div class="leftCard">
+            <ul class="docUl" id="listUl"></ul>
+        </div>
+        <div class="rightCard">
+            <div class="cardTit">肺结核患者首次入户随访记录表</div>
+            <ul class="consUl">
+                <li class="consLi">
+                    <div class="cons-label">随访日期</div>
+                    <div class="cons-txt" id="sfsj" name="sfsj"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">随访方式</div>
+                    <div class="cons-txt" id="sffsName" name="sffsName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">患者类型</div>
+                    <div class="cons-txt" id="hzlxName" name="hzlxName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">痰菌情况</div>
+                    <div class="cons-txt" id="tjqkName" name="tjqkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">耐药情况</div>
+                    <div class="cons-txt" id="nyqkName" name="nyqkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">症状及体征</div>
+                    <div class="cons-txt" id="zzjtzName" name="zzjtzName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">化疗方案</div>
+                    <div class="cons-txt" id="hlfa" name="hlfa"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">用药 用法</div>
+                    <div class="cons-txt" id="fyyfjcfName" name="fyyfjcfName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">药品剂型</div>
+                    <div class="cons-txt" id="ypjxName" name="ypjxName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">督导人员</div>
+                    <div class="cons-txt" id="ddryName" name="ddryName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">单独的居室</div>
+                    <div class="cons-txt" id="ddjsName" name="ddjsName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">通风情况</div>
+                    <div class="cons-txt" id="tfqkName" name="tfqkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">吸烟(支/天)</div>
+                    <div class="cons-txt" id="xyl" name="xyl"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">饮酒(两/天)</div>
+                    <div class="cons-txt" id="yjl" name="yjl"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">取药地点、时间</div>
+                    <div class="cons-txt">
+                        <span id="qydd" name="qydd"></span>/
+                        <span id="qysj" name="qysj"></span>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">服药记录卡的填写</div>
+                    <div class="cons-txt" id="fyjlkName" name="fyjlkName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">服药方法及药品存放</div>
+                    <div class="cons-txt" id="fyyfjcfName1" name="fyyfjcfName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">肺结核治疗疗程</div>
+                    <div class="cons-txt" id="zllcName" name="zllcName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">不规律服药危害</div>
+                    <div class="cons-txt" id="fywhName" name="fywhName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">服药后不良反应及处理</div>
+                    <div class="cons-txt" id="blfyjclName" name="blfyjclName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">治疗期间复诊查痰</div>
+                    <div class="cons-txt" id="fzctName" name="fzctName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">外出期间如何坚持服药</div>
+                    <div class="cons-txt" id="jcfyName" name="jcfyName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">生活习惯及注意事项</div>
+                    <div class="cons-txt" id="sfxgName" name="sfxgName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">密切接触者检查</div>
+                    <div class="cons-txt" id="jczjcName" name="jczjcName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">随访照片</div>
+                    <div class="cons-txt">
+                        <div class="consPic">
+                            <div><img src="../../img/noload.png"></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">医生签字</div>
+                    <div class="cons-txt">
+                        <div class="consQianm">
+                            <div id="ys" name="ys">医生未上传手写签名</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">下次随访日期</div>
+                    <div class="cons-txt" id="xcsfsj" name="xcsfsj"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/resizeDiv.js"></script>
+<script>
+	$(function () {
+		//查询显示肺结核首次的列表
+		getDataList();
+	})
+	//查询显示显示肺结核首次的列表
+	function getDataList(){
+		var jsonParam = new Object();
+        jsonParam.jmId = parent.document.getElementById('archiveId').value;
+        var authorCookie = getCookie("author");
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/follow/getFjhRhList',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (res) {
+            	if(res.retCode == 0){  
+            		$(".wait").eq(0).css('display', 'none');
+            		$("#listUl").html("");
+            		if (res.data != '{}' && res.data.length > 0) {
+            			for(var i = 0; i < res.data.length; i++){
+            				for (var key in res.data[i]) {
+                        		if (res.data[i][key] == null || res.data[i][key] == '') {
+                        			res.data[i][key] = '无数据';
+                        		}
+                        	}
+            				$("#listUl").append(
+            					'<li class="docLi" ids="' + res.data[i].id + '">'+
+			                        '<div class="docLi-icon">'+
+			                            '<div><i class="radius"></i><p>肺</p></div>'+
+			                        '</div>'+
+			                        '<div class="docLi-cont">'+
+			                            '<div class="doc-cont">'+
+			                                '<div>'+
+			                                    '<span>随访医生</span>&nbsp;'+
+			                                    '<span name="sfysName">' + (res.data[i].sfysName == '无数据' ? '': res.data[i].sfysName) + '</span>'+
+			                                '</div>'+
+			                                '<div class="doc-cont-rem" style="margin-top: 5px;">'+
+			                                    '<span>随访方式</span>&nbsp;'+
+			                                    '<span name="sffsName">' + res.data[i].sffsName + '</span>'+
+			                                '</div>'+
+			                            '</div>'+
+			                            '<div class="doc-time" name="sfrq">' + res.data[i].sfrq + '</div>'+
+			                        '</div>'+
+			                    '</li>'
+            				);
+            				var userAgent = navigator.userAgent;
+            				var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                            reIE.test(userAgent);
+                            var fIEVersion = parseFloat(RegExp["$1"]);
+            				if (fIEVersion == 7) {
+            					$(".docLi-cont").css ({
+                		            width: $(".leftCard").width() - 80 + 'px'
+                		        });
+            				} else {
+            					$(".docLi-cont").css ({
+                		            width: $(".leftCard").width() - 80 + 'px'
+                		        });
+            				}
+            			}
+            			getDetail (res.data[0].id);
+            			$("#listUl").find(".docLi").eq(0).addClass("liact");
+            		} else {
+            			$(".nodata").eq(0).css('display', 'block');
+            		}             	
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            }
+        });
+	}
+	$("#listUl").on("click", ".docLi", function () {
+		$("#listUl").find(".docLi").removeClass("liact");
+		$(this).addClass("liact");
+		var ids = $(this).attr("ids");
+		getDetail(ids);
+	})
+	function getDetail (ids) {
+		var jsonParam = new Object();
+		jsonParam.id = ids;
+		var authorCookie = getCookie("author");
+		var detailArr = [
+			'sfsj', 'sffsName', 'hzlxName', 'tjqkName', 
+			'nyqkName', 'zzjtzName', 'hlfa', 'fyyfjcfName', 
+			'ypjxName', 'ddryName', 'ddjsName', 'tfqkName', 'xyl', 
+			'yjl', 'qydd', 'qysj', 'fyjlkName', 'fyyfjcfName1', 
+			'zllcName', 'fywhName', 'blfyjclName', 'fzctName', 
+			'jcfyName', 'sfxgName', 'jczjcName', 'xcsfsj'
+		];
+		$("#yaowutable tbody").html("");
+		$.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/follow/getFjhRh',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (res) {
+            	if(res.retCode == 0){
+            		for (var key in res.data) {
+                		if (res.data[key] == null || res.data[key] == '') {
+                			res.data[key] = '无数据';
+                		}
+                	}
+					for (var i = 0; i < detailArr.length; i++) {
+						var zang = (detailArr[i] + "").replace(/\d+/g,'');
+						$("#"+detailArr[i]).html(res.data[zang]);
+					} 
+					if (res.data.mzydcs == '无数据' && res.data.mcydsj == '无数据') {
+						$("#mzydcs").html('无数据');
+						$("#mcydsj").css('display','none');
+					} else {
+						$("#mcydsj").css('display','inline');
+						$("#mzydcs").html(res.data.mzydcs == '无数据' ? '' : res.data.mzydcs + '次/周');
+						$("#mcydsj").html(res.data.mcydsj == '无数据' ? '' : res.data.mcydsj + '分钟/次');
+						console.log(res.data.mcydsj)
+					}
+					var yaowu = ['ywmc1','ywmc2','ywmc3'];
+					for (var j = 0; j < yaowu.length; j++) {
+						if (res.data[yaowu[j]] != '无数据') {
+							$("#yaowutable tbody").append('<tr>' +
+				                    '<td>' + res.data[yaowu[j]] + '</td>' +
+				                    '<td>' + res.data[yaowu[j] + 'mg'] + '</td>' +
+				                    '<td>' + res.data[yaowu[j] + 'ci'] + '</td></tr>');
+						}
+					}
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            }
+        });
+	}
+</script>
+</html>

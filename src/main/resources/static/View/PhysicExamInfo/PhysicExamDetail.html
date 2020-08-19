@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/residentBasicInfo/residentBasicInfo.css">
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <style lang="scss">
+        .pageTab li {
+            width: auto; padding: 0 10px;
+            min-width: auto;
+        }
+        .pageTab li.litabact:after {
+			content: '';
+			position: absolute;
+			width: 56%;
+			height: 4px;
+			border-radius: 2px;
+			bottom: 3px;
+			left: 50%;
+			margin-left: -28%;
+			background: #503BDE; 
+		}
+        .span-label {
+            width: 200px !important;
+        }
+        .fuzhu .span-label {
+            width: 300px !important;
+        }
+        .zhuyuanTab {
+            height: 40px; margin-bottom: 20px;
+        }
+        .zhuyuanTab li {
+            float: left; height: 40px;
+            line-height: 40px; padding: 0 10px;
+            cursor: pointer;
+        }
+        .zhuyuanTab .liact {
+            color: #503BDE; position: relative;
+        }
+        .zhuyuanTab .liact:after {
+            content: ''; position: absolute;
+            width: 40px; height: 4px; border-radius: 2px;
+            bottom: 5px; left: 50%; margin-left: -20px;
+            background: #503BDE;
+        }
+        .zhuyuanTable .tableBox {display: none;}
+        .actTable {display: block !important;}
+        .table-nodata{
+    		line-height: 40px;
+    		text-align: center;
+    		color: #888888;
+    		display: none;
+    		font-size: 14px;
+    		border-bottom: 1px solid #EBEEF5;
+    	}
+    	.my-table tr th {
+    	 	border-bottom: 1px solid #EBEEF5;
+    	}
+    	 .my-table tr td {
+  			border-bottom: 1px solid #f3f3fb;
+  			color: #939192; 
+  		}
+  		.jiankangpingjia .my-table tr td {
+  			color: #000 !important; 
+  		}
+  		.weixiantizheng .span-label {
+  			width:auto !important;
+  		}
+    </style>
+</head>
+<body>
+    <div class="pageBox">
+        <ul class="pageTab">
+            <li class="backPage"><i class="iconfont">&#xe608;</i></li>
+            <li class="litab litabact"><i class="underI"></i>基本信息</li>
+            <li class="litab"><i class="underI"></i>生活方式</li>
+            <li class="litab"><i class="underI"></i>脏器功能</li>
+            <li class="litab"><i class="underI"></i>查体</li>
+            <li class="litab"><i class="underI"></i>辅助检查</li>
+            <li class="litab"><i class="underI"></i>主要问题</li>
+            <li class="litab"><i class="underI"></i>住院治疗情况</li>
+            <li class="litab"><i class="underI"></i>用药情况</li>
+            <li class="litab"><i class="underI"></i>预防接种史</li>
+            <li class="litab"><i class="underI"></i>健康评价</li>
+            <li class="litab"><i class="underI"></i>健康指导</li>
+        </ul>
+        <div class="pageCont">
+            <ul class="contUl">
+                <li class="contLi actCont jibenxinxi" mload="true">
+                    <!--基本信息-->
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">编号</div>
+                            <div id="tjbh" name="tjbh"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">体检日期</div>
+                            <div id="jcrq" name="jcrq"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">责任医生</div>
+                            <div id="ys" name="ys"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">症状</div>
+                            <div id="zzText" name="zzText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">体温(℃)</div>
+                            <div id="tw" name="tw"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">脉率(次/分钟)</div>
+                            <div id="ml" name="ml"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">呼吸频率(次/分钟)</div>
+                            <div id="xl" name="xl"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">左侧血压(mmHg)</div>
+                            <div>
+                                <span id="zcxy" name="zcxy"></span>/
+                                <span id="zgd" name="zgd"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">右侧血压(mmHg)</div>
+                            <div>
+                                <span id="ycxy" name="ycxy"></span>/
+                                <span id="ygd" name="ygd"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">身高(cm)</div>
+                            <div id="sg" name="sg"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">体重(kg)</div>
+                            <div id="tz" name="tz"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">腰围(cm)</div>
+                            <div id="yw" name="yw"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">体质指数(kg/m<sup>2</sup>)</div>
+                            <div id="bmi" name="bmi"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">老年人健康评估</div>
+                            <div id="lnrjkzkText" name="lnrjkzkText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">老年人自理能力评估</div>
+                            <div id="lnrzlnlpgText" name="lnrzlnlpgText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">老年人认知功能</div>
+                            <div id="lnrrzgnText" name="lnrrzgnText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">老年人情感状态</div>
+                            <div id="lnrqgztText" name="lnrqgztText"></div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi shenghuofangshi">
+                    <!--生活方式-->
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">体育锻炼</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">锻炼频率</span>
+                                    <span id="dlplText" name="dlplText"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">每次锻炼时间(分钟/次)</span>
+                                    <span id="mcdlsj" name="mcdlsj"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">坚持锻炼时间(年)</span>
+                                    <span id="jcdlsj" name="jcdlsj"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">锻炼方式</span>
+                                    <span id="qtdlfs" name="qtdlfs"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">饮食习惯</div>
+                            <div id="ysxgText" name="ysxgText">ysxgText</div>
+                        </li>
+                        <li>
+                            <div class="liLabel">吸烟情况</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">吸烟状况</span>
+                                    <span id="xyqkText" name="xyqkText"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">日吸烟量(支/天)</span>
+                                    <span id="rxyl" name="rxyl"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">开始吸烟年龄</span>
+                                    <span id="ksxynl" name="ksxynl"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">戒烟年龄</span>
+                                    <span id="jynl" name="jynl"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">饮酒情况</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">饮酒频率</span>
+                                    <span id="yjplText" name="yjplText"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">日饮酒量(两/天)</span>
+                                    <span id="ryjl" name="ryjl"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">是否戒酒</span>
+                                    <span id="sfjjText" name="sfjjText"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">戒酒年龄</span>
+                                    <span id="jjnl" name="jjnl"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">开始饮酒年龄</span>
+                                    <span id="ksyjnl" name="ksyjnl"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">近一年是否曾醉酒</span>
+                                    <span id="jynsfzjText" name="jynsfzjText"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">饮酒种类</span>
+                                    <span id="yjzlText" name="yjzlText"></span>
+                                    <span id="qtyjzl" name="qtyjzl"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">职业病危害因素接触史</div>
+                            <div id="zybwhysjcsText" name="zybwhysjcsText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">工种</div>
+                            <div id="gzlx" name="gzlx"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">从业时间(年)</div>
+                            <div id="gzsj" name="gzsj"></div>
+                        </li>
+                        <li class="fanghucuoshi">
+                            <div class="liLabel">粉尘</div>
+                            <div class="liLabel" id="fc" name="fc"></div>
+                            <div class="liLabel">防护措施</div>
+                            <div>
+                                <span id="fcfhcsText" name="fcfhcsText"></span>
+                                <span id="fcfhcsms" name="fcfhcsms"></span>
+                            </div>
+                        </li>
+                        <li class="fanghucuoshi">
+                            <div class="liLabel">放射物质</div>
+                            <div class="liLabel" id="fsxwz" name="fsxwzfsxwzc"></div>
+                            <div class="liLabel">防护措施</div>
+                            <div>
+                                <span id="fsxbhcsText" name="fsxbhcsText"></span>
+                                <span id="fsxwzfhcsms" name="fsxwzfhcsms"></span>
+                            </div>
+                        </li>
+                        <li class="fanghucuoshi">
+                            <div class="liLabel">物理因素</div>
+                            <div class="liLabel" id="wlys" name="wlys"></div>
+                            <div class="liLabel">防护措施</div>
+                            <div>
+                                <span id="wlysdfhcsText" name="wlysdfhcsText"></span>
+                                <span id="wlysfhcs" name="wlysfhcs"></span>
+                            </div>
+                        </li>
+                        <li class="fanghucuoshi">
+                            <div class="liLabel">化学物质</div>
+                            <div class="liLabel" id="hxwz" name="hxwz"></div>
+                            <div class="liLabel">防护措施</div>
+                            <div>
+                                <span id="hxwzdfhcsText" name="hxwzdfhcsText"></span>
+                                <span id="hxwzfhcsms" name="hxwzfhcsms"></span>
+                            </div>
+                        </li>
+                        <li class="fanghucuoshi">
+                            <div class="liLabel">毒物种类其他</div>
+                            <div class="liLabel" id="other" name="other"></div>
+                            <div class="liLabel">防护措施</div>
+                            <div>
+                                <span id="qtfhcsText" name="qtfhcsText"></span>
+                                <span id="qtfhcsms" name="qtfhcsms"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi zangqigongneng">
+                    <!--脏器功能-->
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">口唇</div>
+                            <div id="kcText" name="kcText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">咽部</div>
+                            <div id="ybText" name="ybText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">齿列</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">状态</span>
+                                    <span id="clText" name="clText"></span>
+                                </div>
+                                <div id="zuoshang">
+                                    <span class="span-label">左上</span>
+                                    <span id="qucZs" name="qucZs"></span>
+                                    <span id="qcShang" name="qcShang"></span>
+                                    <span id="ycZs" name="ycZs"></span>
+                                </div>
+                                <div id="zuoxia">
+                                    <span class="span-label">左下</span>
+                                    <span id="qucZx" name="qucZx"></span>
+                                    <span id="qcZuo" name="qcZuo"></span>
+                                    <span id="ycZx" name="ycZx"></span>
+                                </div>
+                                <div id="youshang">
+                                    <span class="span-label">右上</span>
+                                    <span id="qucYs" name="qucYs"></span>
+                                    <span id="qcXia" name="qcXia"></span>
+                                    <span id="ycYs" name="ycYs"></span>
+                                </div>
+                                <div id="youxia">
+                                    <span class="span-label">右下</span>
+                                    <span id="qucYx" name="qucYx"></span>
+                                    <span id="qcYou" name="qcYou"></span>
+                                    <span id="ycYx" name="ycYx"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">左眼</div>
+                            <div id="zysl" name="zysl"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">左眼矫正视力</div>
+                            <div id="zyjzsl" name="zyjzsl"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">右眼</div>
+                            <div id="yysl" name="yysl"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">右眼矫正视力</div>
+                            <div id="yyjzsl" name="yyjzsl"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">听力</div>
+                            <div id="tlText" name="tlText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">运动功能</div>
+                            <div id="ydgnText" name="ydgnText"></div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi chati">
+                    <!--查体-->
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">眼底</div>
+                            <div>
+                                <div id="yandiText" name="yandiText"></div>
+                                <div id="yandycms" name="yandycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">皮肤</div>
+                            <div>
+                                <div id="pfText" name="pfText"></div>
+                                <div id="qtpfycms" name="qtpfycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">巩膜</div>
+                            <div>
+                                <div id="gmText" name="gmText"></div>
+                                <div id="qtgmycms" name="qtgmycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">淋巴结</div>
+                            <div>
+                                <div id="lbjText" name="lbjText"></div>
+                                <div id="qtlbjycms" name="qtlbjycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">桶状胸</div>
+                            <div id="tzxText" name="tzxText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">呼吸音</div>
+                            <div>
+                                <div id="hxyText" name="hxyText"></div>
+                                <div id="hxyms" name="hxyms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">罗音</div>
+                            <div>
+                                <div id="lyText" name="lyText"></div>
+                                <div id="lyns" name="lyns"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">心率(次/分钟)</div>
+                            <div id="xl1" name="xl"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">心律</div>
+                            <div id="xlvText" name="xlvText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">杂音</div>
+                            <div>
+                                <div id="zyText" name="zyText"></div>
+                                <div id="zyms" name="zyms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">压痛</div>
+                            <div>
+                                <div id="ytText" name="ytText"></div>
+                                <div id="ytycms" name="ytycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">包块</div>
+                            <div>
+                                <div id="bkText" name="bkText"></div>
+                                <div id="bkycms" name="bkycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">肝大</div>
+                            <div>
+                                <div id="gdText" name="gdText"></div>
+                                <div id="gdycms" name="gdycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">脾大</div>
+                            <div>
+                                <div id="pdText" name="pdText"></div>
+                                <div id="pdms" name="pdms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">移动性浊音</div>
+                            <div>
+                                <div id="ydxzyText" name="ydxzyText"></div>
+                                <div id="ydxzyms" name="ydxzyms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">下肢水肿</div>
+                            <div id="xzszText" name="xzszText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">足背动脉搏动</div>
+                            <div id="zbdmbdText" name="zbdmbdText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">肛门指诊</div>
+                            <div>
+                                <div id="gmzzText" name="gmzzText"></div>
+                                <div id="gmycms" name="gmycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">乳腺</div>
+                            <div>
+                                <div id="rxText" name="rxText"></div>
+                                <div id="rxycms" name="rxycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">外阴</div>
+                            <div>
+                                <div id="wyText" name="wyText"></div>
+                                <div id="wyycms" name="wyycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">阴道</div>
+                            <div>
+                                <div id="ydText" name="ydText"></div>
+                                <div id="ydycms" name="ydycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">宫颈</div>
+                            <div>
+                                <div id="gjText" name="gjText"></div>
+                                <div id="zgjycms" name="zgjycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">宫体</div>
+                            <div>
+                                <div id="gtText" name="gtText"></div>
+                                <div id="gtycms" name="gtycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">附件</div>
+                            <div>
+                                <div id="fjText" name="fjText"></div>
+                                <div id="fjycms" name="fjycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">查体其他</div>
+                            <div id="qt" name="qt"></div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi fuzhujiancha">
+                    <!--辅助检查-->
+                    <ul class="infoUl fuzhu">
+                        <li>
+                            <div class="liLabel">血常规</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">血红蛋白(g/L)</span>
+                                    <span id="xhdb" name="xhdb"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">白细胞(×10<sup>9</sup>/L)</span>
+                                    <span id="xbxb" name="xbxb"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">血小板(×10<sup>9</sup>/L)</span>
+                                    <span id="xxb" name="xxb"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">其他</span>
+                                    <span id="qtxx" name="qtxx"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">尿常规</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">尿蛋白</span>
+                                    <span id="kfxt" name="kfxt"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">尿糖</span>
+                                    <span id="ptt" name="ptt"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">尿酮体</span>
+                                    <span id="ntt" name="ntt"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">尿潜血</span>
+                                    <span id="nhxb" name="nhxb"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">其他</span>
+                                    <span id="qtny" name="qtny"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">空腹血糖(mmol/L)</div>
+                            <div id="kfxtz" name="kfxtz"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">尿微量白蛋白(mg/dL)</div>
+                            <div id="xy" name="xy"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">大便潜血</div>
+                            <div id="tyhxjText" name="tyhxjText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">糖化血红蛋白(%)</div>
+                            <div id="txhdb" name="txhdb"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">乙型肝炎表面抗原</div>
+                            <div id="yxgybmkyText" name="yxgybmkyText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">肝功能</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">血清谷丙转氨酶(U/L)</span>
+                                    <span id="xqgasbtszam" name="xqgasbtszam"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">血清谷草转氨酶(U/L)</span>
+                                    <span id="ggnjc" name="ggnjc"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">白蛋白(g/L)</span>
+                                    <span id="bdb" name="bdb"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">总胆红素(μmol/L)</span>
+                                    <span id="xqzdhs" name="xqzdhs"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">结合胆红素(μmol/L)</span>
+                                    <span id="jhdhs" name="jhdhs"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">肾功能</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">血清肌酐(μmol/L)</span>
+                                    <span id="xqjg" name="xqjg"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">血尿素(mmol/L)</span>
+                                    <span id="xnsd" name="xnsd"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">血钾浓度(mmol/L)</span>
+                                    <span id="qmsgms" name="qmsgms"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">血钠浓度(mmol/L)</span>
+                                    <span id="hype" name="hype"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">血脂</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span class="span-label">总胆固醇(mmol/L)</span>
+                                    <span id="tc" name="tc"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">甘油三酯(mmol/L)</span>
+                                    <span id="jzxqdb" name="jzxqdb"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">血清低密度脂蛋白胆固醇(mmol/L)</span>
+                                    <span id="ddgc" name="ddgc"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">血清高密度脂蛋白胆固醇(mmol/L)</span>
+                                    <span id="gdgc" name="gdgc"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">心电图</div>
+                            <div>
+                                <div id="xdtText" name="xdtText"></div>
+                                <div id="xdtms" name="xdtms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">胸部X线片</div>
+                            <div>
+                                <div id="xbxgText" name="xbxgText"></div>
+                                <div id="xbxgms" name="xbxgms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">腹部B超</div>
+                            <div>
+                                <div id="bchaoText" name="bchaoText"></div>
+                                <div id="bchaoms" name="bchaoms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">B超其他</div>
+                            <div>
+                                <div id="qtbcText" name="qtbcText"></div>
+                                <div id="qtbcms" name="qtbcms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">宫颈涂片</div>
+                            <div>
+                                <div id="zgjText" name="zgjText"></div>
+                                <div id="zgjycms1" name="zgjycms"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">其他</div>
+                            <div id="qt1" name="qt">qt</div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi zhuyaowenti">
+                    <!--主要问题-->
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">脑血管疾病</div>
+                            <div>
+                                <div id="nxgjbText" name="nxgjbText"></div>
+                                <div id="qtnxgjb" name="qtnxgjb"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">肾脏疾病</div>
+                            <div>
+                                <div id="szjbText" name="szjbText"></div>
+                                <div id="qtszjb" name="qtszjb"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">心脏疾病</div>
+                            <div>
+                                <div id="xzjbText" name="xzjbText"></div>
+                                <div id="qtxzjb" name="qtxzjb"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">血管疾病</div>
+                            <div>
+                                <div id="xgjbText" name="xgjbText"></div>
+                                <div id="qtxgjb" name="qtxgjb"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">眼部疾病</div>
+                            <div>
+                                <div id="ybjbText" name="ybjbText"></div>
+                                <div id="qtybjb" name="qtybjb"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">神经系统其他疾病</div>
+                            <div>
+                                <div id="sjxtjbText" name="sjxtjbText"></div>
+                                <div id="qtsjxtjb" name="qtsjxtjb"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">其他系统疾病</div>
+                            <div>
+                                <div>
+                                	<span id="qtxtjbText" name="qtxtjbText"></span>
+                                	<span id="qt2" name="qt"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi zhuyuan zhuyuanzhiliao">
+                    <!--住院治疗情况-->
+                    <ul class="zhuyuanTab">
+                        <li class="liact">住院史</li>
+                        <li>家庭病床史</li>
+                    </ul>
+                    <div class="zhuyuanTable">
+                        <div class="tableBox actTable">
+                        	<table class="my-table hov-table " id="zhuyuanshi">
+	                            <thead>
+	                                <tr>
+	                                    <th style="min-width: 100px">入院日期</th>
+	                                    <th style="min-width: 100px">出院日期</th>
+	                                    <th style="min-width: 200px">原因</th>
+	                                    <th style="min-width: 200px">医疗机构及科室名称</th>
+	                                    <th>病案号</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody></tbody>
+                        	</table>
+                        	<div class="table-nodata">暂无数据</div>
+                        </div>
+                        <div class="tableBox">
+	                        <table class="my-table hov-table" id="jiatingbingchuangshi">
+	                            <thead>
+	                                <tr>
+	                                    <th style="min-width: 100px">建床日期</th>
+	                                    <th style="min-width: 100px">撤床日期</th>
+	                                    <th style="min-width: 200px">原因</th>
+	                                    <th style="min-width: 200px">医疗机构及科室名称</th>
+	                                    <th>病案号</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody></tbody>
+	                        </table>
+	                        <div class="table-nodata">暂无数据</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="contLi yongyaoqingkuang">
+                    <!--用药情况-->
+                    <table class="my-table hov-table" id="yongyaoqingkuang">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 200px">药物名称</th>
+                                <th style="min-width: 250px">用法</th>
+                                <th style="min-width: 80px">用量</th>
+                                <th style="min-width: 100px">用药时间</th>
+                                <th>用药服从性</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="table-nodata">暂无数据</div>
+                </li>
+                <li class="contLi yufangjiezhongshi">
+                    <!--预防接种史-->
+                    <table class="my-table hov-table" id="jiezhongshi">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 200px">疫苗名称</th>
+                                <th style="min-width: 120px">接种疫苗日期</th>
+                                <th style="min-width: 400px">接种机构</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="table-nodata">暂无数据</div>
+                </li>
+                <li class="contLi jiankangpingjia">
+                    <!--健康评价-->
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">健康评价</div>
+                            <div id="sfzcText" name="sfzcText"></div>
+                        </li>
+                        <li class="pingjiatable">
+                            <table class="my-table hov-table" id="jiankangpingjia">
+                                <thead>
+                                    <tr>
+                                        <th  style="width:200px;">异常</th>
+                                        <th>内容</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi jiankangzhidao">
+                    <!--健康指导-->
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">健康指导</div>
+                            <div id="jkzdText" name="jkzdText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">危险因素控制</div>
+                            <div class="cons-txt tizheng weixiantizheng">
+                                <div style="">
+                                    <span id="wxkzText" name="wxkzText"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">目标体重:&nbsp;&nbsp;</span>
+                                    <span id="gb" name="gb"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">建议接种疫苗:&nbsp;&nbsp;</span>
+                                    <span id="zdjy" name="zdjy"></span>
+                                </div>
+                                <div>
+                                    <span class="span-label">其他:&nbsp;&nbsp;</span>
+                                    <span id="qt3" name="qt"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        var windowparent = window.parent;
+        var iframeSrc = windowparent.$('#mainIframe').attr('src');
+        var tjId = iframeSrc.split('?id=')[1];
+        // 返回list页
+        $(".backPage").click(function () {
+            windowparent.$('#mainIframe').attr('src', 'PhysicExamInfo/PhysicExamInfo.html');
+        })
+        // tab切换
+        $(".pageTab .litab").click(function () {
+            $(".pageTab .litab").removeClass("litabact");
+            $(this).addClass("litabact");
+            var ind = $(this).index();
+            $(".contLi").removeClass("actCont");
+            $(".contLi").eq(ind - 1).addClass("actCont");
+            if (ind == 2) {
+            	getShenghuoInfo();
+            } else if (ind == 3) {
+            	getZangqiInfo();
+            } else if (ind == 4) {
+            	getChatiInfo();
+            } else if (ind ==5) {
+            	getFuzhuInfo();
+            } else if (ind == 6) {
+            	getZhuyaoInfo();
+            } else if (ind == 7) {
+            	getZhuyuanInfo();
+            } else if (ind == 8) {
+            	getYongyaoInfo();
+            } else if (ind == 9) {
+            	getJiezhongInfo();
+            } else if (ind == 10 || ind == 11) {
+            	getJiankangInfo();
+            }
+        });
+        // 高度
+        var pageHeight = $(window).height();
+        function divResize () {
+            pageHeight = $(window).height();
+            $(".pageCont").css({
+                height: pageHeight - 80 + 'px'
+            });
+            $(".contUl").css ({
+                height: $(".pageCont").height() - 40 + 'px'
+            });
+            $(".infoUl>li").css ({
+                width: $(".contUl").width() - 60 + 'px'
+            });
+        }
+        divResize();
+        $(window).resize(function(){
+            divResize();
+        });
+        getJibenInfo();
+        // 基本信息
+        function getJibenInfo () {
+            var jibenArr = ['tjbh', 'jcrq', 'ys', 'zzText', 'tw', 'ml', 'xl', 'zcxy', 'zgd', 'ycxy', 'ygd', 'sg' , 'tz' , 'yw','bmi', 'lnrjkzkText', 'lnrzlnlpgText', 'lnrrzgnText', 'lnrqgztText'];
+            var jsonParam = {
+                tjId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getCheckDetail',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	for (var key in res.data) {
+                    		if (res.data[key] == null || res.data[key] == '') {
+                    			res.data[key] = '无数据';
+                    		}
+                    	}
+                    	for (var key in res.data.ybzzb) {
+                    		if (res.data.ybzzb[key] == null || res.data.ybzzb[key] == '') {
+                    			res.data.ybzzb[key] = '无数据';
+                    		}
+                    		res.data[key] = res.data.ybzzb[key];
+                    	}
+                        for (var i = 0; i < jibenArr.length; i++) {
+                        	var ids = (jibenArr[i] + "").replace(/\d+/g,'');
+                        	$("#"+jibenArr[i]).html(res.data[ids]);
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+        // 生活方式
+        function getShenghuoInfo () {
+            var shenghuoArr = [
+            	'dlplText', 'mcdlsj', 'jcdlsj', 'qtdlfs',
+            	'ysxgText', 'xyqkText', 'rxyl', 'ksxynl', 'jynl',
+            	'yjplText', 'ryjl', 'sfjjText' , 'jjnl' , 'ksyjnl','jynsfzjText', 'yjzlText', 'qtyjzl',
+            	'zybwhysjcsText', 'gzlx', 'gzsj', 'fc', 'fcfhcsText', 'fcfhcsms',
+            	'fsxwz', 'fsxbhcsText', 'fsxwzfhcsms',
+            	'wlys', 'wlysdfhcsText', 'wlysfhcs',
+            	'hxwz', 'hxwzdfhcsText', 'hxwzfhcsms',
+            	'other', 'qtfhcsText', 'qtfhcsms',
+            	];
+            var jsonParam = {
+                tjId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getShfsDetail',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	for (var key in res.data) {
+                    		if (res.data[key] == null || res.data[key] == '') {
+                    			res.data[key] = '无数据';
+                    		}
+                    	}             
+                        for (var i = 0; i < shenghuoArr.length; i++) {
+                        	var sheng = (shenghuoArr[i] + "").replace(/\d+/g,'');
+                        	$("#"+shenghuoArr[i]).html(res.data[sheng]);
+                        }
+                        $("#qtyjzl").css("display", res.data.yjzlText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#fcfhcsms").css("display", res.data.fcfhcsText.indexOf('有') > -1 ? 'block':'none');
+                        $("#fsxwzfhcsms").css("display", res.data.fsxbhcsText.indexOf('有') > -1 ? 'block':'none');
+                        $("#wlysfhcs").css("display", res.data.wlysdfhcsText.indexOf('有') > -1 ? 'block':'none');
+                        $("#hxwzfhcsms").css("display", res.data.hxwzdfhcsText.indexOf('有') > -1 ? 'block':'none');
+                        $("#qtfhcsms").css("display", res.data.qtfhcsText.indexOf('有') > -1 ? 'block':'none');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     // 脏器功能
+        function getZangqiInfo () {
+            var zangqiArr = [
+            	'kcText', 'ybText', 'clText', 'qucZs', 'qcShang', 'ycZs', 'qucZx', 'qcZuo', 'ycZx',
+            	'qucYs', 'qcXia', 'ycYs', 'qucYx', 'qcYou', 'ycYx',
+            	'zysl', 'zyjzsl', 'yysl', 'yyjzsl', 'tlText', 'ydgnText'
+            	];
+            var jsonParam = {
+                tjId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getZqgnbDetail',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	for (var key in res.data) {
+                    		if (res.data[key] == null || res.data[key] == '') {
+                    			res.data[key] = '无数据';
+                    		}
+                    	}             
+                        for (var i = 0; i < zangqiArr.length; i++) {
+                        	var zang = (zangqiArr[i] + "").replace(/\d+/g,'');
+                        	$("#"+zangqiArr[i]).html(res.data[zang]);
+                        }                       
+                        $("#zuoshang").css("display", (res.data.clText.indexOf('正常') < 0 && res.data.clText != '无数据') ? 'block':'none');    
+                        $("#zuoxia").css("display", (res.data.clText.indexOf('正常') < 0 && res.data.clText != '无数据') ? 'block':'none');    
+                        $("#youshang").css("display", (res.data.clText.indexOf('正常') < 0 && res.data.clText != '无数据') ? 'block':'none');    
+                        $("#youxia").css("display", (res.data.clText.indexOf('正常') < 0 && res.data.clText != '无数据') ? 'block':'none');    
+                      	//左上
+                        $("#qucZs").css("display", res.data.clText.indexOf('龋齿') > -1 ? 'inline':'none');
+                        $("#qucZs").html('龋齿:' + res.data.qucZs);
+                        $("#qcShang").css("display", res.data.clText.indexOf('缺齿') > -1 ? 'inline':'none');
+                        $("#qcShang").html('缺齿:' + res.data.qcShang);
+                        $("#ycZs").css("display", res.data.clText.indexOf('义齿') > -1 ? 'inline':'none');
+                        $("#ycZs").html('义齿:' + res.data.ycZs);
+                        //左下
+                        $("#qucZx").css("display", res.data.clText.indexOf('龋齿') > -1 ? 'inline':'none');
+                        $("#qucZx").html('龋齿:' + res.data.qucZx);
+                        $("#qcZuo").css("display", res.data.clText.indexOf('缺齿') > -1 ? 'inline':'none');
+                        $("#qcZuo").html('缺齿:' + res.data.qcZuo);
+                        $("#ycZx").css("display", res.data.clText.indexOf('义齿') > -1 ? 'inline':'none');
+                        $("#ycZx").html('义齿:' + res.data.ycZx);
+                        //右上
+                        $("#qucYs").css("display", res.data.clText.indexOf('龋齿') > -1 ? 'inline':'none');
+                        $("#qucYs").html('龋齿:' + res.data.qucYs);
+                        $("#qcXia").css("display", res.data.clText.indexOf('缺齿') > -1 ? 'inline':'none');
+                        $("#qcXia").html('缺齿:' + res.data.qcXia);
+                        $("#ycYs").css("display", res.data.clText.indexOf('义齿') > -1 ? 'inline':'none');
+                        $("#ycYs").html('义齿:' + res.data.ycYs);
+                        //右下
+                        $("#qucYx").css("display", res.data.clText.indexOf('龋齿') > -1 ? 'inline':'none');
+                        $("#qucYx").html('龋齿:' + res.data.qucYx);
+                        $("#qcYou").css("display", res.data.clText.indexOf('缺齿') > -1 ? 'inline':'none');
+                        $("#qcYou").html('缺齿:' + res.data.qcYou);
+                        $("#ycYx").css("display", res.data.clText.indexOf('义齿') > -1 ? 'inline':'none');
+                        $("#ycYx").html('义齿:' + res.data.ycYx);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     
+     // 查体
+        function getChatiInfo () {
+            var chatiArr = [
+            		'yandiText', 'yandycms', 'pfText', 'qtpfycms', 'gmText', 'qtgmycms',
+            		'lbjText', 'qtlbjycms', 'tzxText', 'hxyText', 'hxyms', 'lyText', 'lyns',
+            		'xl1', 'xlvText', 'zyText', 'zyms', 'ytText', 'ytycms', 'bkText', 'bkycms',
+            		'gdText', 'gdycms', 'pdText', 'pdms', 'ydxzyText', 'ydxzyms', 'xzszText',
+            		'zbdmbdText', 'gmzzText', 'gmycms', 'rxText', 'rxycms', 'wyText', 'wyycms',
+            		'ydText', 'ydycms', 'gjText', 'zgjycms', 'gtText', 'gtycms', 'fjText', 'fjycms', 'qt'
+            	];
+            var jsonParam = {
+                tjId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getJkjcDetail',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	for (var key in res.data) {
+                    		if (res.data[key] == null || res.data[key] == '') {
+                    			res.data[key] = '无数据';
+                    		}
+                    	}             
+                        for (var i = 0; i < chatiArr.length; i++) {
+                        	var cha = (chatiArr[i] + "").replace(/\d+/g,'');
+                        	$("#"+chatiArr[i]).html(res.data[cha]);
+                        }
+                        $("#yandycms").css("display", res.data.yandiText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#qtpfycms").css("display", res.data.pfText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#qtgmycms").css("display", res.data.gmText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#qtlbjycms").css("display", res.data.lbjText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#hxyms").css("display", res.data.hxyText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#lyns").css("display", res.data.lyText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#zyms").css("display", res.data.zyText.indexOf('有') > -1 ? 'block':'none');
+                        $("#ytycms").css("display", res.data.ytText.indexOf('有') > -1 ? 'block':'none');
+                        $("#bkycms").css("display", res.data.bkText.indexOf('有') > -1 ? 'block':'none');
+                        $("#gdycms").css("display", res.data.gdText.indexOf('有') > -1 ? 'block':'none');
+                        $("#pdms").css("display", res.data.pdText.indexOf('有') > -1 ? 'block':'none');
+                        $("#ydxzyms").css("display", res.data.ydxzyText.indexOf('有') > -1 ? 'block':'none');
+                        $("#gmycms").css("display", res.data.gmzzText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#rxycms").css("display", res.data.rxText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#wyycms").css("display", res.data.wyText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#ydycms").css("display", res.data.ydText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#zgjycms").css("display", res.data.gjText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#gtycms").css("display", res.data.gtText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#fjycms").css("display", res.data.fjText.indexOf('异常') > -1 ? 'block':'none');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     // 辅助检查
+        function getFuzhuInfo () {
+            var fuzhuArr = [
+            		'xhdb', 'xbxb', 'xxb', 'qtxx', 'kfxt', 'ptt', 'ntt', 'nhxb', 'qtny',
+            		'kfxtz', 'xy', 'tyhxjText', 'txhdb', 'yxgybmkyText', 
+            		'xqgasbtszam', 'ggnjc', 'bdb', 'xqzdhs', 'jhdhs',	
+            		'xqjg', 'xnsd', 'qmsgms', 'hype', 
+            		'tc', 'jzxqdb', 'ddgc', 'gdgc', 'xdtText', 'xdtms',
+            		'xbxgText', 'xbxgms', 'bchaoText', 'bchaoms', 'qtbcText', 'qtbcms',
+            		'zgjText', 'zgjycms1', 'qt1'
+            	];
+            var jsonParam = {
+                tjId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getXzjcjlbDetail',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	for (var key in res.data) {
+                    		if (res.data[key] == null || res.data[key] == '') {
+                    			res.data[key] = '无数据';
+                    		}
+                    	}             
+                        for (var i = 0; i < fuzhuArr.length; i++) {
+                        	var fu = (fuzhuArr[i] + "").replace(/\d+/g,'');
+                        	$("#"+fuzhuArr[i]).html(res.data[fu]);
+                        }
+                        $("#xdtms").css("display", res.data.xdtText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#xbxgms").css("display", res.data.xbxgText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#bchaoms").css("display", res.data.bchaoText.indexOf('异常') > -1 ? 'block':'none');
+                        $("#qtbcms").css("display", res.data.qtbcText.indexOf('异常') > -1 ? 'block':'none');                         
+                        $("#zgjycms1").css("display", res.data.zgjText.indexOf('异常') > -1 ? 'block':'none');   
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     // 主要问题
+        function getZhuyaoInfo () {
+            var zhuyaoArr = [
+            		'nxgjbText','qtnxgjb',
+            		'szjbText', 'qtszjb', 'xzjbText', 'qtxzjb', 
+            		'xgjbText', 'qtxgjb', 'ybjbText', 'qtybjb',
+            		'sjxtjbText', 'qtsjxtjb', 'qtxtjbText', 'qt2'
+            	];
+            var jsonParam = {
+                tjId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getJkwtbDetail',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	for (var key in res.data) {
+                    		if (res.data[key] == null || res.data[key] == '') {
+                    			res.data[key] = '无数据';
+                    		}
+                    	}             
+                        for (var i = 0; i < zhuyaoArr.length; i++) {
+                        	var fu = (zhuyaoArr[i] + "").replace(/\d+/g,'');
+                        	$("#"+zhuyaoArr[i]).html(res.data[fu]);
+                        }
+                        $("#qt2").html(':&nbsp;&nbsp;' + res.data.qt)
+                        $("#qtnxgjb").css("display", res.data.nxgjbText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#qtszjb").css("display", res.data.szjbText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#qtxzjb").css("display", res.data.xzjbText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#qtxgjb").css("display", res.data.xgjbText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#qtybjb").css("display", res.data.ybjbText.indexOf('其他') > -1 ? 'block':'none');
+                        $("#qtsjxtjb").css("display", res.data.sjxtjbText.indexOf('有') > -1 ? 'block':'none');
+                        $("#qt2").css("display", res.data.qtxtjbText.indexOf('有') > -1 ? 'inline':'none');                       
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     // 住院治疗情况
+        function getZhuyuanInfo () {           
+            var jsonParam = {
+                tjId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getZysList',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	var arrs = res.data;
+                    	$('#zhuyuanshi tbody').html('');
+                        for(var i = 0; i < arrs.length; i++) {
+                            $('#zhuyuanshi tbody').append('<tr>' +
+                                '<td>' + arrs[i].zysj + '</td>' +
+                                '<td>' + arrs[i].cyrq + '</td>' +
+                                '<td>' + arrs[i].zyyy + '</td>' +
+                                '<td>' + arrs[i].yymc + '</td>' +
+                                '<td>' + arrs[i].fbcs + '</td></tr>');
+                        }
+                        if ($('#zhuyuanshi tbody').html() == '') {
+                        	$('.table-nodata').eq(0).css('display', 'block');
+                        } else {
+                        	$('.table-nodata').eq(0).css('display', 'none');
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getJzbcsList',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	var arrs = res.data;
+                    	$('#jiatingbingchuangshi tbody').html('');
+                        for(var i = 0; i < arrs.length; i++) {
+                            $('#jiatingbingchuangshi tbody').append('<tr>' +
+                                '<td>' + arrs[i].zyrq + '</td>' +
+                                '<td>' + arrs[i].cyrq + '</td>' +
+                                '<td>' + arrs[i].fbyy + '</td>' +
+                                '<td>' + arrs[i].szyymc + '</td>' +
+                                '<td>' + arrs[i].bfcs + '</td></tr>');
+                        }
+                        if ($('#jiatingbingchuangshi tbody').html() == '') {
+                        	$('.table-nodata').eq(1).css('display', 'block');
+                        } else {
+                        	$('.table-nodata').eq(1).css('display', 'none');
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     	// 用药情况
+     	function getYongyaoInfo () {
+     		var jsonParam = {
+                    tjId: tjId
+                };
+			var authorCookie = getCookie("author");
+			$.ajax({
+			    type: 'POST',
+			    dataType: "json",
+			    async: false,
+			    contentType: 'application/json',
+			    url: roadPath + '/health/check/getYjjlbList',
+			    data: JSON.stringify(jsonParam),
+			    beforeSend: function (XMLHttpRequest) {
+			        XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+			    },
+			    success: function (res) {
+			        if (res.retCode == 0) {
+			        	var arrs = res.data;
+			        	$('#yongyaoqingkuang tbody').html('');
+			            for(var i = 0; i < arrs.length; i++) {
+			                $('#yongyaoqingkuang tbody').append('<tr>' +
+			                    '<td>' + arrs[i].ywmc + '</td>' +
+			                    '<td>' + arrs[i].synl + '</td>' +
+			                    '<td>' + arrs[i].yl + '</td>' +
+			                    '<td>' + arrs[i].kssj + '</td>' +
+			                    '<td>' + arrs[i].ywycxText + '</td></tr>');
+			            }
+			            if ($('#yongyaoqingkuang tbody').html() == '') {
+                        	$('.table-nodata').eq(2).css('display', 'block');
+                        } else {
+                        	$('.table-nodata').eq(2).css('display', 'none');
+                        }
+			        }
+			    },
+			    error: function (XMLHttpRequest, textStatus, errorThrown) {
+			
+			    }
+			});
+     	}
+     // 预防接种史
+     	function getJiezhongInfo () {
+     		var jsonParam = {
+                    tjId: tjId
+                };
+            var authorCookie = getCookie("author");
+			$.ajax({
+			    type: 'POST',
+			    dataType: "json",
+			    async: false,
+			    contentType: 'application/json',
+			    url: roadPath + '/health/check/getJzsList',
+			    data: JSON.stringify(jsonParam),
+			    beforeSend: function (XMLHttpRequest) {
+			        XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+			    },
+			    success: function (res) {
+			        if (res.retCode == 0) {
+			        	var arrs = res.data;
+			        	$('#jiezhongshi tbody').html('');
+			            for(var i = 0; i < arrs.length; i++) {
+			                $('#jiezhongshi tbody').append('<tr>' +
+			                    '<td>' + arrs[i].ypmc + '</td>' +
+			                    '<td>' + arrs[i].jzymrq + '</td>' +
+			                    '<td>' + arrs[i].tjdw + '</td></tr>');
+			            }
+			            if ($('#jiezhongshi tbody').html() == '') {
+                        	$('.table-nodata').eq(3).css('display', 'block');
+                        } else {
+                        	$('.table-nodata').eq(3).css('display', 'none');
+                        }
+			        }
+			    },
+			    error: function (XMLHttpRequest, textStatus, errorThrown) {
+			
+			    }
+			});
+     	}
+     // 健康评价和健康指导
+     	function getJiankangInfo () {
+     		var jiankangArr = [
+        		'sfzcText', 'jkzdText', 'wxkzText',
+        		'gb', 'zdjy', 'qt3'
+        	];
+     		var jsonParam = {
+                    tjId: tjId
+                };
+            var authorCookie = getCookie("author");
+			$.ajax({
+			    type: 'POST',
+			    dataType: "json",
+			    async: false,
+			    contentType: 'application/json',
+			    url: roadPath + '/health/check/getPgzdjlbDetail',
+			    data: JSON.stringify(jsonParam),
+			    beforeSend: function (XMLHttpRequest) {
+			        XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+			    },
+			    success: function (res) {
+			        if (res.retCode == 0) {
+			        	for (var key in res.data) {
+                    		if (res.data[key] == null || res.data[key] == '') {
+                    			res.data[key] = '无数据';
+                    		}
+                    	}             
+                        for (var i = 0; i < jiankangArr.length; i++) {
+                        	var zang = (jiankangArr[i] + "").replace(/\d+/g,'');
+                        	$("#"+jiankangArr[i]).html(res.data[zang]);
+                        } 
+                        //评价
+                        $("#jiankangpingjia").parent(".pingjiatable").css("display",res.data.sfzcText != '体检无异常' ? 'block':'none');
+                        $("#jiankangpingjia tbody").html("");
+                        var yichangArr = ['yc1', 'yc2', 'yc3', 'yc4'];
+                        for (var j = 0; j < yichangArr.length; j++) {
+                        	if (res.data[yichangArr[j]] != '无数据') {
+                        		$('#jiankangpingjia tbody').append('<tr>' +
+        			                    '<td>异常' + (j + 1) + '</td>' +
+        			                    '<td>' + res.data[yichangArr[j]] + '</td></tr>');
+                        	}
+                        }
+                        //指导
+                        $("#gb").parent().css("display",res.data.wxkzText.indexOf('减体重') > -1 ? 'block':'none');
+                        $("#zdjy").parent().css("display",res.data.wxkzText.indexOf('建议接种疫苗') > -1 ? 'block':'none');
+                        $("#qt3").parent().css("display",res.data.wxkzText.indexOf('其他') > -1 ? 'block':'none');                        
+			        }
+			    },
+			    error: function (XMLHttpRequest, textStatus, errorThrown) {
+			
+			    }
+			});
+     	}
+        // 住院tab切换
+        $(".zhuyuanTab li").click(function () {
+            $(".zhuyuanTab li").removeClass("liact");
+            $(this).addClass("liact");
+            var ind = $(this).index();
+            $(".zhuyuanTable .tableBox").removeClass("actTable");
+            $(".zhuyuanTable .tableBox").eq(ind).addClass("actTable");
+        })
+    })
+</script>
+</html>

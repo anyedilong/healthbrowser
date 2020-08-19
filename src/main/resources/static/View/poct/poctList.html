@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/residentBasicInfo/residentBasicInfo.css">
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <style>
+        .pageCont {
+            position: relative;
+        }
+
+        .wait {
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            font-size: 20px;
+            line-height: 150px;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .nodata {
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            font-size: 18px;
+            display: none;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .nodata img {
+            display: block;
+            margin: 50px auto;
+            width: auto;
+            height: 65%;
+        }
+
+        .my-table tr th {
+            border-bottom: 1px solid #f3f3fb;
+        }
+    </style>
+</head>
+<body>
+<div class="pageBox">
+    <div class="pageCont">
+
+        <div class="wait">
+            请稍等...
+        </div>
+        <div class="nodata">
+            <img src="../../img/img_zwsj.png"/>
+            <div>暂无数据</div>
+        </div>
+        <div class="pageBox" style="top:3px !important; background: #f3f3fb;">
+            <div class="pageCont">
+                <!--门诊处方-->
+                <div class="leftCard">
+                    <ul class="docUl" id="listUl1"></ul>
+                </div>
+                <div class="rightCard">
+                    <ul class="consUl">
+                        <li class="consLi">
+                            <div class="cons-label">项目组名称</div>
+                            <div class="cons-txt" id="proGroupName" name="proGroupName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">样本号</div>
+                            <div class="cons-txt" id="sampleNum" name="sampleNum"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">批号</div>
+                            <div class="cons-txt" id="ph" name="ph"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">检测结果</div>
+                            <div class="cons-txt" id="checkResult" name="checkResult"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">描述</div>
+                            <div class="cons-txt" id="proDesc" name="proDesc"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">测量值</div>
+                            <div class="cons-txt" id="checkValue" name="checkValue"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">测量时间</div>
+                            <div class="cons-txt" id="checkTime" name="checkTime"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">上报时间</div>
+                            <div class="cons-txt" id="uploadTime" name="uploadTime"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<script>
+    $(function () {
+        getChufangInfo();
+
+        function getChufangInfo() {
+            var jsonParam = {
+                residentId: parent.document.getElementById('archiveId').value
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/poct/getPoctList',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                        $(".wait").eq(1).css('display', 'none');
+                        $("#listUl1").html("");
+                        if (res.data != null && res.data !== '{}' && res.data.length > 0) {
+                            $(".wait").eq(0).css('display', 'none');
+                            for (var i = 0; i < res.data.length; i++) {
+                                for (var key in res.data[i]) {
+                                    if (res.data[i][key] == null || res.data[i][key] == '') {
+                                        res.data[i][key] = '无数据';
+                                    }
+                                }
+                                $("#listUl1").append(
+                                    '<li class="docLi" ids="' + JSON.stringify(res.data[i]).replace(/\"/g, "'") + '">' +
+                                    '<div class="docLi-icon">' +
+                                    '<div><i class="radius"></i><p>' + (i + 1) + '</p></div>' +
+                                    '</div>' +
+                                    '<div class="docLi-cont">' +
+                                    '<div class="doc-cont">' +
+                                    '<div>' +
+                                    '<span name="proName">' + res.data[i].proName + '（' + res.data[i].proDesc + '）' + '</span>' +
+                                    '</div>' +
+                                    '<div class="doc-cont-rem" style="margin-top: 5px;">' +
+                                    '<span>检验医生</span>&nbsp;&nbsp;' +
+                                    '<span name="doctorName">' + res.data[i].doctorName + '</span>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="doc-time" name="createTime">' + res.data[i].createTime + '</div>' +
+                                    '</div>' +
+                                    '</li>'
+                                );
+                                var userAgent1 = navigator.userAgent;
+                                var reIE1 = new RegExp("MSIE (\\d+\\.\\d+);");
+                                reIE1.test(userAgent1);
+                                var fIEVersion1 = parseFloat(RegExp["$1"]);
+                                if (fIEVersion1 == 7) {
+                                    $(".docLi-cont").css({
+                                        width: $(".leftCard").width() - 80 + 'px'
+                                    });
+                                } else {
+                                    $(".docLi-cont").css({
+                                        width: $(".leftCard").width() - 80 + 'px'
+                                    });
+                                }
+                            }
+                            getDetail(res.data[0]);
+                            $("#listUl1").find(".docLi").eq(0).addClass("liact");
+                        } else {
+                            var temp = $(".nodata").eq(0);
+                            $(".nodata").eq(0).css('display', 'block');
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+
+        $("#listUl1").on("click", ".docLi", function () {
+            $("#listUl1").find(".docLi").removeClass("liact");
+            $(this).addClass("liact");
+            var ids = JSON.parse($(this).attr("ids").replace(/'/g, '"'));
+            getDetail(ids);
+        });
+
+        // list详情
+        function getDetail(obj) {
+            var authorCookie = getCookie("author");
+            var jsonParam = {
+                id: obj.id
+            };
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/poct/getPoct',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                        var data = res.data;
+                        if (data != null) {
+                            $("#proGroupName").text(data.proGroupName);
+                            $("#sampleNum").text(data.sampleNum);
+                            $("#ph").text(data.ph);
+                            $("#checkResult").text(data.checkResult);
+                            $("#proDesc").text(data.proDesc);
+                            $("#checkValue").text(data.checkValue);
+                            $("#checkTime").text(data.checkTime);
+                            $("#uploadTime").text(data.uploadTime);
+
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+
+
+        }
+
+        // 高度
+        var pageHeight = $(window).height();
+
+        function divResize() {
+            pageHeight = $(window).height();
+            $(".pageCont").css({
+                height: pageHeight - 80 + 'px'
+            });
+            $(".leftCard").css({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.35 + 'px'
+            });
+            $(".rightCard").css({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.65 - 40 - 15 + 'px'
+            });
+            $(".contUl").css({
+                height: $(".pageCont").height() - 40 + 'px'
+            });
+            $(".infoUl li").css({
+                width: $(".infoUl li").width() - 40 + 'px'
+            });
+        }
+
+        divResize();
+        $(window).resize(function () {
+            divResize();
+        });
+    })
+</script>
+</html>

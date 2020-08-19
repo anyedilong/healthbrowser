@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>居民健康档案浏览器信息系统</title>
+    <link rel="stylesheet" href="../css/mainPageCss.css">
+    <link rel="stylesheet" href="../img/iconfont/iconfont.css">
+    <script src="../js/jquery-1.8.0.js"></script>
+    <script src="../js/jquery.util.js"></script>
+    <script src="../js/loginValidate.js"></script>
+    <script src="../js/json2.js"></script>
+    <script src="../img/iconfont/iconfont.js"></script>
+    <script src="../js/mainPageJS.js"></script>
+    <style>
+        .resSex,.resyears {
+            float: left;
+        }
+        .InfoBox i {
+        	font-size: 12px;
+        }
+        .nodatasign{
+		    text-align: center;
+		    font-size: 18px;
+		    color: #2c3038;
+		    display: block !important;
+		    background: rgba(255,255,255,0);
+        }
+    </style>
+</head>
+<body>
+    <div class="mainPage">
+        <div class="headBox">
+            <div class="headCont">
+                <div class="residentName">
+                    <span id="hzmc" name="hzmc"></span>的健康档案
+                </div>
+                <div class="residentInfoBox">
+                    <div class="InfoBox">
+                        <div class="resSex">
+                        	<i class="radius1"></i>
+                        	<i class="radius2"></i>
+							<p class="ptext" id="xb" name="xb"></p>
+                        </div>
+                        <div class="resyears">
+                            <div>年龄<span id="nl" name="nl"></span>岁</div>
+                            <div>
+                                <span id="zjlxText" name="zjlxText"></span>&nbsp;
+                                <span id="sfzh" name="sfzh"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="InfoBox">
+                    	<i class="iconfont">&#xe62a;</i>
+                        出生日期&nbsp;&nbsp;<span id="csrq" name="csrq"></span>
+                    </div>
+                    <div class="InfoBox">
+                    	<i class="iconfont">&#xe62a;</i>
+                        联系电话&nbsp;&nbsp;<span id="sj" name="sj"></span>
+                    </div>
+                    <div class="InfoBox" id="rqlxText">
+                    	<i class="iconfont">&#xe62a;</i>
+                        人群类型
+                    </div>
+                    <input type="hidden" id="archiveId"/>
+                    <input type="hidden" id="idCard"/>
+                </div>
+            </div>
+        </div>
+        <div class="bodyBox">
+            <div class="leftMenu">
+                <div class="menubox">
+                    <ul class="menuUl" id="healthJMMenu">
+                    </ul>
+                </div>
+            </div>
+            <div class="rightCont">
+                <iframe id="mainIframe" allowTransparency="true" frameborder="no"
+                        border="0" src=""></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

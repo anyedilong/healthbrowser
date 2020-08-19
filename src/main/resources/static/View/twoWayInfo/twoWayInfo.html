@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <script src="../../js/resizeDiv.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+</head>
+<style>
+	.pageBox {position: relative;}
+	.wait {
+		background: #fff;
+		width: 100%;height:100%;
+		font-size: 20px;
+		line-height: 150px; text-align: center;
+		position: absolute; left:0;top:0;
+		z-index: 2000;
+	}
+	.nodata {
+		background: #fff;
+		width: 100%;height:100%;
+		font-size: 18px; 
+		display:none;
+		text-align: center;
+		position: absolute; left:0;top:0;
+		z-index: 2000;
+	}
+	.nodata img {
+		display:block; margin: 50px auto;
+		width: auto;height:65%;
+	} 
+</style>
+<body>
+<div class="pageBox">
+	<div class="wait">
+		请稍等...
+	</div> 
+	<div class="nodata">
+		<img src="../../img/img_zwsj.png"/>
+		<div>暂无数据</div>
+	</div>
+    <div class="pageCont">
+        <div class="leftCard">
+            <ul class="docUl" id="twoWayList"></ul>
+        </div>
+        <div class="rightCard">
+            <div class="cardTit">双向转诊单（<span id="cardTit" name="cardTit"></span>）</div>
+            <ul class="consUl">
+                <li class="consLi">
+                    <div class="cons-label">档案编号</div>
+                    <div class="cons-txt" id="jlh" name="jlh"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">患者姓名</div>
+                    <div class="cons-txt" id="hzmc" name="hzmc"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">性别</div>
+                    <div class="cons-txt" id="xbName" name="xbName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">联系电话</div>
+                    <div class="cons-txt" id="sj" name="sj"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">家庭地址</div>
+                    <div class="cons-txt" id="jtzz" name="jtzz"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">转诊日期</div>
+                    <div class="cons-txt" id="referralTime" name="referralTime"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">转诊医院</div>
+                    <div class="cons-txt" id="referralHospital" name="referralHospital"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">转诊医生</div>
+                    <div class="cons-txt" id="referralUserName" name="referralUserName"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">接诊医院</div>
+                    <div class="cons-txt" id="receiveHospital" name="receiveHospital"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">接诊科室</div>
+                    <div class="cons-txt" id="receiveDept" name="receiveDept"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">接诊医生</div>
+                    <div class="cons-txt" id="receiveUserName2" name="receiveUserName"></div>
+                </li>
+                <li class="consLi outFile" style="display:none;">
+                    <div class="cons-label">初步印象</div>
+                    <div class="cons-txt" id="impression" name="impression"></div>
+                </li>
+                <li class="consLi outFile" style="display:none;">
+                    <div class="cons-label">主要现病史（<span id="cardTit2" name="cardTit"></span>原因）</div>
+                    <div class="cons-txt" id="yyyfName" name="yyyfName"></div>
+                </li>
+                <li class="consLi outFile" style="display:none;">
+                    <div class="cons-label">主要既往史</div>
+                    <div class="cons-txt" id="pastHistory" name="pastHistory"></div>
+                </li>
+                <li class="consLi inFile" style="display:none;">
+                    <div class="cons-label">诊断结果</div>
+                    <div class="cons-txt" id="receiveUserName3" name="receiveUserName"></div>
+                </li>
+                <li class="consLi inFile" style="display:none;">
+                    <div class="cons-label">主要检查结果（<span id="cardTit3" name="cardTit"></span>原因）</div>
+                    <div class="cons-txt" id="inspectionResult" name="yyyfName"></div>
+                </li>
+                <li class="consLi inFile" style="display:none;">
+                    <div class="cons-label">下一步治疗方案及康复建议</div>
+                    <div class="cons-txt" id="rehabilitationAdvice" name="rehabilitationAdvice"></div>
+                </li>
+                <li class="consLi">
+                    <div class="cons-label">治疗经过</div>
+                    <div class="cons-txt" id="treatmentCourse" name="treatmentCourse"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+	$(function () {
+		//查询显示双向转诊列表
+		getTwoWayList();
+		
+		$("#twoWayList").on("click", ".docLi", function () {
+			$("#twoWayList").find(".docLi").removeClass("liact");
+			$(this).addClass("liact");
+			var ids = $(this).attr("ids");
+			gettwoWayInfo(ids);
+		});
+	});
+	//查询显示双向转诊列表
+	function getTwoWayList(){
+		var jsonParam = new Object();
+		var page = new Object;
+		page.pageSize = 500;
+		page.pageNo = 1;
+		jsonParam.page = page;
+	    jsonParam.jmId = parent.document.getElementById('archiveId').value;
+	    var authorCookie = getCookie("author");
+	    $.ajax({
+	        type: 'POST',
+	        dataType: "json",
+	        async: false,
+	        contentType: 'application/json',
+	        url: roadPath + '/referral/getReferralPage',
+	        data: JSON.stringify(jsonParam),
+	        beforeSend: function (XMLHttpRequest) {
+	        	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+	        },
+	        success: function (resultMsg) {
+	        	if(resultMsg.retCode == 0){
+	        		$(".wait").eq(0).css('display', 'none');
+	        		var twoWayArr = resultMsg.data.list;
+	        		var twoWayStr = '';
+	        		if(twoWayStr != '{}' && twoWayArr.length > 0){
+	        			$("#twoWayList").html("");
+	        			//获取列表的第一个转诊的详情
+	        			gettwoWayInfo(twoWayArr[0].id);
+	        			//拼接列表
+	        			for(var i = 0; i < twoWayArr.length; i++){
+	        				twoWayStr += '<li class="docLi" ids="'+twoWayArr[i].id+'">'+
+	                            			'<div class="docLi-icon">'+
+	                        					'<div><i class="radius"></i><p>'+(twoWayArr[i].status == '2' ? '出' : '入')+'</p></div>'+
+	                    					'</div>'+
+	                    					'<div class="docLi-cont">'+
+	                        					'<div class="doc-cont">'+
+	                    							'<div>'+
+	                                					'<span>责任医生&nbsp;'+twoWayArr[i].receiveUserName+'</span>'+
+	                            					'</div>'+
+	                            					'<div class="doc-cont-rem" style="margin-top: 5px;">'+
+	                                					'<span >接诊单位&nbsp;'+twoWayArr[i].receiveHospital+'&nbsp;&nbsp;</span>'+
+	                                					'<span> 科室&nbsp;'+twoWayArr[i].receiveDept+'</span>'+
+	                            				'</div>'+
+	                            			'</div>'+
+	                        				'<div class="doc-time">'+twoWayArr[i].referralTime+'</div>'+
+	                    					'</div>'+
+	                					'</li>';
+	        			}
+	        		} else {
+	        			$(".nodata").eq(0).css('display', 'block');   
+	        		}
+	        		$("#twoWayList").append(twoWayStr);
+	        		var userAgent = navigator.userAgent;
+    				var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                    reIE.test(userAgent);
+                    var fIEVersion = parseFloat(RegExp["$1"]);
+    				if (fIEVersion == 7) {
+    					$(".docLi-cont").css ({
+        		            width: $(".leftCard").width() - 80 + 'px'
+        		        });
+    				} else {
+    					$(".docLi-cont").css ({
+        		            width: $(".leftCard").width() - 80 + 'px'
+        		        });
+    				}
+	        		$("#twoWayList").find(".docLi").eq(0).addClass("liact");
+	        	}
+	        },
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        
+	        }
+	    });
+	}
+	function gettwoWayInfo(twoWayId){
+		var jsonParam = new Object();
+	    jsonParam.id = twoWayId;
+	    var authorCookie = getCookie("author");
+	    $.ajax({
+	        type: 'POST',
+	        dataType: "json",
+	        async: false,
+	        contentType: 'application/json',
+	        url: roadPath + '/referral/getInfo',
+	        data: JSON.stringify(jsonParam),
+	        beforeSend: function (XMLHttpRequest) {
+	        	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+	        },
+	        success: function (resultMsg) {
+	        	if(resultMsg.retCode == 0){
+	        		var cardTit = (resultMsg.data.status == '1' ? '转入' : (resultMsg.data.status == '2' ? '转出' : ''));
+	        		$('#cardTit').text(cardTit);
+	        		$("#cardTit2").text(cardTit);
+	        		$("#cardTit3").text(cardTit);
+	        		$('#jlh').text($.util.isNull(resultMsg.data.customer.jlh) ? "无数据" : resultMsg.data.customer.jlh);
+	        		$('#hzmc').text($.util.isNull(resultMsg.data.customer.hzmc) ? "无数据" : resultMsg.data.customer.hzmc);
+	        		$('#xbName').text($.util.isNull(resultMsg.data.customer.xbName) ? "无数据" : resultMsg.data.customer.xbName);
+	        		$('#sj').text($.util.isNull(resultMsg.data.customer.sj) ? "无数据" : resultMsg.data.customer.sj);
+	        		$('#jtzz').text($.util.isNull(resultMsg.data.customer.jtzz) ? "无数据" : resultMsg.data.customer.jtzz);
+	        		$('#referralTime').text($.util.isNull(resultMsg.data.referralTime) ? "无数据" : resultMsg.data.referralTime);
+	        		$('#referralHospital').text($.util.isNull(resultMsg.data.referralHospital) ? "无数据" : resultMsg.data.referralHospital);
+	        		$('#referralUserName').text($.util.isNull(resultMsg.data.referralUserName) ? "无数据" : resultMsg.data.referralUserName);
+	        		$('#receiveHospital').text($.util.isNull(resultMsg.data.receiveHospital) ? "无数据" : resultMsg.data.receiveHospital);
+	        		$('#receiveDept').text($.util.isNull(resultMsg.data.receiveDept) ? "无数据" : resultMsg.data.receiveDept);
+	        		$('#receiveUserName2').text($.util.isNull(resultMsg.data.receiveUserName) ? "无数据" : resultMsg.data.receiveUserName);
+	        		$('#treatmentCourse').text($.util.isNull(resultMsg.data.treatmentCourse) ? "无数据" : resultMsg.data.treatmentCourse);
+	        		if(resultMsg.data.status == '1'){
+	        			//document.getElementById("inFile").style.display="";
+	        			//document.getElementById("outFile").style.display="none";
+	        			$(".inFile").css('display', 'block');
+	        			$(".outFile").css('display', 'none');
+	        			$("#cardTit2").text(cardTit);
+		        		$('#receiveUserName3').text($.util.isNull(resultMsg.data.receiveUserName) ? "无数据" : resultMsg.data.receiveUserName);
+		        		$('#inspectionResult').text($.util.isNull(resultMsg.data.inspectionResult) ? "无数据" : resultMsg.data.inspectionResult);
+		        		$('#rehabilitationAdvice').text($.util.isNull(resultMsg.data.rehabilitationAdvice) ? "无数据" : resultMsg.data.rehabilitationAdvice);
+		        		$('#treatmentCourse').text($.util.isNull(resultMsg.data.treatmentCourse) ? "无数据" : resultMsg.data.treatmentCourse);
+	        		}
+	        		if(resultMsg.data.status == '2'){
+	        			//document.getElementById("inFile").style.display="none";
+	        			//document.getElementById("outFile").style.display="";
+	        			$(".inFile").css('display', 'none');
+	        			$(".outFile").css('display', 'block');
+	        			$("#cardTit3").text(cardTit);
+	        			$('#impression').text($.util.isNull(resultMsg.data.impression) ? "无数据" : resultMsg.data.impression);
+		        		$('#yyyfName').text($.util.isNull(resultMsg.data.referralCause) ? "无数据" : resultMsg.data.referralCause);
+		        		$('#pastHistory').text($.util.isNull(resultMsg.data.pastHistory) ? "无数据" : resultMsg.data.pastHistory);
+	        		}
+	        	}
+	        },
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        
+	        }
+	    });
+	}
+</script>
+</html>

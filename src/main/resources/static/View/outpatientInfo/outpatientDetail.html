@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/residentBasicInfo/residentBasicInfo.css">
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+     <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <style>
+        .pageTab li {
+            width: auto; padding: 0 10px;
+            min-width: auto;
+        }
+        .span-label {
+            width: 200px !important;
+        }
+        .pageCont {position: relative;}
+		.wait {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 20px;
+			line-height: 150px; text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 18px; 
+			display:none;
+			text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata img {
+			display:block; margin: 50px auto;
+			width: auto;height:65%;
+		} 
+		.table-nodata{
+    		line-height: 40px;
+    		text-align: center;
+    		color: #888888;
+    		display: none;
+    		font-size: 14px;
+    		border-bottom: 1px solid #EBEEF5;
+    	}
+    	.my-table tr th {
+    		border-bottom: 1px solid #f3f3fb;
+    	}
+    </style>
+</head>
+<body>
+<div class="pageBox">
+    <ul class="pageTab">
+        <li class="backPage"><i class="iconfont">&#xe608;</i></li>
+        <li class="litab litabact"><i class="underI"></i>门诊病历</li>
+        <li class="litab"><i class="underI"></i>门诊处方</li>
+        <li class="litab"><i class="underI"></i>检查报告单</li>
+        <li class="litab"><i class="underI"></i>检验报告单</li>
+        <li class="litab"><i class="underI"></i>门诊诊断</li>
+    </ul>
+    <div class="pageCont">
+        <ul class="contUl">
+            <li class="contLi actCont">
+	            <div class="wait">
+					请稍等...
+				</div> 
+				<div class="nodata">
+					<img src="../../img/img_zwsj.png"/>
+					<div>暂无数据</div>
+				</div>
+                <!--门诊病历-->
+                <ul class="infoUl">
+                    <li>
+                        <div class="liLabel">医院代码</div>
+                        <div id="orgCode" name="orgCode">orgCode</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">医院名称</div>
+                        <div id="orgName" name="orgName">orgName</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">科室代码</div>
+                        <div id="depCode" name="depCode">depCode</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">科室名称</div>
+                        <div id="depName" name="depName">depName</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">病历号</div>
+                        <div id="caseNum" name="tcaseNumw">caseNum</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">身份证号码</div>
+                        <div id="sfzh" name="sfzh">sfzh</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">姓名</div>
+                        <div id="name" name="name">name</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">性别</div>
+                        <div id="sex" name="sex">sex</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">年龄</div>
+                        <div id="age" name="age">age</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">就诊时间</div>
+                        <div id="visitingTime" name="visitingTime">visitingTime</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">主诉</div>
+                        <div id="chiefCompliant" name="chiefCompliant">chiefCompliant</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">现病史</div>
+                        <div id="presentIllness" name="presentIllness">presentIllness</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">既往史</div>
+                        <div id="pastHistory" name="pastHistory">pastHistory</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">体格检查</div>
+                        <div id="physicalExam" name="physicalExam">physicalExam</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">处理意见</div>
+                        <div id="treatIdea" name="treatIdea">treatIdea</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">医生姓名</div>
+                        <div id="doctorName" name="doctorName">doctorName</div>
+                    </li>
+                    <li>
+                        <div class="liLabel">就诊类别</div>
+                        <div id="visitingTypeText" name="visitingTypeText">visitingTypeText</div>
+                    </li>
+                </ul>
+            </li>
+            <li class="contLi">
+            	<div class="wait">
+					请稍等...
+				</div> 
+				<div class="nodata">
+					<img src="../../img/img_zwsj.png"/>
+					<div>暂无数据</div>
+				</div>
+                <div class="pageBox" style="top:50px !important; background: #f3f3fb;">
+                    <div class="pageCont">
+                        <!--门诊处方-->
+                        <div class="leftCard">
+                            <ul class="docUl" id="listUl1"></ul>
+                        </div>
+                        <div class="rightCard">
+                            <ul class="consUl">
+                                <li class="consLi">
+                                    <div class="cons-label">门诊号</div>
+                                    <div class="cons-txt" id="outpatientNum1" name="outpatientNum">{{doctorDetail.outpatientNum}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">处方号</div>
+                                    <div class="cons-txt" id="recipeNum1" name="recipeNum">{{doctorDetail.recipeNum}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">开立日期</div>
+                                    <div class="cons-txt" id="prescribeDate" name="prescribeDate">{{doctorDetail.chufangdetail}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">处方类别</div>
+                                    <div class="cons-txt" id="recipeType" name="recipeType">{{chufangdetail.recipeType + '处方' }}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">科室名称</div>
+                                    <div class="cons-txt" id="depName1" name="depName">{{doctorDetail.depName}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">医院名称</div>
+                                    <div class="cons-txt" id="orgName1" name="orgName">{{doctorDetail.orgName}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">处方明细</div>                             
+                                </li>
+                                <li class="consLi">
+                                    <table class="my-table hov-table" id="mingxi">
+                                        <thead>
+                                            <tr>
+                                                <th>药品分类</th>
+                                                <th>名称</th>
+                                                <th>规格</th>
+                                                <th style="min-width: 60px;">单位</th>
+                                                <th>单价</th>
+                                                <th>数量</th>
+                                                <th>用药方式</th>
+                                                <th>草药付数</th>
+                                                <th >剂量</th>
+                                                <th >执行频率</th>
+                                                <th >处方项类别</th>
+                                                <th >用量</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">处方诊断</div>
+                                </li>
+                                <li class="consLi">
+                                    <table class="my-table hov-table" id="zhenduan">
+                                        <thead>
+                                            <tr>
+                                                <th>诊断类型</th>
+                                                <th>诊断名称</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="contLi">
+            	<div class="wait">
+					请稍等...
+				</div> 
+				<div class="nodata">
+					<img src="../../img/img_zwsj.png"/>
+					<div>暂无数据</div>
+				</div>
+                <!--检查报告单-->
+                <div class="pageBox" style="top:50px !important; background: #f3f3fb;">
+                    <div class="pageCont">
+                        <div class="leftCard" >
+                            <ul class="docUl" id="listUl2"></ul>
+                        </div>
+                        <div class="rightCard">                            
+                            <ul class="consUl">
+                                <li class="consLi">
+                                    <div class="cons-label">影像描述</div>
+                                    <div class="cons-txt" id="imageRemake" name="imageRemake">{{doctorDetail.imageRemake}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">影像结论</div>
+                                    <div class="cons-txt" id="imageJl" name="imageJl">{{doctorDetail.imageJl}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">检查时间</div>
+                                    <div class="cons-txt" id="imageTime1" name="imageTime">{{doctorDetail.imageTime}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">影像类型</div>
+                                    <div class="cons-txt" id="imageType1" name="imageType">imageType</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">影像文件</div>
+                                    <div class="cons-txt">
+                                     	<div class="consPic" id="imageUrl" name="imageUrl">
+                                		</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="contLi">
+            	<div class="wait">
+					请稍等...
+				</div> 
+				<div class="nodata">
+					<img src="../../img/img_zwsj.png"/>
+					<div>暂无数据</div>
+				</div>
+                <!--检验报告单-->
+                <div class="pageBox" style="top:50px !important; background: #f3f3fb;">
+                    <div class="pageCont">
+                        <div class="leftCard">
+                            <ul class="docUl" id="listUl3"></ul>
+                        </div>
+                        <div class="rightCard">
+                            <!--<div class="cardTit">新生儿家庭访视记录表</div>-->
+                            <ul class="consUl">
+                                <li class="consLi">
+                                    <div class="cons-label">门诊标识号</div>
+                                    <div class="cons-txt" id="outpatientNum4" name="outpatientNum">{{doctorDetail.outpatientNum}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">检验类型</div>
+                                    <div class="cons-txt" id="itemType" name="itemType">{{doctorDetail.itemType}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">检验时间</div>
+                                    <div class="cons-txt" id="diagnosisTime4" name="diagnosisTime">{{doctorDetail.diagnosisTime}}</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">项目名称</div>
+                                    <div class="cons-txt" id="itemName4" name="itemName">imageType</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">检验值</div>
+                                    <div class="cons-txt" id="itemValue" name="itemValue">itemValue</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">最小范围值</div>
+                                    <div class="cons-txt" id="minValue" name="minValue">minValue</div>
+                                </li>
+                                <li class="consLi">
+                                    <div class="cons-label">最大范围值</div>
+                                    <div class="cons-txt" id="maxValue" name="maxValue">maxValue</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="contLi">            	
+                <!--门诊诊断-->
+                <table class="my-table hov-table" id="menzhenzhenduan">
+                    <thead>
+	                    <tr>
+	                        <th>诊断名称</th>
+	                        <th>诊断日期</th>
+	                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="table-nodata">暂无数据</div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script>
+    $(function () {
+    	var windowparent = window.parent;
+        var iframeSrc = windowparent.$('#mainIframe').attr('src');
+     // 门诊病历
+     	$(".wait").eq(0).css('display', 'none');
+        $(".nodata").eq(0).css('display', 'none');
+        var objstr = JSON.parse(windowparent.$('#mainIframe').attr('objstr').replace(/'/g, '"'));
+        var bingliArr = [
+        	'orgCode', 'orgName', 'depCode', 'depName', 'caseNum', 
+        	'sfzh', 'name', 'sex', 'age', 'visitingTime', 'chiefCompliant',
+        	'presentIllness', 'pastHistory', 'physicalExam', 'treatIdea',
+        	'doctorName', 'visitingTypeText'
+        ];        
+        var tjId = objstr.id;
+        for (var key in objstr) {
+    		if (objstr[key] == null || objstr[key] == '') {
+    			objstr[key] = '无数据';
+    		}
+    	}   
+        for (var i = 0; i < bingliArr.length; i++) {
+        	var bingli = (bingliArr[i] + "").replace(/\d+/g,'');
+        	$("#"+bingliArr[i]).html(objstr[bingli]);
+        }         
+     	// 返回list页
+        $(".backPage").click(function () {
+            windowparent.$('#mainIframe').attr('src', 'outpatientInfo/outpatientInfo.html');
+        })
+        // tab切换
+        $(".pageTab .litab").click(function () {
+            $(".pageTab .litab").removeClass("litabact");
+            $(this).addClass("litabact");
+            var ind = $(this).index();
+            $(".contLi").removeClass("actCont");
+            $(".contLi").eq(ind - 1).addClass("actCont");
+            if (ind == 2) {
+            	getChufangInfo();
+            } else if (ind == 3) {
+            	getJianchaInfo();
+            } else if (ind == 4) {
+            	getJianyanInfo();
+            } else if (ind == 5) {            	
+            	getMenzhenInfo();
+            }
+        });
+     // 门诊处方
+     	function getChufangInfo () {
+           var jsonParam = {
+        		mzId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/outpatient/getOutpatientCfList',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	$(".wait").eq(1).css('display', 'none');
+                    	$("#listUl1").html("");                      	
+                    	if (res.data != '{}' && res.data.length > 0) {
+                			for(var i = 0; i < res.data.length; i++){
+                				for (var key in res.data[i]) {
+                            		if (res.data[i][key] == null || res.data[i][key] == '') {
+                            			res.data[i][key] = '无数据';
+                            		}
+                            	}
+                				$("#listUl1").append(
+                					'<li class="docLi" ids="' + JSON.stringify(res.data[i]).replace(/\"/g, "'") + '">'+
+    			                        '<div class="docLi-icon">'+
+    			                            '<div><i class="radius"></i><p>' + res.data[i].depName.substring(0, 1) + '</p></div>'+
+    			                        '</div>'+
+    			                        '<div class="docLi-cont">'+
+    			                            '<div class="doc-cont">'+
+    			                                '<div>'+
+    			                                    '<span>处方号</span>&nbsp;'+
+    			                                    '<span name="sfysName">' + res.data[i].recipeNum + '</span>'+
+    			                                '</div>'+
+    			                                '<div class="doc-cont-rem" style="margin-top: 5px;">'+
+    			                                    '<span>门诊号</span>&nbsp;'+
+    			                                    '<span name="sffsName">' + res.data[i].outpatientNum + '</span>'+
+    			                                '</div>'+
+    			                            '</div>'+
+    			                            '<div class="doc-time" name="sfrq">' + res.data[i].prescribeDate + '</div>'+
+    			                        '</div>'+
+    			                    '</li>'
+                				);
+                				var userAgent1 = navigator.userAgent;
+                				var reIE1 = new RegExp("MSIE (\\d+\\.\\d+);");
+                                reIE1.test(userAgent1);
+                                var fIEVersion1 = parseFloat(RegExp["$1"]);
+                				if (fIEVersion1 == 7) {
+                					$(".docLi-cont").css ({
+                    		            width: $(".leftCard").width() - 80 + 'px'
+                    		        });
+                				} else {
+                					$(".docLi-cont").css ({
+                    		            width: $(".leftCard").width() - 80 + 'px'
+                    		        });
+                				}
+                			}
+                			getDetail (1, res.data[0]);
+                			$("#listUl1").find(".docLi").eq(0).addClass("liact");
+                		} else {
+                			$(".nodata").eq(1).css('display', 'block');
+                		}  
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+	 // 检查报告单
+     	function getJianchaInfo () {
+           var jsonParam = {
+        		mzId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/outpatient/getOutpatientImageList',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	$(".wait").eq(2).css('display', 'none');
+                    	$("#listUl2").html("");
+                    	if (res.data != '{}' && res.data.length > 0) {
+                			for(var i = 0; i < res.data.length; i++){
+                				for (var key in res.data[i]) {
+                            		if (res.data[i][key] == null || res.data[i][key] == '') {
+                            			res.data[i][key] = '无数据';
+                            		}
+                            	}
+                				$("#listUl2").append(
+                					'<li class="docLi" ids="' + JSON.stringify(res.data[i]).replace(/\"/g, "'") + '">'+
+    			                        '<div class="docLi-icon">'+
+    			                            '<div><i class="radius"></i><p>' + (res.data[i].imageType + '').substring(0, 1) + '</p></div>'+
+    			                        '</div>'+
+    			                        '<div class="docLi-cont">'+
+    			                            '<div class="doc-cont">'+
+    			                                '<div>'+
+    			                                    '<span name="sfysName">' + (res.data[i].imageType + '') + '</span>'+
+    			                                '</div>'+
+    			                                '<div class="doc-cont-rem" style="margin-top: 5px;">'+
+    			                                    '<span>门诊号</span>&nbsp;'+
+    			                                    '<span name="sffsName">' + res.data[i].outpatientNum + '</span>'+
+    			                                '</div>'+
+    			                            '</div>'+
+    			                            '<div class="doc-time" name="sfrq">' + res.data[i].imageTime + '</div>'+
+    			                        '</div>'+
+    			                    '</li>'
+                				);
+                				var userAgent2 = navigator.userAgent;
+                				var reIE2 = new RegExp("MSIE (\\d+\\.\\d+);");
+                                reIE2.test(userAgent2);
+                                var fIEVersion2 = parseFloat(RegExp["$1"]);
+                				if (fIEVersion2 == 7) {
+                					$(".docLi-cont").css ({
+                    		            width: $(".leftCard").width() - 80 + 'px'
+                    		        });
+                				} else {
+                					$(".docLi-cont").css ({
+                    		            width: $(".leftCard").width() - 80 + 'px'
+                    		        });
+                				}
+                			}
+                			getDetail (2, res.data[0]);
+                			$("#listUl2").find(".docLi").eq(0).addClass("liact");
+                		} else {
+                			$(".nodata").eq(2).css('display', 'block');
+                		} 
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     // 检验报告单
+     	function getJianyanInfo () {
+           var jsonParam = {
+        		mzId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/outpatient/getOutpatientJcList',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {
+                    	$(".wait").eq(3).css('display', 'none');
+                    	$("#listUl3").html("");
+                    	if (res.data != '{}' && res.data.length > 0) {
+                			for(var i = 0; i < res.data.length; i++){
+                				for (var key in res.data[i]) {
+                            		if (res.data[i][key] == null || res.data[i][key] == '') {
+                            			res.data[i][key] = '无数据';
+                            		}
+                            	}
+                				$("#listUl3").append(
+                					'<li class="docLi" ids="' + JSON.stringify(res.data[i]).replace(/\"/g, "'") + '">'+
+    			                        '<div class="docLi-icon">'+
+    			                            '<div><i class="radius"></i><p>验</p></div>'+
+    			                        '</div>'+
+    			                        '<div class="docLi-cont">'+
+    			                            '<div class="doc-cont">'+
+    			                                '<div>'+
+    			                                	'<span>项目名称</span>&nbsp;'+
+    			                                    '<span name="sfysName">' + (res.data[i].itemName + '') + '</span>'+
+    			                                '</div>'+
+    			                                '<div class="doc-cont-rem" style="margin-top: 5px;">'+
+    			                                    '<span>门诊号</span>&nbsp;'+
+    			                                    '<span name="sffsName">' + res.data[i].outpatientNum + '</span>'+
+    			                                '</div>'+
+    			                            '</div>'+
+    			                            '<div class="doc-time" name="sfrq">' + res.data[i].diagnosisTime + '</div>'+
+    			                        '</div>'+
+    			                    '</li>'
+                				);
+                				var userAgent3 = navigator.userAgent;
+                				var reIE3 = new RegExp("MSIE (\\d+\\.\\d+);");
+                                reIE3.test(userAgent3);
+                                var fIEVersion3 = parseFloat(RegExp["$1"]);
+                				if (fIEVersion3 == 7) {
+                					$(".docLi-cont").css ({
+                    		            width: $(".leftCard").width() - 80 + 'px'
+                    		        });
+                				} else {
+                					$(".docLi-cont").css ({
+                    		            width: $(".leftCard").width() - 80 + 'px'
+                    		        });
+                				}
+                			}
+                			getDetail (3, res.data[0]);
+                			$("#listUl3").find(".docLi").eq(0).addClass("liact");
+                		} else {
+                			$(".nodata").eq(3).css('display', 'block');
+                		} 
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     // 门诊诊断
+     	function getMenzhenInfo () {
+           var jsonParam = {
+        		mzId: tjId
+            };
+            var authorCookie = getCookie("author");
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/outpatient/getOutpatientZDList',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (res) {
+                    if (res.retCode == 0) {  
+                    	if (res.data.length == 0) {
+                    		$('.table-nodata').css('display', 'block');
+                    	}
+                    	$("#menzhenzhenduan tbody").html("");
+                    	for(var i = 0; i < res.data.length; i++) {
+                            $('#menzhenzhenduan tbody').append('<tr>' +
+                                '<td>' + res.data[i].diseaseName + '</td>' +
+                                '<td>' + res.data[i].diagnosisTime + '</td></i></td></tr>');
+                        }                    	
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+     	$("#listUl1").on("click", ".docLi", function () {
+    		$("#listUl1").find(".docLi").removeClass("liact");
+    		$(this).addClass("liact");
+    		var ids = JSON.parse($(this).attr("ids").replace(/'/g, '"'));    		
+    		getDetail(1, ids);
+    	})
+    	$("#listUl2").on("click", ".docLi", function () {
+    		$("#listUl2").find(".docLi").removeClass("liact");
+    		$(this).addClass("liact");
+    		var ids = JSON.parse($(this).attr("ids").replace(/'/g, '"'));    		
+    		getDetail(2, ids);
+    	})
+    	$("#listUl3").on("click", ".docLi", function () {
+    		$("#listUl3").find(".docLi").removeClass("liact");
+    		$(this).addClass("liact");
+    		var ids = JSON.parse($(this).attr("ids").replace(/'/g, '"'));    		
+    		getDetail(3, ids);
+    	})
+     // list详情
+     	function getDetail (type, obj) {
+    	 	if (type == 1) {
+    	 		$("#mingxi tbody").html("");
+    	 		$("#zhenduan tbody").html("");
+    	 		var chufangArr = [
+        			'outpatientNum1', 'recipeNum1', 'prescribeDate',
+        			'recipeType', 'depName1', 'orgName1'
+        		];
+        		for (var i = 0; i < chufangArr.length; i++) {
+    				var chu = (chufangArr[i] + "").replace(/\d+/g,'');
+    				$("#"+chufangArr[i]).html(obj[chu]);
+    			} 
+        		$("#recipeType").html(obj.recipeType + '处方')
+        		var mingxiArr = obj.recipelist;
+        		if(mingxiArr != '无数据'){
+        			for (var j = 0; j < mingxiArr.length; j++) {
+            			$("#mingxi tbody").append('<tr>' +
+    		                    '<td>' + mingxiArr[j].drugClassName + '</td>' +
+    		                    '<td>' + mingxiArr[j].drugName + '</td>' +
+    		                    '<td>' + mingxiArr[j].spec + '</td>' +
+    		                    '<td>' + mingxiArr[j].unit + '</td>' +
+    		                    '<td>' + (mingxiArr[j].price - 0).toFixed(2) + '</td>' +
+    		                    '<td>' + mingxiArr[j].quantity + '</td>' +
+    		                    '<td>' + mingxiArr[j].drugRoute + '</td>' +
+    		                    '<td>' + mingxiArr[j].herbNum + '</td>' +
+    		                    '<td>' + mingxiArr[j].unitDose + '</td>' +
+    		                    '<td>' + mingxiArr[j].drugFrequency + '</td>' +
+    		                    '<td>' + mingxiArr[j].itemTypeText + '</td>' +
+    		                    '<td>' + mingxiArr[j].orderDosage + '</td></tr>');
+            		}
+        		}
+        		var zhenduanArr = obj.diagnosislist;
+        		if(zhenduanArr != '无数据'){
+	        		for (var j = 0; j < zhenduanArr.length; j++) {
+	        			$("#zhenduan tbody").append('<tr>' +
+			                    '<td>' + zhenduanArr[j].diagnosisTypeText + '</td>' +		                    
+			                    '<td>' + zhenduanArr[j].diseaseName + '</td></tr>');
+	        		}
+	        	}
+    	 	} else if (type == 2) {    	 		
+    	 		var jianchaArr = [
+        			'imageRemake', 'imageJl', 'imageTime1', 'imageType1',
+        		];
+        		for (var i = 0; i < jianchaArr.length; i++) {
+    				var jian = (jianchaArr[i] + "").replace(/\d+/g,'');
+    				$("#"+jianchaArr[i]).html(obj[jian]);
+    			}
+        		$("#imageUrl").html("");
+        		var imagelist = obj.imagelist;
+        		if(imagelist != null && imagelist != undefined){
+        			for(var q = 0; q < imagelist.length; q++){
+        				if(imagelist[q].imageJpgUrl != null && imagelist[q].imageJpgUrl != undefined && imagelist[q].imageJpgUrl != "无数据"){
+        					$("#imageUrl").append("<img src='"+imagelist[q].imageJpgUrl+"' alt='' style=''>");
+        				}else{
+        					//dcm文件转换
+        					if(imagelist[q].imageUrl == null || imagelist[q].imageUrl == undefined) return '';
+        					var jsonParam = {imageId: imagelist[q].id, imagePath: imagelist[q].imageUrl };
+        					var authorCookie = getCookie("author");
+        		            $.ajax({
+        		                type: 'POST',
+        		                dataType: "json",
+        		                async: false,
+        		                contentType: 'application/json',
+        		                url: roadPath + '/health/outpatient/getCoverImageFormat',
+        		                data: JSON.stringify(jsonParam),
+        		                beforeSend: function (XMLHttpRequest) {
+        		                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+        		                },
+        		                success: function (res) {
+        		                    if (res.retCode == 0) {  
+        		                    	//$("#imageUrl").attr("src", );   
+        		                    	$("#imageUrl").append("<img src='"+res.data+"' alt='' style=''>");
+        		                    }
+        		                },
+        		                error: function (XMLHttpRequest, textStatus, errorThrown) {
+        		
+        		                }
+        		            });
+        				} 
+        			}
+        		}else{
+        			$("#imageUrl").append("<img src='../../img/noload.png' alt='' style=''>");
+        		}
+    	 	} else if (type == 3) {    	 		
+     	 		var jianyanArr = [
+         			'outpatientNum4', 'itemType', 'diagnosisTime4',
+         			'itemName4', 'itemValue', 'minValue', 'maxValue'
+         		];
+         		for (var i = 0; i < jianyanArr.length; i++) {
+     				var yan = (jianyanArr[i] + "").replace(/\d+/g,'');
+     				$("#"+jianyanArr[i]).html(obj[yan]);
+     			}
+     	 	}   
+     	}
+     // 高度
+     	var pageHeight = $(window).height();
+        function divResize () {
+            pageHeight = $(window).height();
+            $(".pageCont").css({
+                height: pageHeight - 80 + 'px'
+            });
+            $(".leftCard").css ({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.35 + 'px'
+            });
+            $(".rightCard").css ({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.65 - 40 - 15 + 'px'
+            });
+            $(".contUl").css ({
+                height: $(".pageCont").height() - 40 + 'px'
+            });
+            $(".infoUl li").css ({
+                width: $(".infoUl li").width() - 40 + 'px'
+            });
+        }
+        divResize();
+        $(window).resize(function(){
+            divResize();
+        });          
+    })
+</script>
+</html>

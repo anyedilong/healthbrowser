@@ -1,0 +1,44 @@
+@charset "utf-8";      
+.myPage {
+	text-align: right;
+	font-size: 14px;
+	margin-top: 20px;
+}
+.myPage a {
+    text-decoration: none;
+	/*border: 1px solid #AAE;*/
+	color: #959094;
+}
+
+.myPage a, .myPage span {
+    display: inline-block;
+    /*padding: 0.1em 0.4em;*/
+	height: 28px;line-height: 28px;
+	min-width: 28px;text-align: center;
+    margin: 0 5px;
+	cursor: pointer;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+
+.myPage .current {
+    background: #497BFB;
+    color: #fff;
+    border-radius: 2px;
+	/*border: 1px solid #AAE;*/
+}
+
+.myPage .prev,  .myPage .next{
+	background: #f4f4f5 !important;
+	color: #C0C4CC !important;
+	border-radius: 2px;
+	font-size: 12px !important;
+}
+
+.myPage .current.prev, .myPage .current.next{
+	color:#999;
+	border-color:#999;
+	background:#fff !important;
+}

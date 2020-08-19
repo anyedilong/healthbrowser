@@ -1,0 +1,17 @@
+@charset "utf-8";
+@import "../base";
+@import "../commen";
+.pagesBox {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  overflow: auto; overflow: hidden;
+}
+.pageCont {
+  padding: 15px;
+  height: calc(100% - 50px);
+}
+.tableCard {
+  @include roundCorner;
+  overflow-y: auto;
+  background: #fff; padding: 20px;
+}

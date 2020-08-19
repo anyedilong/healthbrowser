@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <style>
+    	.childDetail > .litab {display:none;} 
+    	.pageBox {position: relative;}
+		.wait {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 20px;
+			line-height: 150px; text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 18px; 
+			display:none;
+			text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata img {
+			display:block; margin: 50px auto;
+			width: auto;height:65%;
+		}    	
+    </style>
+</head>
+<body>
+<div class="pageBox">
+	<div class="wait">
+		请稍等...
+	</div> 
+	<div class="nodata">
+		<img src="../../img/img_zwsj.png"/>
+		<div>暂无数据</div>
+	</div>
+    <div class="pageCont">
+        <div class="leftCard">
+            <ul class="docUl" id="listUl"></ul>
+        </div>
+        <ul class="childDetail">
+            <li class="litab newborn">
+                <div class="rightCard">
+                    <div class="cardTit">新生儿家庭访视记录表</div>
+                    <ul class="consUl">
+                        <li class="consLi">
+                            <div class="cons-label">性别</div>
+                            <div class="cons-txt" id="xbName" name="xbName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">出生日期</div>
+                            <div class="cons-txt" id="csrq" name="csrq"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">身份证号</div>
+                            <div class="cons-txt" id="sfzh" name="sfzh"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">家庭住址</div>
+                            <div class="cons-txt" id="jtzz" name="jtzz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">父亲</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span>姓名：</span>
+                                    <span id="fqm" name="fqm"></span>
+                                </div>
+                                <div>
+                                    <span>职业：</span>
+                                    <span id="fqgz" name="fqgz"></span>
+                                </div>
+                                <div>
+                                    <span>联系电话：</span>
+                                    <span id="fqdh" name="fqdh"></span>
+                                </div>
+                                <div>
+                                    <span>出生日期：</span>
+                                    <span id="fqcsrq" name="fqcsrq"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">母亲</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span>姓名：</span>
+                                    <span id="mqm" name="mqm"></span>
+                                </div>
+                                <div>
+                                    <span>职业：</span>
+                                    <span id="mqgz" name="mqgz"></span>
+                                </div>
+                                <div>
+                                    <span>联系电话：</span>
+                                    <span id="mqdh" name="mqdh"></span>
+                                </div>
+                                <div>
+                                    <span>出生日期：</span>
+                                    <span id="mqcsrq" name="mqcsrq"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">出生孕周</div>
+                            <div class="cons-txt" id="csyz" name="csyz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">母亲妊娠期患病情况</div>
+                            <div class="cons-txt" id="mqrsqhbqkName" name="mqrsqhbqkName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">助产机构名称</div>
+                            <div class="cons-txt">
+                                <span id="zcjgmc" name="zcjgmc"></span>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">出生情况</div>
+                            <div class="cons-txt" id="csqkName" name="csqkName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">新生儿窒息</div>
+                            <div class="cons-txt" id="xsezxName" name="xsezxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">畸型</div>
+                            <div class="cons-txt" id="sfjxName" name="sfjxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">新生儿听力筛查</div>
+                            <div class="cons-txt" id="xsetlscName" name="xsetlscName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">新生儿疾病筛查</div>
+                            <div class="cons-txt" id="xsejbscName" name="xsejbscName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">新生儿出生体重(kg)</div>
+                            <div class="cons-txt" id="cstz" name="cstz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">目前体重(kg)</div>
+                            <div class="cons-txt" id="mqtz" name="mqtz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">出生身长(cm)</div>
+                            <div class="cons-txt" id="cssc" name="cssc"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">喂养方式</div>
+                            <div class="cons-txt" id="wyfsName" name="wyfsName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">吃奶量(mL/次)</div>
+                            <div class="cons-txt" id="cnl" name="cnl"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">吃奶次数(次/日)</div>
+                            <div class="cons-txt" id="cncs" name="cncs"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">呕吐(kg)</div>
+                            <div class="cons-txt" id="otName" name="otName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">大便</div>
+                            <div class="cons-txt" id="dbName" name="dbName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">大便次数(次/日)</div>
+                            <div class="cons-txt" id="dbcs" name="dbcs"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体温(℃)</div>
+                            <div class="cons-txt" id="tw" name="tw"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">心率(次/分钟)</div>
+                            <div class="cons-txt" id="ml" name="ml"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">呼吸频率(次/分钟)</div>
+                            <div class="cons-txt" id="hxpl" name="hxpl"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">面色</div>
+                            <div class="cons-txt" id="msName" name="msName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">黄疸部位</div>
+                            <div class="cons-txt" id="hdName" name="hdName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">前囟</div>
+                            <div class="cons-txt" id="xmName" name="xmName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">左囟(cm)</div>
+                            <div class="cons-txt" id="zx" name="zx"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">右囟(cm)</div>
+                            <div class="cons-txt" id="yx" name="yx"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">眼睛</div>
+                            <div class="cons-txt" id="ywgName" name="ywgName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">四肢活动度</div>
+                            <div class="cons-txt" id="szhddName" name="szhddName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">耳外观</div>
+                            <div class="cons-txt" id="ewgName" name="ewgName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">颈部包块</div>
+                            <div class="cons-txt" id="jbbkName" name="jbbkName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">鼻</div>
+                            <div class="cons-txt" id="bzName" name="bzName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">皮肤</div>
+                            <div class="cons-txt" id="pfName" name="pfName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">口腔</div>
+                            <div class="cons-txt" id="kqName" name="kqName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">肛门</div>
+                            <div class="cons-txt" id="gmName" name="gmName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">心肺听诊</div>
+                            <div class="cons-txt" id="xftzName" name="xftzName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">胸部</div>
+                            <div class="cons-txt" id="chestName" name="chestName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">腹部触诊</div>
+                            <div class="cons-txt" id="fbczName" name="fbczName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">脊柱</div>
+                            <div class="cons-txt" id="jzName" name="jzName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">外生殖器</div>
+                            <div class="cons-txt" id="wszqName" name="wszqName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">脐带</div>
+                            <div class="cons-txt" id="qdName" name="qdName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">转诊建议</div>
+                            <div class="cons-txt" id="zzjyName" name="zzjyName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">原因</div>
+                            <div class="cons-txt" id="zzyy" name="zzyy"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">机构及科室</div>
+                            <div class="cons-txt" id="jgjks" name="jgjks"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">指导</div>
+                            <div class="cons-txt" id="zdName" name="zdName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">本次访视日期</div>
+                            <div class="cons-txt" id="bcsfrq" name="bcsfrq"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">下次随访地点</div>
+                            <div class="cons-txt" id="xcsfdd" name="xcsfdd"></div>
+                        </li>                        
+                        <li class="consLi">
+                            <div class="cons-label">随访照片</div>
+                            <div class="cons-txt">
+                                <div class="consPic">
+	                                <div><img src="../../img/noload.png"></div>
+	                            </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">医生签字</div>
+                            <div class="cons-txt">
+                                <div class="consQianm">
+                                    <div>医生未上传手写签名</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">下次随访日期</div>
+                            <div class="cons-txt" id="xcsfrq" name="xcsfrq"></div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="litab toEight">
+                <div class="rightCard">
+                    <div class="cardTit" id="stage1"></div>
+                    <ul class="consUl">
+                        <li class="consLi">
+                            <div class="cons-label">随访日期</div>
+                            <div class="cons-txt" id="sfrq" name="sfrq"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体 重(kg)</div>
+                            <div class="cons-txt" id="tz" name="tz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体重等级</div>
+                            <div class="cons-txt" id="tzfxName" name="tzfxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">身 长(cm)</div>
+                            <div class="cons-txt" id="sc" name="sc"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">身长等级</div>
+                            <div class="cons-txt" id="scfxName" name="scfxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">头围(cm)</div>
+                            <div class="cons-txt" id="tw1" name="tw"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体征</div>
+                            <div class="cons-txt tizheng">
+                                <div style="">
+                                    <span>面色：</span>
+                                    <span id="msName1" name="msName"></span>
+                                </div>
+                                <div>
+                                    <span>皮肤：</span>
+                                    <span id="pfName1" name="pfName"></span>
+                                </div>
+                                <div>
+                                    <span>前囟(前囟*后囟cm):</span>
+                                    <span id="xmName1" name="xmName"></span>
+                                    <span id="qxm" name="qxm"></span>
+                                    <span id="hxm" name="hxm"></span>
+                                </div>
+                                <div>
+                                    <span>颈部包块：</span>
+                                    <span id="jbbkName1" name="jbbkName"></span>
+                                </div>
+                                <div>
+                                    <span>眼 睛：</span>
+                                    <span id="ywgName1" name="ywgName"></span>
+                                </div>
+                                <div>
+                                    <span>耳：</span>
+                                    <span id="ewgName1" name="ewgName"></span>
+                                </div>
+                                <div>
+                                    <span>听力：</span>
+                                    <span id="tlName" name="tlName"></span>
+                                </div>
+                                <div>
+                                    <span>口腔：</span>
+                                    <span id="kqName1" name="kqName"></span>
+                                </div>
+                                <div>
+                                    <span>胸部：</span>
+                                    <span id="chestName1" name="chestName"></span>
+                                </div>
+                                <div>
+                                    <span>腹部：</span>
+                                    <span id="fbName" name="fbName"></span>
+                                </div>
+                                <div>
+                                    <span>脐部：</span>
+                                    <span id="qbName" name="qbName"></span>
+                                </div>
+                                <div>
+                                    <span>四肢：</span>
+                                    <span id="szName" name="szName"></span>
+                                </div>
+                                <div>
+                                    <span>可疑佝偻病症状：</span>
+                                    <span id="kyglbzzName" name="kyglbzzName"></span>
+                                </div>
+                                <div>
+                                    <span>可疑佝偻病体征：</span>
+                                    <span id="kyglbtzName" name="kyglbtzName"></span>
+                                </div>
+                                <div>
+                                    <span>肛门/外生殖器：</span>
+                                    <span id="gmhwszqName" name="gmhwszqName"></span>
+                                </div>
+                                <div>
+                                    <span>血红蛋白值：</span>
+                                    <span id="xhdbz" name="xhdbz"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">户外活动(小时/日)</div>
+                            <div class="cons-txt" id="hwhd" name="hwhd"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">服用维生素 D(IU/日)</div>
+                            <div class="cons-txt" id="fywssd" name="fywssd"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">发育评估</div>
+                            <div class="cons-txt">
+                                <span id="fypgName" name="fypgName"></span>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">两次随访间患病情况</div>
+                            <div class="cons-txt" id="lcsfjhbqkName" name="lcsfjhbqkName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">肺炎(次)</div>
+                            <div class="cons-txt" id="fy1" name="fy"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">腹泻(次)</div>
+                            <div class="cons-txt" id="fx1" name="fx"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">外伤(次)</div>
+                            <div class="cons-txt" id="ws1" name="ws"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">其他(次)</div>
+                            <div class="cons-txt" id="qt11" name="qt1"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">转诊建议</div>
+                            <div class="cons-txt" id="zzjyName1" name="zzjyName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">原因</div>
+                            <div class="cons-txt" id="zzyy1" name="zzyy"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">机构及科室</div>
+                            <div class="cons-txt" id="jgjks1" name="jgjks"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">指导</div>
+                            <div class="cons-txt" id="zdName1" name="zdName"></div>
+                        </li>                       
+                        <li class="consLi">
+                            <div class="cons-label">随访照片</div>
+                            <div class="cons-txt">
+                                <div class="consPic">
+	                                <div><img src="../../img/noload.png"></div>
+	                            </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">医生签字</div>
+                            <div class="cons-txt">
+                                <div class="consQianm">
+                                    <div>医生未上传手写签名</div>
+                                </div>
+                            </div>
+                        </li>
+                         <li class="consLi">
+                            <div class="cons-label">下次随访日期</div>
+                            <div class="cons-txt" id="xcsfrq1" name="xcsfrq"></div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="litab twelveToThirty">
+                <div class="rightCard">
+                    <div class="cardTit" id="stage2"></div>
+                    <ul class="consUl">
+                        <li class="consLi">
+                            <div class="cons-label">随访日期</div>
+                            <div class="cons-txt" id="sfrq2" name="sfrq"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体 重(kg)</div>
+                            <div class="cons-txt" id="tz2" name="tz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体重等级</div>
+                            <div class="cons-txt" id="tzfxName2" name="tzfxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">身 长(cm)</div>
+                            <div class="cons-txt" id="sc2" name="sc"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">身长等级</div>
+                            <div class="cons-txt" id="scfxName2" name="scfxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">面色</div>
+                            <div class="cons-txt" id="msName2" name="msName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">皮肤</div>
+                            <div class="cons-txt" id="pfName2" name="pfName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">前囟（前囟*后囟cm）</div>
+                            <div class="cons-txt">
+                            	<span id="xinmenName" name="xinmenName"></span>
+                            	<span id="qxm1" name="qxm">无数据</span>
+                            	<span id="hxm1" name="hxm">无数据</span>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">眼睛</div>
+                            <div class="cons-txt" id="ywgName2" name="ywgName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">耳外观</div>
+                            <div class="cons-txt" id="ewgName2" name="ewgName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">听力</div>
+                            <div class="cons-txt" id="tlName2" name="tlName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">出牙/龋齿数（颗）</div>
+                            <div class="cons-txt">
+								<span id="zcy" name="zcy">无数据</span>/
+                            	<span id="ycy" name="ycy">无数据</span>
+							</div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">胸部</div>
+                            <div class="cons-txt" id="chestName2" name="chestName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">腹部</div>
+                            <div class="cons-txt" id="fbName2" name="fbName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">四肢</div>
+                            <div class="cons-txt" id="szName2" name="szName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">步态</div>
+                            <div class="cons-txt" id="btName" name="btName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">可疑佝偻病体征</div>
+                            <div class="cons-txt" id="kyglbtzName2" name="kyglbtzName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">血红蛋白值</div>
+                            <div class="cons-txt" id="xhdbz2" name="xhdbz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">户外活动(小时/日)</div>
+                            <div class="cons-txt" id="hwhd2" name="hwhd"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">服用维生素 D(IU/日)</div>
+                            <div class="cons-txt" id="fywssd2" name="fywssd"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">发育评估</div>
+                            <div class="cons-txt">
+                                <span id="fypgName2" name="fypgName"></span>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">两次随访间患病情况</div>
+                            <div class="cons-txt" id="lcsfjhbqkName2" name="lcsfjhbqkName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">肺炎(次)</div>
+                            <div class="cons-txt" id="fy2" name="fy"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">腹泻(次)</div>
+                            <div class="cons-txt" id="fx2" name="fx"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">外伤(次)</div>
+                            <div class="cons-txt" id="ws2" name="ws"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">其他(次)</div>
+                            <div class="cons-txt" id="qt12" name="qt1"></div>
+                        </li>          
+                        <li class="consLi">
+                            <div class="cons-label">转诊建议</div>
+                            <div class="cons-txt" id="zzjyName2" name="zzjyName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">机构及科室</div>
+                            <div class="cons-txt" id="jgjks2" name="jgjks"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">转诊原因</div>
+                            <div class="cons-txt" id="zzyy2" name="zzyy"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">指导</div>
+                            <div class="cons-txt" id="zdName2" name="zdName"></div>
+                        </li>                        
+                        <li class="consLi">
+                            <div class="cons-label">随访照片</div>
+                            <div class="cons-txt">
+                                <div class="consPic">
+	                                <div><img src="../../img/noload.png"></div>
+	                            </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">医生签字</div>
+                            <div class="cons-txt">
+                                <div class="consQianm">
+                                    <div>医生未上传手写签名</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">下次随访日期</div>
+                            <div class="cons-txt" id="xcsfrq2" name="xcsfrq"></div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="litab threeToSix">
+                <div class="rightCard">
+                    <div class="cardTit" id="stage3"></div>
+                    <ul class="consUl">
+                        <li class="consLi">
+                            <div class="cons-label">随访日期</div>
+                            <div class="cons-txt" id="sfrq3" name="sfrq"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体重(kg)</div>
+                            <div class="cons-txt" id="tz3" name="tz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体重等级</div>
+                            <div class="cons-txt" id="tzfxName3" name="tzfxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">身高(cm)</div>
+                            <div class="cons-txt" id="sc3" name="sc"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">身高等级</div>
+                            <div class="cons-txt" id="scfxName3" name="scfxName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体重/身高</div>
+                            <div class="cons-txt" id="ts" name="ts"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体重/身高等级</div>
+                            <div class="cons-txt" id="tsdj" name="tsdj"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">体格发育评价</div>
+                            <div class="cons-txt" id="tgfypjName" name="tgfypjName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">视力</div>
+                            <div class="cons-txt" id="sl" name="sl"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">听力</div>
+                            <div class="cons-txt" id="tlName3" name="tlName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">出牙/龋齿数（颗）</div>
+                            <div class="cons-txt">
+								<span id="zc" name="zc">无数据</span>
+                            	<span id="yc" name="yc">无数据</span>
+							</div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">胸部</div>
+                            <div class="cons-txt" id="chestName3" name="chestName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">腹部</div>
+                            <div class="cons-txt" id="fbName3" name="fbName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">血红蛋白值 (g/L)</div>
+                            <div class="cons-txt" id="xhdbz3" name="xhdbz"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">其他</div>
+                            <div class="cons-txt" id="qt" name="qt"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">发育评估</div>
+                            <div class="cons-txt" id="fypgName3" name="fypgName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">两次随访间患病情况</div>
+                            <div class="cons-txt" id="lcsfjhbqkName3" name="lcsfjhbqkName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">肺炎(次)</div>
+                            <div class="cons-txt" id="fy3" name="fy"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">腹泻(次)</div>
+                            <div class="cons-txt" id="fx3" name="fx"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">外伤(次)</div>
+                            <div class="cons-txt" id="ws3" name="ws"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">其他(次)</div>
+                            <div class="cons-txt" id="qt13" name="qt1"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">转诊建议</div>
+                            <div class="cons-txt" id="zzjyName3" name="zzjyName"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">转诊原因</div>
+                            <div class="cons-txt" id="zzyy3" name="zzyy"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">指导</div>
+                            <div class="cons-txt" id="zd3" name="zd"></div>
+                        </li>                        
+                        <li class="consLi">
+                            <div class="cons-label">随访照片</div>
+                            <div class="cons-txt">
+                                <div class="consPic">
+	                                <div><img src="../../img/noload.png"></div>
+	                            </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">医生签字</div>
+                            <div class="cons-txt">
+                                <div class="consQianm">
+                                    <div>医生未上传手写签名</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">下次随访日期</div>
+                            <div class="cons-txt" id="xcsfrq3" name="xcsfrq"></div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="litab medicine">
+                <div class="rightCard">
+                    <div class="cardTit" id="stage4"></div>
+                    <ul class="consUl">
+                        <li class="consLi">
+                            <div class="cons-label">随访日期</div>
+                            <div class="cons-txt" id="sfrq4" name="sfrq"></div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">中医药健康管理服务</div>
+                            <div class="cons-txt" id="zyyglfwName" name="zyyglfwName">无数据</div>
+                            <div class="cons-txt" id="zyyjkglfwName" name="zyyjkglfwName">无数据</div>                            
+                        </li>                    
+                        <li class="consLi">
+                            <div class="cons-label">医生签字</div>
+                            <div class="cons-txt">
+                                <div class="consQianm">
+                                    <div>医生未上传手写签名</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="consLi">
+                            <div class="cons-label">下次随访日期</div>
+                            <div class="cons-txt" id="xcsfrq4" name="xcsfrq"></div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script>
+    $(function () {
+    	var pageHeight = $(window).height();
+        function divResize () {
+            pageHeight = $(window).height();
+            $(".pageCont").css({height: pageHeight - 30 + 'px'});
+            $(".leftCard").css ({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.35 + 'px'
+            });
+            $(".rightCard").css ({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.65 - 40 - 15 + 'px'
+            });          
+            $(".cons-txt").css ({
+                width: $(".rightCard").width() - 240 + 'px'
+            });         
+        }
+        divResize();
+        $(window).resize(function(){
+            divResize();
+        });
+    	getDataList();
+    })
+    // 获取儿童列表信息
+    function getDataList(){
+    	var jsonParam = new Object();
+        jsonParam.jmId = parent.document.getElementById('archiveId').value;
+        var authorCookie = getCookie("author");
+        $.ajax({
+				type: 'POST',
+				dataType: "json",
+				async: false,
+				contentType: 'application/json',
+				url: roadPath + '/health/follow/getEtList',
+				data: JSON.stringify(jsonParam),
+				beforeSend: function (XMLHttpRequest) {
+				XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+			},
+			success:function(res) {               
+		        if(res.retCode == 0) {
+		        	$(".wait").eq(0).css('display', 'none');
+		        	$("#listUl").html("");
+		        	if (res.data.length > 0 && res.data != '{}') {
+		        		res.data.sort(compare('stage'));
+            			for(var i = 0; i < res.data.length; i++){
+            				for (var key in res.data[i]) {
+                        		if (res.data[i][key] == null || res.data[i][key] == '') {
+                        			res.data[i][key] = '无数据';
+                        		}
+                        	}
+            				$("#listUl").append(
+            					'<li class="docLi" ids="' + res.data[i].id + '"  stage="' + res.data[i].stage + '">'+
+			                        '<div class="docLi-icon">'+
+			                            '<div><i class="radius"></i><p>儿</p></div>'+
+			                        '</div>'+
+			                        '<div class="docLi-cont">'+
+			                            '<div class="doc-cont">'+
+			                                '<div>'+
+			                                    '<span>随访医生</span>&nbsp;'+
+			                                    '<span name="sfysName">' + (res.data[i].sfysName == '无数据' ? '': res.data[i].sfysName) + '</span>'+
+			                                '</div>'+
+			                                '<div class="doc-cont-rem" style="margin-top: 5px;">'+			                                    
+			                                    '<span name="sffsName">' + childStage(res.data[i].stage) + '</span>'+
+			                                '</div>'+
+			                            '</div>'+
+			                            '<div class="doc-time" name="sfrq">' + res.data[i].sfrq + '</div>'+
+			                        '</div>'+
+			                    '</li>'
+            				);
+            				var userAgent = navigator.userAgent;
+            				var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                            reIE.test(userAgent);
+                            var fIEVersion = parseFloat(RegExp["$1"]);
+            				if (fIEVersion == 7) {
+            					$(".docLi-cont").css ({
+                		            width: $(".leftCard").width() - 80 + 'px'
+                		        });
+            				} else {
+            					$(".docLi-cont").css ({
+                		            width: $(".leftCard").width() - 80 + 'px'
+                		        });
+            				}
+            			}
+            			var stage = res.data[0].stage;
+            			if (stage == '0') {
+            				getNewborn(res.data[0].id);
+            			} else if (stage == '1' || stage == '2' || stage == '3' || stage == '4') {
+            				$("#stage1").html(childStage(stage));
+            				getToEight(res.data[0].id);
+            			} else if (stage == '5' || stage == '6' || stage == '7' || stage == '8') {
+            				$("#stage2").html(childStage(stage));
+            				getTwelveToThirty(res.data[0].id);
+            			} else if (stage == '9' || stage == '10' || stage == '11' || stage == '12') {
+            				$("#stage3").html(childStage(stage));
+            				getThreeToSix(res.data[0].id)
+            			} else if (stage == '13' || stage == '14' || stage == '15' || stage == '16' || stage == '17' || stage == '18') {
+            				$("#stage4").html(childStage(stage));
+            				getMedicine(res.data[0].id, stage);
+            			}
+            			$("#listUl").find(".docLi").eq(0).addClass("liact");
+            		} else {
+            			$(".nodata").eq(0).css('display', 'block');
+            		}
+		        }
+	    	},
+		    error:function(){
+		        alert("加载资源失败");
+		    }
+		});
+	};
+	// 儿童列表状态
+	function childStage (val) {
+		switch (val) {
+			case '0':
+				return '新生儿家庭访视记录表';
+			case '1':
+				return '满月儿童健康检查记录表';
+			case '2':
+				return '3 月龄儿童健康检查记录表';
+			case '3':
+            	return '6 月龄儿童健康检查记录表';
+          	case '4':
+            	return '8 月龄儿童健康检查记录表';
+          	case '5':
+            	return '12 月龄儿童健康检查记录表';
+          	case '6':
+            	return '18 月龄儿童健康检查记录表';
+          	case '7':
+            	return '24 月龄儿童健康检查记录表';
+          	case '8':
+            	return '30 月龄儿童健康检查记录表';
+          	case '9':
+            	return '3 岁儿童健康检查记录表';
+          	case '10':
+            	return '4 岁儿童健康检查记录表';
+          	case '11':
+            	return '5 岁儿童健康检查记录表';
+          	case '12':
+           	 	return '6 岁儿童健康检查记录表';
+          	case '13':
+            	return '6 月龄儿童中医药健康管理服务记录表';
+          	case '14':
+            	return '12 月龄儿童中医药健康管理服务记录表';
+          	case '15':
+            	return '18 月龄儿童中医药健康管理服务记录表';
+          	case '16':
+            	return '24 月龄儿童中医药健康管理服务记录表';
+          	case '17':
+            	return '30 月龄儿童中医药健康管理服务记录表';
+          	case '18':
+            	return '36 月龄儿童中医药健康管理服务记录表';
+       	}
+   	}
+	//排序
+	function compare(attr) {
+		return function(a,b){
+	        var val1 = a[attr] - 0;
+	        var val2 = b[attr] - 0;
+	        return val1 - val2;
+       	}
+    }
+	$("#listUl").on("click", ".docLi", function () {
+		$("#listUl").find(".docLi").removeClass("liact");
+		$(this).addClass("liact");
+		var ids = $(this).attr("ids");
+		var stage =  $(this).attr("stage");
+		if (stage == '0') {
+			getNewborn(ids);
+		} else if (stage == '1' || stage == '2' || stage == '3' || stage == '4') {
+			$("#stage1").html(childStage(stage));
+			getToEight(ids);
+		} else if (stage == '5' || stage == '6' || stage == '7' || stage == '8') {
+			$("#stage2").html(childStage(stage));
+			getTwelveToThirty(ids);
+		} else if (stage == '9' || stage == '10' || stage == '11' || stage == '12') {
+			$("#stage3").html(childStage(stage));
+			getThreeToSix(ids);
+		} else if (stage == '13' || stage == '14' || stage == '15' || stage == '16' || stage == '17' || stage == '18') {
+			$("#stage4").html(childStage(stage));
+			getMedicine(ids, stage);
+		}
+	})
+    // 新生儿家庭访视记录表
+    function getNewborn(ids){
+		$(".litab").css('display', 'none');
+		$(".newborn").css('display', 'block');
+		var jsonParam = new Object();
+		jsonParam.id = ids;
+		var authorCookie = getCookie("author");
+		var bornArr = [
+			'xbName', 'csrq', 'sfzh', 'jtzz',
+			'fqm', 'fqgz', 'fqdh', 'fqcsrq',
+			'mqm', 'mqgz', 'mqdh', 'mqcsrq',
+			'csyz', 'mqrsqhbqkName', 'zcjgmc', 'csqkName', 'xsezxName', 
+			'sfjxName', 'xsetlscName', 'xsejbscName', 'cstz', 'mqtz', 
+			'cssc', 'wyfsName', 'cnl', 'cncs', 'otName', 
+			'dbName', 'dbcs', 'tw', 'ml', 'hxpl', 
+			'msName', 'hdName', 'xmName', 'zx', 'yx', 'ywgName', 'szhddName', 
+			'ewgName', 'jbbkName', 'bzName', 'pfName', 'kqName', 'gmName', 
+			'xftzName', 'chestName', 'fbczName', 'jzName', 'wszqName', 
+			'qdName', 'zzjyName', 'zzyy', 'jgjks', 'zdName', '', 
+			'bcsfrq', 'xcsfdd', 'xcsfrq'
+		];
+        $.ajax({
+        	type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/follow/getXse',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success:function(res) {                
+                if(res.retCode == 0) {
+                	for (var key in res.data) {
+                		if (res.data[key] == null || res.data[key] == '') {
+                			res.data[key] = '无数据';
+                		}
+                	}
+                	for (var i = 0; i < bornArr.length; i++) {
+						var born = (bornArr[i] + "").replace(/\d+/g,'');
+						$("#"+bornArr[i]).html(res.data[born]);
+					} 
+                }
+            },
+            error:function(){
+                alert("加载资源失败");
+            }
+        });
+    };
+    // 满月～八月儿童健康检查记录表
+    function getToEight(ids){
+    	$(".litab").css('display', 'none');
+		$(".toEight").css('display', 'block');
+		var jsonParam = new Object();
+		jsonParam.id = ids;
+		var authorCookie = getCookie("author");
+		var eightArr = [
+			'sfrq', 'tz', 'tzfxName', 'sc', 'scfxName', 
+			'tw1', 'msName1', 'pfName1', 'xmName1', 'qxm', 'hxm',
+			'jbbkName1', 'ywgName1', 'ewgName1', 'tlName', 'kqName1', 
+			'chestName1', 'fbName', 'qbName', 'szName', 'kyglbzzName', 
+			'kyglbtzName', 'gmhwszqName', 'xhdbz', 'hwhd', 'fywssd', 
+			'fypgName', 'lcsfjhbqkName', 'lcsfjhbqkName', 'fy1', 			
+			'fx1', 'ws1', 'zzjyName1', 'zzyy1', 
+			'jgjks1', 'zdName1', 'xcsfrq1'
+		];
+        $.ajax({
+        	type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/follow/getEt1',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success:function(res) {                
+                if(res.retCode == 0) {
+                	for (var key in res.data) {
+                		if (res.data[key] == null || res.data[key] == '') {
+                			res.data[key] = '无数据';
+                		}
+                	}
+                	for (var i = 0; i < eightArr.length; i++) {
+						var eight = (eightArr[i] + "").replace(/\d+/g,'');
+						$("#"+eightArr[i]).html(res.data[eight]);
+					} 
+                	$("#qt11").html(res.data.qt1);                
+                	var lcsf = res.data.lcsfjhbqkName + ''
+                	$("#fy1").parent(".consLi").css("display", lcsf.indexOf('肺炎') > -1 ? 'block' : 'none');
+                	$("#fx1").parent(".consLi").css("display", lcsf.indexOf('腹泻') > -1 ? 'block' : 'none');
+                	$("#ws1").parent(".consLi").css("display", lcsf.indexOf('外伤') > -1 ? 'block' : 'none');
+                	$("#qt11").parent(".consLi").css("display", lcsf.indexOf('其他') > -1 ? 'block' : 'none');
+                }
+            },
+            error:function(){
+                alert("加载资源失败");
+            }
+        });
+    };
+    // 12～30月龄儿童健康检查记录表
+    function getTwelveToThirty(ids){
+    	$(".litab").css('display', 'none');
+		$(".twelveToThirty").css('display', 'block');
+		var jsonParam = new Object();
+		jsonParam.id = ids;
+		var authorCookie = getCookie("author");
+		var ttArr = [
+			'sfrq2', 'tz2', 'tzfxName2', 'sc2', 'scfxName2', 
+			'msName2', 'pfName2', 'xinmenName', 'qxm1', 'hxm1', 
+			'ywgName2', 'ewgName2', 'tlName2', 'zcy', 'ycy', 
+			'chestName2', 'fbName2', 'szName2', 'btName', 'kyglbtzName2', 
+			'xhdbz2', 'hwhd2', 'fywssd2', 'fypgName2', 'lcsfjhbqkName2', 
+			'fy2', 'fx2', 'ws2', 'zzjyName2', 'jgjks2',
+			'zzyy2', 'zdName2', 'xcsfrq2'
+		];
+        $.ajax({
+        	type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/follow/getEt3',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success:function(res) {                
+                if(res.retCode == 0) {
+                	for (var key in res.data) {
+                		if (res.data[key] == null || res.data[key] == '') {
+                			res.data[key] = '无数据';
+                		}
+                	}
+                	for (var i = 0; i < ttArr.length; i++) {
+						var tt = (ttArr[i] + "").replace(/\d+/g,'');
+						$("#"+ttArr[i]).html(res.data[tt]);
+					}
+                	$("#qt12").html(res.data.qt1);                
+                	var lcsf = res.data.lcsfjhbqkName + ''
+                	$("#fy2").parent(".consLi").css("display", lcsf.indexOf('肺炎') > -1 ? 'block' : 'none');
+                	$("#fx2").parent(".consLi").css("display", lcsf.indexOf('腹泻') > -1 ? 'block' : 'none');
+                	$("#ws2").parent(".consLi").css("display", lcsf.indexOf('外伤') > -1 ? 'block' : 'none');
+                	$("#qt12").parent(".consLi").css("display", lcsf.indexOf('其他') > -1 ? 'block' : 'none');
+                }
+            },
+            error:function(){
+                alert("加载资源失败");
+            }
+        });
+    };
+     // 3～6岁儿童健康检查记录表
+	function getThreeToSix(ids){
+	  	$(".litab").css('display', 'none');
+		$(".threeToSix").css('display', 'block');
+		var jsonParam = new Object();
+		jsonParam.id = ids;
+		var authorCookie = getCookie("author");
+		var tsArr = [
+			'sfrq3', 'tz3', 'tzfxName3', 'sc3', 'scfxName3', 
+			'tgfypjName', 'sl', 'tlName3', 'zc', 'yc', 'chestName3', 
+			'fbName3', 'xhdbz3', 'qt', 'fypgName3', 'lcsfjhbqkName3', 
+			'fy3', 'fx3', 'ws3', 'zzjyName3', 
+			'zzyy3', 'zd3', 'xcsfrq3', 'tsdj', 'ts'
+		];
+   		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			async: false,
+			contentType: 'application/json',
+			url: roadPath + '/health/follow/getEt6',
+			data: JSON.stringify(jsonParam),
+			beforeSend: function (XMLHttpRequest) {
+				XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+			},
+      			success:function(res) {                
+				if(res.retCode == 0) {
+           			for (var key in res.data) {
+		           		if (res.data[key] == null || res.data[key] == '') {
+		           			res.data[key] = '无数据';
+		           		}
+           			}
+           			for (var i = 0; i < tsArr.length; i++) {
+						var ts = (tsArr[i] + "").replace(/\d+/g,'');
+						$("#"+tsArr[i]).html(res.data[ts]);
+					}         
+           			$("#qt13").html(res.data.qt1);                
+                	var lcsf = res.data.lcsfjhbqkName + ''
+                	$("#fy3").parent(".consLi").css("display", lcsf.indexOf('肺炎') > -1 ? 'block' : 'none');
+                	$("#fx3").parent(".consLi").css("display", lcsf.indexOf('腹泻') > -1 ? 'block' : 'none');
+                	$("#ws3").parent(".consLi").css("display", lcsf.indexOf('外伤') > -1 ? 'block' : 'none');
+                	$("#qt13").parent(".consLi").css("display", lcsf.indexOf('其他') > -1 ? 'block' : 'none');
+                	switch (res.data.tsdj) {
+						case '1':
+						  return '上';
+						case '2':
+						  return '中';
+						case '3':
+						  return '下';
+						default:
+						  return '无数据';
+					}                	
+      			}
+			},
+			error:function(){
+			    alert("加载资源失败");
+			}
+		});
+   	};
+ // 儿童中医药
+	function getMedicine(ids, stage){
+	 	var urls = '';
+	 	'zyyglfwName', 'zyyjkglfwName'       
+		if (stage === '13' || stage === '14' || stage === '15') {
+			urls = '/health/follow/getEt1Zyy';
+			$("#zyyglfwName").css('display','block');
+			$("#zyyjkglfwName").css('display','none');
+		} else if (stage === '16' || stage === '17' || stage === '18') {
+			urls = '/health/follow/getEt3Zyy';
+			$("#zyyglfwName").css('display','none');
+			$("#zyyjkglfwName").css('display','block');
+		}
+	  	$(".litab").css('display', 'none');
+		$(".medicine").css('display', 'block');
+		var jsonParam = new Object();
+		jsonParam.id = ids;
+		var authorCookie = getCookie("author");
+		var MedArr = [
+			'sfrq4', 'zyyglfwName', 'zyyjkglfwName', 'xcsfrq4'
+		];
+   		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			async: false,
+			contentType: 'application/json',
+			url: roadPath + '' + urls,
+			data: JSON.stringify(jsonParam),
+			beforeSend: function (XMLHttpRequest) {
+				XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+			},
+      			success:function(res) {                
+				if(res.retCode == 0) {
+           			console.log(res.data);
+           			for (var key in res.data) {
+		           		if (res.data[key] == null || res.data[key] == '') {
+		           			res.data[key] = '无数据';
+		           		}
+           			}
+           			for (var i = 0; i < MedArr.length; i++) {
+						var med = (MedArr[i] + "").replace(/\d+/g,'');
+						$("#"+MedArr[i]).html(res.data[med]);
+					}	           		    		
+      			}
+			},
+			error:function(){
+			    alert("加载资源失败");
+			}
+		});
+   	};
+</script>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/residentBasicInfo/residentBasicInfo.css">
+    <link rel="stylesheet" href="../../css/followUpInfo/hypertension.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <style>
+        .my-tag{
+            height: 24px;
+            line-height: 24px;
+        }
+        .packBox {}
+        .spanff {display: inline-block;}
+        .icon_tip{
+        	top: 0px;
+            width: 18px; height: 18px;
+            /* border: 1px solid #F39800; */
+            cursor: pointer;
+            text-align: center;
+    		line-height: 18px;                        
+            font-size: 10px;
+            position:relative;overflow:hidden;
+        }
+        .icon_tip .radius1 {
+		  	position:absolute;width:100%;height:100%;
+			left: 0; top: 0;
+			border: 18px dotted;
+			border-radius:50%;/*主流浏览器支持的属性*/
+			border-width:0vw;/*vw 可是窗口的宽度单位；*/
+			margin:0vw;
+			color: #F39800;
+			background-color:currentColor;
+		}
+		.icon_tip .radius2 {
+		  	position:absolute;
+		  	width:100%;height:100%;
+		  	width:calc(100% - 2px);height:calc(100% - 2px); 
+			left: 1px;top: 1px;
+			border: 16px dotted;
+			border-radius:50%;/*主流浏览器支持的属性*/
+			border-width:0vw;/*vw 可是窗口的宽度单位；*/
+			margin:0vw;
+			color: #ffffff;
+			background-color:currentColor;
+		}
+		.icon_tip>p {
+			 position:relative;
+			 color: #F39800;
+		}
+        .infoUl{
+            padding: 20px;
+        }
+        .myTab.contUl{
+            overflow-y: unset;
+            padding: 0;
+        }
+        .myTab .rightCard .consLi .cons-label{
+            width: auto;
+            float: left;
+        }
+        .myTab .rightCard .consLi .cons-txt{
+            float: right;
+        }
+        .myTab .rightCard .consLi.myLi .cons-label{
+            width: 200px;
+        }
+        .myTab .rightCard .consLi.myLi .cons-txt{
+            float: left;
+        }
+        .myDialog{
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            /* -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); */
+            margin: -200px 0 0 -15%;
+            height: 400px; 
+            /* height: auto; */
+            background: #fff;
+            overflow-y: auto;
+            width: 30%;
+            -webkit-box-shadow: 0px 3px 21px 0px rgba(65,58,120,0.23);
+            -moz-box-shadow: 0px 3px 21px 0px rgba(65,58,120,0.23);
+            box-shadow: 0px 3px 21px 0px rgba(65,58,120,0.23);
+          	border: 1px solid #ccc;
+        }
+        .myDialog .dialog_title{
+            padding: 20px 20px 10px 20px;
+            font-size: 18px;
+            color: #497BFB;
+            line-height: 1;
+        }
+        .myDialog .dialog_close{
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+		    top: 15px;
+		    right: 20px;
+        }
+        .myDialog .dialog_content{
+            padding: 0px 20px 20px 20px;
+		    line-height: 30px;
+		    color: #888;
+		    height: 310px;
+		    overflow-y: auto;
+        }
+        .pageCont {position: relative;}
+		.wait {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 20px;
+			line-height: 150px; text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata {
+			background: #fff;
+			width: 100%;height:100%;
+			font-size: 18px; 
+			display:none;
+			text-align: center;
+			position: absolute; left:0;top:0;
+			z-index: 2000;
+		}
+		.nodata img {
+			display:block; margin: 50px auto;
+			width: auto;height:65%;
+		} 
+    </style>
+</head>
+<body>
+    <div class="pageBox">
+        <ul class="pageTab">
+            <li class="litabact"><i class="underI"></i>签约协议</li>
+            <li><i class="underI"></i>签约服务</li>
+        </ul>
+        <div class="pageCont">
+            <ul class="contUl myTab">
+                <li class="contLi actCont" style="height: 100%;overflow-y: auto;position: relative;" myloading="true">
+                    <div class="wait">
+						请稍等...
+					</div> 
+					<div class="nodata">
+						<img src="../../img/img_zwsj.png"/>
+						<div>暂无数据</div>
+					</div>
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">团队长</div>
+                            <div id="teamLeaderId" name="teamLeaderId"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">团队名称</div>
+                            <div id="teamName" name="teamName"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">团队电话</div>
+                            <div id="teamTelephone" name="teamTelephone"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">团队成员</div>
+                            <div id="teamuserlist"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">所属机构</div>
+                            <div id="adderss" name="adderss"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">服务包名称</div>
+                            <div id="servicePackage">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">附件</div>
+                            <div id="serviceImagList"></div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi" myloading="true" style="background: #f3f3fb">
+                	<div class="wait">
+						请稍等...
+					</div> 
+					<div class="nodata">
+						<img src="../../img/img_zwsj.png"/>
+						<div>暂无数据</div>
+					</div>
+                    <div class="leftCard">
+                        <ul class="docUl" id="signlist">
+                        </ul>
+                    </div>
+                    <div class="rightCard">
+                        <ul class="consUl">
+                            <li class="consLi">
+                                <div class="cons-label">服务包</div>
+                                <div class="cons-txt" id="servicepackageName"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">服务项目</div>
+                                <div class="cons-txt" id="serviceprojectName"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">项目描述</div>
+                                <div class="cons-txt" id="projectDesc"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">责任医生</div>
+                                <div class="cons-txt" id="doctorId"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">所在团队</div>
+                                <div class="cons-txt" id="teamName1"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">所在机构</div>
+                                <div class="cons-txt" id="orgname"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">履约类型</div>
+                                <div class="cons-txt" id="servicetypeText"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">履约时间</div>
+                                <div class="cons-txt" id="serviceTime"></div>
+                            </li>
+                            <li class="consLi">
+                                <div class="cons-label">履约服务描述</div>
+                                <div class="cons-txt" id="specification"></div>
+                            </li>
+                        </ul>
+                    </div>
+                	<div style="clear:both;"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+    	//设置菜单事件
+    	setMenuEvent();
+    	//获取签约协议信息
+    	getSignTreaty();
+    	
+    	$("#signlist").on("click", ".docLi", function () {
+			$("#signlist").find(".docLi").removeClass("liact");
+			$(this).addClass("liact");
+			var ids = $(this).attr("ids").split(",");
+			getSignServiceInfo(ids[0], ids[1], ids[2]);
+		});
+    });
+    
+    //获取签约协议信息
+    function getSignTreaty(){
+    	var jsonParam = new Object();
+	    jsonParam.jmId = parent.document.getElementById('archiveId').value;;
+	    var authorCookie = getCookie("author");
+	    $.ajax({
+	        type: 'POST',
+	        dataType: "json",
+	        async: false,
+	        contentType: 'application/json',
+	        url: roadPath + '/health/sign/getSignInfo',
+	        data: JSON.stringify(jsonParam),
+	        beforeSend: function (XMLHttpRequest) {
+	        	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+	        },
+	        success: function (resultMsg) {
+	        	if(resultMsg.retCode == 0){
+	        		$(".wait").eq(0).css('display', 'none');
+	        		if (resultMsg.data != '{}') {
+	        			$("#teamuserlist").html("");
+	        			$("#servicePackage").html("");
+	        			$("#serviceImagList").html("");
+	        			$('#teamLeaderId').text($.util.isNull(resultMsg.data.sysTeam.teamLeaderId) ? "无数据" : resultMsg.data.sysTeam.teamLeaderId);
+		        		$('#teamName').text($.util.isNull(resultMsg.data.sysTeam.teamName) ? "无数据" : resultMsg.data.sysTeam.teamName);
+		        		$('#teamTelephone').text($.util.isNull(resultMsg.data.sysTeam.healthPhone) ? "无数据" : resultMsg.data.sysTeam.healthPhone);
+		        		//团队
+		        		var teamUserArr = resultMsg.data.sysTeam.teamUserList;
+		        		if(teamUserArr.length > 0){
+		        			var teamuserStr = '';
+		        			for(var i = 0; i < teamUserArr.length; i++){
+		        				teamuserStr += '<div><span>'+teamUserArr[i].userId+'</span><span class="my-tag">'+teamUserArr[i].teamRoleName+'</span></div>';
+		        			}
+		        			$("#teamuserlist").append(teamuserStr);
+		        		}else{
+		        			$("#teamuserlist").append("无数据");
+		        		}
+		        		$('#adderss').text($.util.isNull(resultMsg.data.adderss) ? "无数据" : resultMsg.data.adderss);
+		        		//服务包
+		        		var servicePackageArr = resultMsg.data.servicePackageList;
+		        		if(servicePackageArr.length == 0){
+		        			$("#servicePackage").append("无数据");
+		        		}else{
+		        			var servicePackageStr = '';
+		        			for(var i = 0; i < servicePackageArr.length; i++){
+		        				servicePackageStr += '<div class="packBox">'+
+						                                '<span class="spanff">'+servicePackageArr[i].packageName+'</span>'+
+						                                '&nbsp;&nbsp;<span class="spanff icon_tip"><i class="radius1"></i><i class="radius2"></i><p>!</p></span>'+
+						                                '<div class="myDialog">'+
+						                                    '<div class="dialog_title">服务项 <span class="dialog_close">×</span></div>';
+						         //服务包
+						         var serviceProjctArr = servicePackageArr[i].serviceProjctList;
+						         if(serviceProjctArr.length == 0){
+						        	 servicePackageStr += '<div class="dialog_content">无数据</div>';
+						         }else{
+						        	 servicePackageStr += '<div class="dialog_content">';
+						        	 for(var s = 0; s < serviceProjctArr.length; s++){
+						        		 servicePackageStr += '<div style="color:#606266; font-size:14px; word-break: break-all;">'+serviceProjctArr[s].projectName+'</div>';
+						        	 }
+						        	 servicePackageStr += '</div>';
+						         }                        
+						         servicePackageStr += '</div></div>';
+		        			}
+		        			$("#servicePackage").append(servicePackageStr);
+		        			$(".packBox").css({
+		        	        	width: $(".infoUl").width() - 300 + 'px'
+		        	        });
+		        		}
+		        		//服务附件
+		        		var imgArr = resultMsg.data.imgList;
+		        		if(imgArr.length == 0){
+		        			$("#serviceImagList").append("图片路径暂没有");
+		        		}else{
+		        			var serviceImagStr = '';
+		        			for(var i = 0; i < imgArr.length; i++){
+		        				serviceImagStr += '<div class="dialog_content">'+imgArr[i]+'</div>';
+		        			}
+		        			$("#serviceImagList").append(serviceImagStr);
+		        		}
+	        		} else {
+	        			$(".nodata").eq(0).css('display', 'block');
+	        		}
+	        	}
+	        },
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        
+	        }
+	    });
+    }
+    //获取签约服务列表
+    function getSignService(){
+    	var jsonParam = new Object();
+		var page = new Object;
+	    jsonParam.jmId = parent.document.getElementById('archiveId').value;
+	    var authorCookie = getCookie("author");
+	    $.ajax({
+	        type: 'POST',
+	        dataType: "json",
+	        async: false,
+	        contentType: 'application/json',
+	        url: roadPath + '/health/sign/getSignServiceList',
+	        data: JSON.stringify(jsonParam),
+	        beforeSend: function (XMLHttpRequest) {
+	        	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+	        },
+	        success: function (resultMsg) {
+	        	if(resultMsg.retCode == 0){
+	        		$(".wait").eq(1).css('display', 'none');
+	        		var signServiceArr = resultMsg.data;
+	        		var signServiceStr = '';
+	        		if(signServiceArr != '{}' && signServiceArr.length > 0){
+	        			$("#signlist").html("");
+	        			//获取列表的第一个签约服务的详情
+	        			getSignServiceInfo(signServiceArr[0].packageId, signServiceArr[0].projectId, signServiceArr[0].signId);
+	        			//拼接列表
+	        			for(var i = 0; i < signServiceArr.length; i++){
+	        				var recordIds = signServiceArr[0].packageId + "," +  signServiceArr[0].projectId + "," +  signServiceArr[0].signId;
+	        				signServiceStr += '<li class="docLi" ids="'+recordIds+'">'+
+					                                '<div class="docLi-icon"><div><i class="radius"></i><p>签</p></div></div>'+
+					                                '<div class="docLi-cont">'+
+					                                    '<div class="doc-cont">'+
+					                                        '<div>'+
+					                                            '<span>'+signServiceArr[i].serviceprojectName+'</span>'+
+					                                            '<span>（'+signServiceArr[i].recordCount+'）</span>'+
+					                                        '</div>'+
+					                                        '<div style="margin-top: 5px" class="doc-cont-rem">'+
+					                                            '<span>责任医生</span>&nbsp;'+
+					                                            '<span>'+signServiceArr[i].doctorId+'</span>&nbsp;'+
+					                                            '<span>履约类型</span>&nbsp;'+
+					                                            '<span>'+signServiceArr[i].servicetypeText+'</span>'+
+					                                        '</div>'+
+					                                    '</div>'+
+					                                    '<div class="doc-time">'+signServiceArr[i].serviceTime+'</div>'+
+					                                '</div>'+
+					                                '<div style="clear: both"></div>'+
+					                            '</li>';
+	        			}
+	        		} else {
+	        			$(".nodata").eq(1).css('display', 'block');   
+	        		}	        	
+	        		$("#signlist").append(signServiceStr);
+	        		$(".docUl").find(".docLi").eq(0).addClass("liact");
+	        		var userAgent = navigator.userAgent;
+    				var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                    reIE.test(userAgent);
+                    var fIEVersion = parseFloat(RegExp["$1"]);
+    				if (fIEVersion == 7) {
+    					$(".docLi-cont").css ({
+        		            width: $(".leftCard").width() - 80 + 'px'
+        		        });
+    				} else {
+    					$(".docLi-cont").css ({
+        		            width: $(".leftCard").width() - 80 + 'px'
+        		        });
+    				}
+	        	}
+	        },
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        
+	        }
+	    });
+    }
+    //获取签约服务信息
+    function getSignServiceInfo(packageId, projectId, signId){
+		var jsonParam = new Object();
+	    jsonParam.packeageId = packageId;
+	    jsonParam.projectId = projectId;
+	    jsonParam.signId = signId;
+	    var authorCookie = getCookie("author");
+	    $.ajax({
+	        type: 'POST',
+	        dataType: "json",
+	        async: false,
+	        contentType: 'application/json',
+	        url: roadPath + '/health/sign/getSignServiceInfo',
+	        data: JSON.stringify(jsonParam),
+	        beforeSend: function (XMLHttpRequest) {
+	        	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+	        },
+	        success: function (resultMsg) {
+	        	if(resultMsg.retCode == 0){
+	        		$('#servicepackageName').text($.util.isNull(resultMsg.data[0].servicepackageName) ? "无数据" : resultMsg.data[0].servicepackageName);
+	        		$('#serviceprojectName').text($.util.isNull(resultMsg.data[0].serviceprojectName) ? "无数据" : resultMsg.data[0].serviceprojectName);
+	        		$('#projectDesc').text($.util.isNull(resultMsg.data[0].projectDesc) ? "无数据" : resultMsg.data[0].projectDesc);
+	        		$('#doctorId').text($.util.isNull(resultMsg.data[0].doctorId) ? "无数据" : resultMsg.data[0].doctorId);
+	        		$('#teamName1').text($.util.isNull(resultMsg.data[0].teamName) ? "无数据" : resultMsg.data[0].teamName);
+	        		$('#orgname').text($.util.isNull(resultMsg.data[0].orgname) ? "无数据" : resultMsg.data[0].orgname);
+	        		$('#servicetypeText').text($.util.isNull(resultMsg.data[0].servicetypeText) ? "无数据" : resultMsg.data[0].servicetypeText);
+	        		$('#serviceTime').text($.util.isNull(resultMsg.data[0].serviceTime) ? "无数据" : resultMsg.data[0].serviceTime);
+	        		$('#specification').text($.util.isNull(resultMsg.data[0].specification) ? "无数据" : resultMsg.data[0].specification);
+	        	}
+	        },
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        
+	        }
+	    });
+	}
+  	//设置菜单事件
+    function setMenuEvent(){
+    	$(".pageTab li").click(function () {
+            $(".pageTab li").removeClass("litabact");
+            $(this).addClass("litabact");
+            var ind = $(this).index();
+            $(".contLi").removeClass("actCont");
+            $(".contLi").eq(ind).addClass("actCont");
+            if(mytrim(this.innerHTML).indexOf('签约协议') > -1){
+            	getSignTreaty();
+            }else if(mytrim(this.innerHTML).indexOf('签约服务') > -1){
+            	getSignService();
+            }
+        });
+
+        var pageHeight = $(window).height();
+        function divResize () {
+            pageHeight = $(window).height();
+            $(".pageCont").css({
+                height: pageHeight - 80 + 'px'
+            });
+            $(".contUl").css ({
+                height: $(".pageCont").height() + 'px'
+            });
+            $(".infoUl li").css ({
+                width: $(".infoUl li").width() - 40 + 'px'
+            });
+            $(".leftCard").css ({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.35 + 'px'
+            });
+            $(".rightCard").css ({
+                height: $(".pageCont").height() - 40 + 'px',
+                width: $(".pageCont").width() * 0.65 - 40 - 15  + 'px'
+            });
+        }
+        divResize();
+        $(window).resize(function(){
+            divResize();
+        });
+        $('#servicePackage').on('click','.icon_tip',function () {
+        	$('.myDialog').hide();
+            $(this).next().show();
+        });
+        $('#servicePackage').on('click','.dialog_close',function () {
+            $(this).parents('.myDialog').hide();
+        });
+    }
+</script>
+</html>

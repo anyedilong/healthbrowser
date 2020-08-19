@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/PhysicExamInfo/PhysicExamInfo.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+    <link rel="stylesheet" href="../../css/pagination.css">
+    <script src="../../js/jquery.pagination.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <style>
+    	.table-nodata{
+    		line-height: 40px;
+    		text-align: center;
+    		color: #888888;
+    		display: none;
+    		font-size: 14px;
+    		border-bottom: 1px solid #EBEEF5;
+    	}
+    </style>
+</head>
+<body>
+    <div class="pageBox">
+        <div class="pageCont">
+            <div class="tableCard">
+                <table class="my-table hov-table">
+                    <thead>
+                        <tr>
+                            <th>体检编号</th>
+                            <th style="width: 100px">体检日期</th>
+                            <th style="width: 120px">责任医生</th>
+                            <th style="min-width: 400px">体检机构</th>
+                            <th>管理</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="table-nodata">暂无数据</div>
+                <div class="pagingBox">
+                    <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        // 动态高度
+        var pageHeight = $(window).height();
+        function divResize () {
+            pageHeight = $(window).height();
+            $(".pageCont").css({height: pageHeight - 30 + 'px'});
+            $(".tableCard").css ({
+                height: $(".pageCont").height() - 40 + 'px'
+            });
+        }
+        divResize();
+        $(window).resize(function(){
+            divResize();
+        });
+        // 跳详情页
+        var urls = '';
+        var windowparent = window.parent;
+        $(".my-table").on('click', '.tableicon', function () {
+            var ids = $(this).parents("tr").attr("tjId");
+            urls = 'PhysicExamInfo/PhysicExamDetail.html?id=' + ids;
+            windowparent.$('#mainIframe').attr('src', urls);
+        })
+
+        // 动态数据处理
+        // 分页
+        function paginationInit (totalPage) {
+            $("#myPage").pagination(totalPage, {
+                num_edge_entries: 1, //边缘页数
+                num_display_entries: (totalPage > 4 ? 4 : totalPage), //主体页数
+                callback: pageselectCallback,
+                items_per_page: 1 //每页显示1项
+            });
+        }
+        function pageselectCallback(page_index, jq){
+            if(jq.length !== undefined){
+                getTableInfo(page_index + 1);
+            }
+        }
+        getTableInfo(1);
+        // 动态表格
+        function getTableInfo(pageNo) {
+        	// console.log(parent.document.getElementById('archiveId').value);
+            var jsonParam = new Object();
+            var authorCookie = getCookie("author");
+            jsonParam = {
+                page: {
+                    pageNo: pageNo,
+                    pageSize: 10
+                },
+                jmId: parent.document.getElementById('archiveId').value
+            }
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: 'application/json',
+                url: roadPath + '/health/check/getCheckPage',
+                data: JSON.stringify(jsonParam),
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+                },
+                success: function (resultMsg) {
+                    if (resultMsg.retCode == 0) {
+                    	if (resultMsg.data.list.length == 0) {
+                    		$('.table-nodata').css('display', 'block');
+                    	}
+                        if (pageNo == 1) {
+                            paginationInit(resultMsg.data.totalPage);
+                        }
+                        addTable(resultMsg.data.list);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+        function addTable(arrs) {
+            $('.my-table tbody').html('');
+            for(var i = 0; i < arrs.length; i++) {
+                $('.my-table tbody').append('<tr tjId="' + arrs[i].id + '">' +
+                    '<td>' + arrs[i].tjbh + '</td>' +
+                    '<td>' + arrs[i].jcrq + '</td>' +
+                    '<td>' + arrs[i].ys + '</td>' +
+                    '<td>' + arrs[i].tjdw + '</td>' +
+                    '<td><i class="tableicon iconfont">&#xe604;</i></td></tr>');
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,65 @@
+@charset "utf-8";
+@import "../base";
+@import "../commen";
+.pageBox {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  overflow: auto; overflow: hidden;
+}
+.pageTab {
+  background: #fff; height: $lineHeight + 10px; width: 100%;
+  @include boxShadow(0px 10px 15px rgba(135,118,251,0.34) inset);
+  li {
+    position: relative;
+    float: left; margin-top: 10px;
+    line-height: $lineHeight; height: $lineHeight; font-size: $font_size_lg;
+    min-width: 120px; text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  li.litabact {
+    color: #503BDE;
+    &:after {
+      content: ''; position: absolute;
+      width: 40px; height: 4px; border-radius: 2px;
+      bottom: 3px; left: 50%; margin-left: -20px;
+      background: #503BDE;
+    }
+  }
+}
+.pageCont {
+  padding: 15px;
+  height: calc(100% - 50px);
+}
+.contUl {
+  @include roundCorner;
+  height: 100%; overflow-y: auto;
+  background: #fff; padding: 20px;
+}
+.contLi {
+  display: none;
+}
+.actCont {display: block}
+.infoUl {
+  li {
+    @include clear; width: 100%;
+    font-size: 15px;
+    line-height: $lineHeight; margin-bottom: 10px;
+    border-bottom: 1px solid $borderColor;
+  }
+  li > div {
+    float: left;
+  }
+  .liLabel {
+    width: 200px;
+  }
+}
+.jiwangDiv {
+  float: none; height: $lineHeight;
+}
+.infotxt {
+  width: 300px; float: left;
+}
+.infotime {
+  width: 300px; float: left;
+}

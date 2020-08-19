@@ -1,0 +1,46 @@
+@charset "utf-8";
+@import "base";
+//公共样式
+* {
+  margin: 0; padding: 0;
+}
+li {list-style: none;}
+iframe {
+  border: none;
+}
+@mixin clear {
+  zoom: 1;
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+.my-tag {
+  display: inline-block; font-size: 12px;
+  padding: 1px 8px; background: lightcoral;
+  color: #ffffff; border-radius: 3px; margin-left: 5px;
+}
+.my-table {
+  line-height: $lineHeight;
+  width: 100%; font-size: 14px; border: none;
+  border-spacing: 0; text-indent: 3px;
+  border-collapse: collapse;
+}
+.my-table i {cursor: pointer; color: $mainColor}
+.my-table tr th {
+  color: #645e62;
+  text-align: left;
+}
+.my-table tr.bgtr th {
+  background: #f3f3fb;
+}
+.my-table tr td {
+  border-bottom: 1px solid #f3f3fb; color: #939192;
+}
+.my-table.hov-table tbody tr:hover {
+  background: #f3f3fb;
+}

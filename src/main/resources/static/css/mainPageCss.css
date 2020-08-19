@@ -1,0 +1,207 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0; }
+
+li {
+  list-style: none; }
+
+iframe {
+  border: none; }
+
+.my-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 1px 8px;
+  background: #497bfb;
+  color: #ffffff;
+  border-radius: 3px;
+  margin-left: 5px; }
+
+.my-table {
+  line-height: 40px;
+  width: 100%;
+  font-size: 14px;
+  border: none;
+  border-spacing: 0;
+  text-indent: 3px;
+  border-collapse: collapse; }
+
+.my-table i {
+  cursor: pointer;
+  color: #497BFB; }
+
+.my-table tr th {
+  color: #645e62;
+  text-align: left; }
+
+.my-table tr.bgtr th {
+  background: #f3f3fb; }
+
+.my-table tr td {
+  border-bottom: 1px solid #f3f3fb;
+  color: #939192; }
+
+.my-table.hov-table tbody tr:hover {
+  background: #f3f3fb; }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  overflow: hidden;
+  color: #434445; }
+
+.mainPage {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  color: #434445;
+  background: #f3f3fb; }
+
+.headBox {
+  width: 100%; }
+  .headBox .headCont {
+    height: 130px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    *height: 90px;
+    color: #F4F6FC;
+    /* background: #6861f9; */
+    background: -webkit-linear-gradient(left, #5233f3, #6861f9);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #5233f3, #6861f9);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #5233f3, #6861f9);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #5233f3, #6861f9);
+     filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr="#5233f3", endColorstr="#6861f9", gradientType="1");
+    /* 标准的语法 */ }
+    .headBox .headCont .residentName {
+      font-size: 22px; }
+
+.InfoBox {
+  float: left;
+  margin-right: 50px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #F4F6FC; }
+
+.InfoBox:nth-child(1) {
+  margin-right: 80px; }
+
+.resSex, .resyears {
+  float: left; }
+
+.resSex {
+  height: 38px;
+  width: 38px;
+  text-align: center;
+  line-height: 38px;
+  /* background: #5e51eb; */
+  font-size: 18px; 
+  position:relative;overflow:hidden;
+  }
+.resSex .radius1 {
+  position:absolute;width:100%;height:100%;
+  left: 0; top: 0;
+  border-radius:50%;/*主流浏览器支持的属性*/
+  border: 38px dotted;
+  border-width:0vw;/*vw 可是窗口的宽度单位；*/
+  margin:0vw;
+  color: #9084F8;
+  background-color:currentColor;
+}
+.resSex .radius2 {
+  position:absolute;
+  width:100%;height:100%;
+  width:calc(100% - 2px);height:calc(100% - 2px); 
+  left: 1px;top: 1px;
+  border-radius:50%;/*主流浏览器支持的属性*/
+  border: 36px dotted;
+  border-width:0vw;/*vw 可是窗口的宽度单位；*/
+  margin:0vw;
+  color: #5e51eb;
+  background-color:currentColor;
+}
+.resSex .ptext{
+ position:relative;
+ color:#fff;
+}
+.resyears {
+  font-size: 14px;
+  margin-left: 10px; }
+
+.bodyBox {
+  width: 100%;
+  height: calc(100% - 130px); }
+
+.leftMenu {
+  position: absolute;
+  width: 200px;
+  left: 0;
+  overflow-x: hidden;
+  background: #0A0722; }
+
+.menubox {
+  width: 218px;
+  height: 100%;
+  overflow-y: auto; }
+
+.menuUl {
+  color: #7D7C86;
+  padding: 20px;
+  width: 160px; }
+
+.menuLi > div {
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  cursor: pointer; }
+  .menuLi > div i {
+    font-size: 24px;
+    margin: 0 10px 0 15px;
+    color: #51505F;
+    float: left;
+    line-height: 40px; }
+  .menuLi > div > div {
+    float: left; }
+  .menuLi > div.menuAct {
+    color: #F4F6FC;
+    background: #2e2a41; }
+    .menuLi > div.menuAct i {
+      color: #BFB6F9; }
+.menuLi .childMenu {
+  display: none; }
+.menuLi .childMenu > li {
+  font-size: 14px;
+  line-height: 40px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-indent: 50px; }
+  .menuLi .childMenu > li.erjiAct {
+    color: #F4F6FC; }
+
+.rightCont {
+  position: absolute;
+  right: 0;
+  left: 200px;
+  width: calc(100% - 200px);
+  height: 100%; }
+
+#mainIframe {
+  width: 100%;
+  height: 100%;
+  position: absolute; }
+
+/*# sourceMappingURL=mainPageCss.css.map */

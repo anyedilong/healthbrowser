@@ -1,0 +1,197 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+li {
+  list-style: none; }
+
+iframe {
+  border: none; }
+
+.my-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 1px 8px;
+  background: #497bfb;
+  color: #ffffff;
+  border-radius: 3px;
+  margin-left: 5px; }
+
+.my-table {
+  line-height: 40px;
+  width: 100%;
+  font-size: 14px;
+  border: none;
+  border-spacing: 0;
+  text-indent: 3px;
+  border-collapse: collapse; }
+
+.my-table i {
+  cursor: pointer;
+  color: #497BFB; }
+
+.my-table tr th {
+  color: #645e62;
+  text-align: left; }
+
+.my-table tr.bgtr th {
+  background: #f3f3fb; }
+
+.my-table tr td {
+  border-bottom: 1px solid #f3f3fb;
+  color: #939192; }
+
+.my-table.hov-table tbody tr:hover {
+  background: #f3f3fb; }
+
+.pageBox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  overflow: hidden; }
+
+.pageCont {
+  padding: 15px;
+  height: calc(100% - 50px); }
+
+.leftCard, .rightCard {
+  float: left;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  overflow-y: auto;
+  background: #fff;
+  padding: 20px; }
+
+.leftCard {
+  position: relative;
+  margin-right: 15px;
+  padding: 20px 0; }
+
+.docLi {
+	width:100%;
+  cursor: pointer; }
+  .docLi:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; 
+  }
+  .docLi .docLi-icon {
+    padding: 20px 0 20px 20px;
+    float: left; 
+  }
+  .docLi .docLi-icon>div {
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    line-height: 38px;
+    /* border-radius: 50%; */
+    font-size: 24px;
+    color: #F4F6FC;
+    /* background: #618BF9;  */
+    position:relative;overflow:hidden;
+  }
+  .docLi .docLi-icon>div>i {
+  	position:absolute;width:100%;height:100%;
+	left: 0; top: 0;
+	border-radius:50%;/*主流浏览器支持的属性*/
+	border: 38px dotted;
+	border-width:0vw;/*vw 可是窗口的宽度单位；*/
+	margin:0vw;
+	color: #618BF9;
+	background-color:currentColor;
+  }
+  .docLi .docLi-icon>div>p {
+  	 position:relative;
+  }
+  .docLi .docLi-cont {
+    float: left;
+    width: calc(100% - 60px);
+    box-sizing: border-box;
+    padding: 20px 20px 20px 0;
+    border-bottom: 1px solid #F2F6FD; }
+    .docLi .docLi-cont .doc-time {
+      font-size: 12px;
+      color: #888888;
+      float: right; }
+  .docLi.liact {
+    background: #F2FCFD; }
+    .liact .docLi-icon,.liact .docLi-cont {
+     background: #F2FCFD !important;
+    }
+
+.doc-cont {
+  margin-left: 10px;
+  float: left; }
+  .doc-cont > div:nth-child(1) {
+    font-size: 16px;
+    color: #2C3038; }
+  .doc-cont .doc-cont-rem {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #888888; }
+
+.rightCard .cardTit {
+  text-align: center;
+  font-size: 24px;
+  color: #2C3038;
+  margin-bottom: 30px; }
+.rightCard .consLi {
+  color: #2C3038;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #F2F6FD;
+  font-size: 16px;
+  line-height: 40px;
+  zoom: 1;
+  box-sizing: border-box; }
+  .rightCard .consLi:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  .rightCard .consLi .cons-label, .rightCard .consLi .cons-txt {
+    float: left; }
+  .rightCard .consLi .cons-label {
+    width: 200px; }
+
+.consPic > div {
+  float: left;
+  width: 115px;
+  height: 115px;
+  margin: 0 30px 10px 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+.consQianm > div {
+  width: 170px;
+  height: 70px; }
+
+.cons-txt.tizheng > div {
+  height: 40px; }
+  .cons-txt.tizheng > div span:nth-child(1) {
+    width: 150px;
+    display: inline-block; }
+
+.span-label {
+  width: 150px;
+  display: inline-block; }
+  
+.consQianm > div {
+  width: 168px !important;
+  height: 57px !important;
+  line-height: 57px !important;
+  text-align: center !important;
+  background: #EBEEFB !important;
+  color: #618BF9 !important;
+}
+  
+
+/*# sourceMappingURL=hypertension.css.map */

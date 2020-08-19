@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+li {
+  list-style: none; }
+
+iframe {
+  border: none; }
+
+.my-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 1px 8px;
+  background: lightcoral;
+  color: #ffffff;
+  border-radius: 3px;
+  margin-left: 5px; }
+
+.my-table {
+  line-height: 40px;
+  width: 100%;
+  font-size: 14px;
+  border: none;
+  border-spacing: 0;
+  text-indent: 3px;
+  border-collapse: collapse; }
+
+.my-table i {
+  cursor: pointer;
+  color: #497BFB; }
+
+.my-table tr th {
+  color: #645e62;
+  text-align: left; 
+  border-bottom: 1px solid #EBEEF5;
+}
+
+.my-table tr.bgtr th {
+  background: #f3f3fb; }
+
+.my-table tr td {
+  border-bottom: 1px solid #f3f3fb;
+  color: #939192; }
+
+.my-table.hov-table tbody tr:hover {
+  background: #f3f3fb; }
+
+.pagesBox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  overflow: hidden; }
+
+.pageCont {
+  padding: 15px;
+  height: calc(100% - 50px); }
+
+.tableCard {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  overflow-y: auto;
+  background: #fff;
+  padding: 20px; }
+
+/*# sourceMappingURL=PhysicExamInfo.css.map */

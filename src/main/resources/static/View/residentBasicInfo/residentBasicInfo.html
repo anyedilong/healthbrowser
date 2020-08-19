@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/residentBasicInfo/residentBasicInfo.css">
+    <link rel="stylesheet" href="../../img/iconfont/iconfont.css">
+    <script src="../../js/jquery-1.8.0.js"></script>
+    <script src="../../js/jquery.util.js"></script>
+    <script src="../../js/loginValidate.js"></script>
+    <script src="../../js/json2.js"></script>
+    <script src="../../img/iconfont/iconfont.js"></script>
+</head>
+<body>
+    <div class="pageBox">
+        <ul class="pageTab">
+            <li class="litabact">
+            	<i class="underI"></i>
+            	基本档案
+            </li>
+            <li><i class="underI"></i>既往史</li>
+            <li><i class="underI"></i>家族史</li>
+            <li><i class="underI"></i>家庭情况</li>
+            <li><i class="underI"></i>生活环境</li>
+        </ul>
+        <div class="pageCont">
+            <ul class="contUl">
+                <li class="contLi actCont" myloading="true">
+                	<div class="wait">
+                		请稍等...
+                	</div>                	
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">姓名</div>
+                            <div id="hzmc" name="hzmc"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">性别</div>
+                            <div id="xb" name="xb"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">联系人姓名</div>
+                            <div id="lxr" name="lxr"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">联系人电话</div>
+                            <div id="lxdh" name="lxdh"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">出生日期</div>
+                            <div id="csrq" name="csrq"></div>
+                        </li>
+                        <!--<li>-->
+                            <!--<div class="liLabel">是否死亡</div>-->
+                            <!--<div id="overFlg" name="overFlg">否</div>-->
+                        <!--</li>-->
+                        <li>
+                            <div class="liLabel">身份证号</div>
+                            <div id="sfzh" name="sfzh"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">工作单位</div>
+                            <div id="gzdw" name="gzdw"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">本人电话</div>
+                            <div id="sj" name="sj"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">常住类型</div>
+                            <div id="jzlx" name="jzlx"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">民族</div>
+                            <div id="mzText" name="mzText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">文化程度</div>
+                            <div id="whcdText" name="whcdText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">所属区划</div>
+                            <div>
+                                <span id="ssshengbh" name="ssshengbh"></span><!--省-->
+                                <span id="sssbh" name="sssbh"></span><!--市-->
+                                <span id="ssxbh" name="ssxbh"></span><!--县-->
+                                <span id="ssxzbh" name="ssxzbh"></span><!--镇-->
+                                <span id="sscbh" name="sscbh"></span><!--村-->
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">户籍地址</div>
+                            <div id="jtzz" name="jtzz"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">现住址</div>
+                            <div id="xzz" name="xzz"></div>
+                        </li>
+                        <!-- <li>
+                            <div class="liLabel">血型</div>
+                            <div>
+                                <span id="xuexingText" name="xuexingText"></span>
+                                <span id="rhText" name="rhText"></span>
+                            </div>
+                        </li> -->
+                        <li>
+                            <div class="liLabel">血型</div>
+                            <div id="xuexingText" name="xuexingText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">RH</div>
+                            <div id="rhText" name="rhText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">职业</div>
+                            <div id="gzText" name="gzText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">婚姻状况</div>
+                            <div id="hyqkText" name="hyqkText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">医疗费用支付方式</div>
+                            <div id="zffsText" name="zffsText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">药物过敏史</div>
+                            <div id="ywgmsText" name="ywgmsText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">暴露史</div>
+                            <div id="blsText" name="blsText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">人群分类</div>
+                            <div id="rqlxText" name="rqlxText"></div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi" myloading="true">
+                	<div class="wait">
+                		请稍等...
+                	</div>  
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">疾病</div>
+                            <div id="sick">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">手术</div>
+                            <div id="operation">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">外伤</div>
+                            <div id="trauma">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">输血</div>
+                            <div id="blood">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">残疾情况</div>
+                            <div>
+                                <div class="jiwangDiv">
+                                    <div class="infotxt" id="cjqkmsText" name="cjqkmsText">输血1</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi" myloading="true">
+                	<div class="wait">
+                		请稍等...
+                	</div>  
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">父亲</div>
+                            <div>
+                                <div id="fqbsText" name="fqbsText"></div>
+                                <div id="fqdqtbs" name="fqdqtbs"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">母亲</div>
+                            <div>
+                                <div id="mqbsText" name="mqbsText"></div>
+                                <div id="mqdqtbs" name="mqdqtbs"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">兄弟姐妹</div>
+                            <div>
+                                <div id="xdjmdbsText" name="xdjmdbsText"></div>
+                                <div id="xdjmdqtbs" name="xdjmdqtbs"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">子女</div>
+                            <div>
+                                <div id="znbsText" name="znbsText"></div>
+                                <div id="znqtbs" name="znqtbs"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liLabel">遗传病史</div>
+                            <div>
+                                <div id="cjqkText" name="cjqkText"></div>
+                                <div id="qtjbms" name="qtjbms"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi" myloading="true">
+                	<div class="wait">
+                		请稍等...
+                	</div>  
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">户主姓名</div>
+                            <div id="hzxm" name="hzxm"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">身份证号</div>
+                            <div id="hzsfzh" name="hzsfzh"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">家庭人口数</div>
+                            <div id="jtrks" name="jtrks"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">家庭结构</div>
+                            <div id="jtjg" name="jtjg"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">居住情况</div>
+                            <div id="jzqk" name="jzqk"></div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="contLi" myloading="true">
+                	<div class="wait">
+                		请稍等...
+                	</div>  
+                    <ul class="infoUl">
+                        <li>
+                            <div class="liLabel">厨房排风设施</div>
+                            <div id="cfpfcsText" name="cfpfcsText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">燃料类型</div>
+                            <div id="rllxText" name="rllxText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">饮水</div>
+                            <div id="yslxText" name="yslxText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">厕所</div>
+                            <div id="cslxText" name="cslxText"></div>
+                        </li>
+                        <li>
+                            <div class="liLabel">禽畜栏</div>
+                            <div id="qxlText" name="qxlText"></div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+	var jmId = '';
+    $(function () {
+    	//设置tab页事件
+    	setTabEvent();
+    	//默认显示档案的基本信息
+    	getArchiveDetail();
+    });
+    
+    //获取基本档案信息
+    function getArchiveDetail(){
+    	var jsonParam = new Object();
+        jsonParam.sfzh = parent.document.getElementById('idCard').value;
+        var authorCookie = getCookie("author");
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/archive/getArchiveDetailBySfzh',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (resultMsg) {
+            	if(resultMsg.retCode == 0){
+            		$(".wait").eq(0).css('display', 'none');   
+            		$(".wait").eq(3).css('display', 'none');            	            	
+            		$('#hzmc').text($.util.isNull(resultMsg.data.hzmc) ? "无数据" : resultMsg.data.hzmc);
+                    $('#xb').text($.util.isNull(resultMsg.data.xb) ? "无数据" : resultMsg.data.xb);
+                    $('#lxr').text($.util.isNull(resultMsg.data.lxr) ? "无数据" : resultMsg.data.lxr);
+                    $('#lxdh').text($.util.isNull(resultMsg.data.lxdh) ? "无数据" : resultMsg.data.lxdh);
+                    $('#csrq').text($.util.isNull(resultMsg.data.csrq) ? "无数据" : resultMsg.data.csrq);
+                    $('#sfzh').text($.util.isNull(resultMsg.data.sfzh) ? "无数据" : resultMsg.data.sfzh);
+                    $('#gzdw').text($.util.isNull(resultMsg.data.gzdw) ? "无数据" : resultMsg.data.gzdw);
+                    $('#sj').text($.util.isNull(resultMsg.data.sj) ? "无数据" : resultMsg.data.sj);
+                    $('#jzlx').text($.util.isNull(resultMsg.data.jzlxText) ? "无数据" : resultMsg.data.jzlxText);
+                    $('#mzText').text($.util.isNull(resultMsg.data.mzText) ? "无数据" : resultMsg.data.mzText);
+                    $('#whcdText').text($.util.isNull(resultMsg.data.whcdText) ? "无数据" : resultMsg.data.whcdText);
+                    $('#ssshengbh').text(($.util.isNull(resultMsg.data.ssshengbh) || resultMsg.data.ssshengbh == '请选择..') ? "" : resultMsg.data.ssshengbh);
+                    $('#sssbh').text(($.util.isNull(resultMsg.data.sssbh) || resultMsg.data.sssbh == '请选择..') ? "" : resultMsg.data.sssbh);
+                    $('#ssxbh').text(($.util.isNull(resultMsg.data.ssxbh) || resultMsg.data.ssxbh == '请选择..') ? "" : resultMsg.data.ssxbh);
+                    $('#ssxzbh').text(($.util.isNull(resultMsg.data.ssxzbh) || resultMsg.data.ssxzbh =='请选择..') ? "" : resultMsg.data.ssxzbh);
+                    $('#sscbh').text(($.util.isNull(resultMsg.data.sscbh) || resultMsg.data.sscbh == '请选择..') ? "" : resultMsg.data.sscbh);
+                    $('#jtzz').text($.util.isNull(resultMsg.data.jtzz) ? "无数据" : resultMsg.data.jtzz);
+                    $('#xzz').text($.util.isNull(resultMsg.data.xzz) ? "无数据" : resultMsg.data.xzz);
+                    $('#xuexingText').text($.util.isNull(resultMsg.data.xuexingText) ? "无数据" : resultMsg.data.xuexingText);
+                    $('#rhText').text($.util.isNull(resultMsg.data.rhText) ? "无数据" : resultMsg.data.rhText);
+                    $('#gzText').text($.util.isNull(resultMsg.data.gzText) ? "无数据" : resultMsg.data.gzText);
+                    $('#hyqkText').text($.util.isNull(resultMsg.data.hyqkText) ? "无数据" : resultMsg.data.hyqkText);
+                    $('#zffsText').text($.util.isNull(resultMsg.data.zffsText) ? "无数据" : resultMsg.data.zffsText);
+                    $('#ywgmsText').text($.util.isNull(resultMsg.data.ywgmsText) ? "无数据" : resultMsg.data.ywgmsText);
+                    $('#blsText').text($.util.isNull(resultMsg.data.blsText) ? "无数据" : resultMsg.data.blsText);
+                    $('#rqlxText').text($.util.isNull(resultMsg.data.rqlxText) ? "无数据" : resultMsg.data.rqlxText);
+                    jmId = resultMsg.data.id;
+                    //既往史的残疾情况
+                    $("#cjqkmsText").text($.util.isNull(resultMsg.data.cjqkmsText) ? "无数据" : resultMsg.data.hzmc);
+                  	//遗传病史
+					$('#cjqkText').text($.util.isNull(resultMsg.data.cjqkText) ? "无数据" : resultMsg.data.cjqkText);
+					$('#qtjbms').text($.util.isNull(resultMsg.data.qtjbms) ? "无数据" : "描述："+resultMsg.data.qtjbms);
+					$('#qtjbms').css('display', resultMsg.data.cjqkText.indexOf('有') > -1 ? 'block':'none');
+                    //家庭情况
+                    $('#hzxm').text($.util.isNull(resultMsg.data.hzxm) ? "无数据" : resultMsg.data.hzxm);
+                    $('#hzsfzh').text($.util.isNull(resultMsg.data.hzsfzh) ? "无数据" : resultMsg.data.hzsfzh);
+                    $('#jtrks').text($.util.isNull(resultMsg.data.jtrks) ? "无数据" : resultMsg.data.jtrks);
+                    $('#jtjg').text($.util.isNull(resultMsg.data.jtjg) ? "无数据" : resultMsg.data.jtjg);
+                    $('#jzqk').text($.util.isNull(resultMsg.data.jzqk) ? "无数据" : resultMsg.data.jzqk);
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	console.log(errorThrown);
+            }
+        });
+    }
+    //获取既往史信息
+    function getJWSInfo(){
+    	var jsonParam = new Object();
+        jsonParam.jmId = parent.document.getElementById('archiveId').value;
+        var authorCookie = getCookie("author");
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/archive/getBSxxDetail',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (resultMsg) {
+            	if(resultMsg.retCode == 0){
+            		$(".wait").eq(1).css('display', 'none');
+            		var jwsArr = resultMsg.data;
+            		var sickStr = '';
+            		var operationStr = '';
+            		var traumaStr = '';
+            		var bloodStr = '';
+            		$("#sick").html("");
+            		$("#operation").html("");
+            		$("#trauma").html("");
+            		$("#blood").html("");
+            		for(var i = 0; i < jwsArr.length; i++){
+            			var jwsName = $.util.isNull(jwsArr[i].jblxText) ? "无数据" : jwsArr[i].jblxText;
+            			var jwsTime = $.util.isNull(jwsArr[i].qzsj) ? "无数据" : jwsArr[i].qzsj;
+            			if(jwsArr[i].jblx == '1'){
+            				sickStr += '<div class="jiwangDiv">'+
+            								'<div class="infotxt">'+jwsName+'</div>'+
+                                			'<div class="infotime" id="qzsj" name="qzsj">'+
+                                    			'<span style="margin-right: 40px">确诊时间</span>'+jwsTime+
+                                			'</div>'+
+                            		  '</div>';
+            			}else if(jwsArr[i].jblx == '2'){
+            				operationStr += '<div class="jiwangDiv">'+
+											'<div class="infotxt">'+jwsName+'</div>'+
+				                			'<div class="infotime" id="qzsj" name="qzsj">'+
+				                    			'<span style="margin-right: 40px">手术时间</span>'+jwsTime+
+				                			'</div>'+
+				            		  '</div>';
+            			}else if(jwsArr[i].jblx == '3'){
+            				traumaStr += '<div class="jiwangDiv">'+
+												'<div class="infotxt">'+jwsName+'</div>'+
+					                			'<div class="infotime" id="qzsj" name="qzsj">'+
+					                    			'<span style="margin-right: 40px">外伤时间</span>'+jwsTime+
+					                			'</div>'+
+					            		  '</div>';
+            			}else if(jwsArr[i].jblx == '4'){
+            				bloodStr += '<div class="jiwangDiv">'+
+												'<div class="infotxt">'+jwsName+'</div>'+
+					                			'<div class="infotime" id="qzsj" name="qzsj">'+
+					                    			'<span style="margin-right: 40px">输血时间</span>'+jwsTime+
+					                			'</div>'+
+					            		  '</div>';
+            			}
+
+            		}
+            		sickStr = (sickStr == '' ? '无数据' : sickStr);
+            		operationStr = (operationStr == '' ? '无数据' : operationStr);
+            		traumaStr = (traumaStr == '' ? '无数据' : traumaStr);
+            		bloodStr = (bloodStr == '' ? '无数据' : bloodStr);
+            		$("#sick").append(sickStr);
+            		$("#operation").append(operationStr);
+            		$("#trauma").append(traumaStr);
+            		$("#blood").append(bloodStr);
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            }
+        });
+    }
+    //获取家族史信息
+    function getJZSInfo(){
+    	var jsonParam = new Object();
+    	jsonParam.jmId = parent.document.getElementById('archiveId').value;
+        var authorCookie = getCookie("author");
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/archive/getJZSxxDetail',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (resultMsg) {
+				if(resultMsg.retCode == 0){
+					$(".wait").eq(2).css('display', 'none');
+					
+					$('#fqbsText').text($.util.isNull(resultMsg.data.fqbsText) ? "无数据" : resultMsg.data.fqbsText);
+					$('#fqdqtbs').text($.util.isNull(resultMsg.data.fqdqtbs) ? "其他：无数据" : "其他："+resultMsg.data.fqdqtbs);
+					$('#fqdqtbs').css('display', resultMsg.data.fqbsText.indexOf('其他') < 0 ? 'none':'block');
+					
+					$('#mqbsText').text($.util.isNull(resultMsg.data.mqbsText) ? "无数据" : resultMsg.data.mqbsText);
+					$('#mqdqtbs').text($.util.isNull(resultMsg.data.mqdqtbs) ? "其他：无数据" : "其他："+resultMsg.data.mqdqtbs);
+					$('#mqdqtbs').css('display', resultMsg.data.mqbsText.indexOf('其他') < 0 ? 'none':'block');
+					
+					$('#xdjmdbsText').text($.util.isNull(resultMsg.data.xdjmdbsText) ? "无数据" : resultMsg.data.xdjmdbsText);
+					$('#xdjmdqtbs').text($.util.isNull(resultMsg.data.xdjmdqtbs) ? "其他：无数据" : "其他："+resultMsg.data.xdjmdqtbs);
+					$('#xdjmdqtbs').css('display', resultMsg.data.xdjmdbsText.indexOf('其他') < 0 ? 'none':'block');
+					
+					$('#znbsText').text($.util.isNull(resultMsg.data.znbsText) ? "无数据" : resultMsg.data.znbsText);
+					$('#znqtbs').text($.util.isNull(resultMsg.data.znqtbs) ? "其他：无数据" : "其他："+resultMsg.data.znqtbs);
+					$('#znqtbs').css('display', resultMsg.data.znbsText.indexOf('其他') < 0 ? 'none':'block');
+					
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            }
+        });
+    }
+    //获取生活环境信息
+    function getSHHJInfo(){
+    	var jsonParam = new Object();
+    	jsonParam.jmId = parent.document.getElementById('archiveId').value;
+        var authorCookie = getCookie("author");
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            contentType: 'application/json',
+            url: roadPath + '/health/archive/getSHfsDetail',
+            data: JSON.stringify(jsonParam),
+            beforeSend: function (XMLHttpRequest) {
+            	XMLHttpRequest.setRequestHeader("authToken", authorCookie);
+            },
+            success: function (resultMsg) {
+				if(resultMsg.retCode == 0){				
+					$(".wait").eq(4).css('display', 'none');
+					$('#cfpfcsText').text($.util.isNull(resultMsg.data.cfpfcsText) ? "无数据" : resultMsg.data.cfpfcsText);
+					$('#rllxText').text($.util.isNull(resultMsg.data.rllxText) ? "无数据" : resultMsg.data.rllxText);
+					$('#yslxText').text($.util.isNull(resultMsg.data.yslxText) ? "无数据" : resultMsg.data.yslxText);
+					$('#cslxText').text($.util.isNull(resultMsg.data.cslxText) ? "无数据" : resultMsg.data.cslxText);
+					$('#qxlText').text($.util.isNull(resultMsg.data.qxlText) ? "无数据" : resultMsg.data.qxlText);
+            	}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            }
+        });
+    }
+  	//设置tab页事件
+	function setTabEvent(){
+		$(".pageTab li").click(function () {
+            $(".pageTab li").removeClass("litabact");
+            $(this).addClass("litabact");
+            var ind = $(this).index();
+            $(".contLi").removeClass("actCont");
+            $(".contLi").eq(ind).addClass("actCont");
+            if(mytrim(this.innerHTML).indexOf('基本档案') > -1 || mytrim(this.innerHTML).indexOf('家庭情况') > -1){
+            	getArchiveDetail();
+            }else if(mytrim(this.innerHTML).indexOf('既往史') > -1 ){
+            	getJWSInfo();
+            }else if(mytrim(this.innerHTML).indexOf('家族史') > -1 ){
+            	getJZSInfo();
+            }else if(mytrim(this.innerHTML).indexOf('生活环境') > -1 ){
+            	getSHHJInfo();
+            }
+        });
+        var pageHeight = $(window).height();
+        function divResize () {
+            pageHeight = $(window).height();
+            $(".pageCont").css({
+                height: pageHeight - 80 + 'px'
+            });
+            $(".contUl").css ({
+                height: $(".pageCont").height() - 40 + 'px'
+            });
+            $(".infoUl li").css ({
+                width: $(".infoUl li").width() - 40 + 'px'
+            });
+        }
+        divResize();
+        $(window).resize(function(){
+            divResize();
+        });
+  	}
+</script>
+</html>
